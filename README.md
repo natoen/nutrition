@@ -6,18 +6,21 @@ nutrition dense and delicious foods.
 ## Data Structure
 
 The `nutrition.csv` file contains individual tables for different food items.
-Every table are separated by 2 rows and has a "{TABLE_TITLE} Total" and
-"{TABLE_TITLE} % Daily Value (RDI)" for their last 2 rows. The data are sourced
-from MEXT as the priority because the user is Japanese followed by USDA and
-other sources when the data from MEXT are lacking or suspicious where cross
-checking is needed. Since MEXT does not track heavy metals (e.g. Arsenic,
-Cadmium, Mercury, Lead), typical baseline values (in ppm) were aggregated from
-global food safety bodies (like the FDA Total Diet Study and EFSA reports)
-tailored to each specific food category. Extremely small trace values (e.g.,
-amino acids in a 5g serving of Celery) have been precisely calculated to ensure
-no data is inadvertently rounded to zero unless the value is truly absent. The
-unit for heavy metals in the spreadsheet is marked as `(ppm/ug)`. The currently
-inputted values represent parts per million (ppm), which is equivalent to mg/kg.
+
+- Every table are separated by 2 rows and has a "{TABLE_TITLE} Total" and
+  "{TABLE_TITLE} % Daily Value (RDI)" for their last 2 rows.
+- The data are sourced from MEXT as the priority because the user is Japanese
+  followed by USDA and other sources when the data from MEXT are lacking or
+  suspicious where cross checking is needed.
+- Since MEXT does not track heavy metals (e.g. Arsenic, Cadmium, Mercury, Lead),
+  typical baseline values (in ppm) were aggregated from global food safety
+  bodies (like the FDA Total Diet Study and EFSA reports) tailored to each
+  specific food category. Extremely small trace values (e.g., amino acids in a
+  5g serving of Celery) have been precisely calculated to ensure no data is
+  inadvertently rounded to zero unless the value is truly absent.
+- The unit for heavy metals in the spreadsheet is marked as `(ppm/ug)`. The
+  currently inputted values represent parts per million (ppm), which is
+  equivalent to mg/kg.
 
 ### Data Calculations Methodology
 
