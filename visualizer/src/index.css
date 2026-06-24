@@ -9,6 +9,13 @@
   --border-color: rgba(255, 255, 255, 0.1);
   --success: #10b981;
   --warning: #f59e0b;
+  --gradient-radial-1: rgba(56, 189, 248, 0.1);
+  --gradient-radial-2: rgba(192, 132, 252, 0.1);
+  --shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  --food-item-bg: rgba(0,0,0,0.2);
+  --progress-bg: rgba(0,0,0,0.3);
+  --btn-disabled-bg: rgba(255,255,255,0.1);
+  --btn-disabled-text: rgba(255,255,255,0.3);
 }
 
 body {
@@ -17,11 +24,12 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--bg-color);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(192, 132, 252, 0.1) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, var(--gradient-radial-1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, var(--gradient-radial-2) 0px, transparent 50%);
   background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 * { box-sizing: border-box; }
@@ -37,8 +45,9 @@ h1, h2, h3, h4 {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow);
   padding: 24px;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .gradient-text {

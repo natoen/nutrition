@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react'
-import { Plus, Minus, Info } from 'lucide-react'
 import './MealBuilder.css'
 
 interface MealBuilderProps {
@@ -52,6 +51,79 @@ const RDI_TARGETS: Record<string, string> = {
   'Selenium (mcg)': '55 mcg'
 }
 
+const getFoodStyle = (name: string) => {
+  const lower = name.toLowerCase()
+  if (lower.includes('milk')) return { icon: '🥛', color: '#f8fafc' }
+  if (lower.includes('banana')) return { icon: '🍌', color: '#fde047' }
+  if (lower.includes('strawberry')) return { icon: '🍓', color: '#ef4444' }
+  if (lower.includes('apple')) return { icon: '🍎', color: '#ef4444' }
+  if (lower.includes('orange')) return { icon: '🍊', color: '#f97316' }
+  if (lower.includes('tomato')) return { icon: '🍅', color: '#ef4444' }
+  if (lower.includes('potato')) return { icon: '🥔', color: '#d97706' }
+  if (lower.includes('carrot')) return { icon: '🥕', color: '#f97316' }
+  if (lower.includes('kabocha') || lower.includes('pumpkin')) return { icon: '🎃', color: '#d97706' }
+  if (lower.includes('kiwi')) return { icon: '🥝', color: '#84cc16' }
+  if (lower.includes('avocado')) return { icon: '🥑', color: '#10b981' }
+  if (lower.includes('natto') || lower.includes('bean')) return { icon: '🫘', color: '#a16207' }
+  if (lower.includes('rice')) return { icon: '🍚', color: '#f8fafc' }
+  if (lower.includes('spinach') || lower.includes('kale')) return { icon: '🥬', color: '#10b981' }
+  if (lower.includes('broccoli')) return { icon: '🥦', color: '#10b981' }
+  if (lower.includes('salad') || lower.includes('celery')) return { icon: '🥗', color: '#10b981' }
+  if (lower.includes('liver') || lower.includes('beef') || lower.includes('pork')) return { icon: '🥩', color: '#ef4444' }
+  if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('fish')) return { icon: '🐟', color: '#f97316' }
+  if (lower.includes('uni') || lower.includes('sea urchin') || lower.includes('ikura') || lower.includes('roe')) return { icon: '🍣', color: '#f97316' }
+  if (lower.includes('egg')) return { icon: '🍳', color: '#eab308' }
+  if (lower.includes('sunflower')) return { icon: '🌻', color: '#a16207' }
+  if (lower.includes('peanut')) return { icon: '🥜', color: '#a16207' }
+  if (lower.includes('chicken')) return { icon: '🍗', color: '#f59e0b' }
+  return { icon: '🍽️', color: 'white' }
+}
+
+const getNutrientStyle = (name: string) => {
+  const lower = name.toLowerCase()
+  if (lower.includes('calories')) return { icon: '🔥', color: '#ef4444' }
+  if (lower.includes('protein')) return { icon: '💪', color: '#ec4899' }
+  if (lower.includes('fat')) return { icon: '🥑', color: '#eab308' }
+  if (lower.includes('carbohydrates')) return { icon: '🍞', color: '#d97706' }
+  if (lower.includes('fiber')) return { icon: '🥦', color: '#22c55e' }
+  if (lower.includes('sodium')) return { icon: '🧂', color: '#94a3b8' }
+  
+  if (lower.includes('vitamin a') || lower.includes('lutein')) return { icon: '🥕', color: '#f97316' }
+  if (lower.includes('vitamin c')) return { icon: '🍊', color: '#fbbf24' }
+  if (lower.includes('vitamin d')) return { icon: '☀️', color: '#fbbf24' }
+  if (lower.includes('vitamin e')) return { icon: '🌻', color: '#84cc16' }
+  if (lower.includes('vitamin k')) return { icon: '🥬', color: '#15803d' }
+  if (lower.includes('vitamin b') || lower.includes('folate')) return { icon: '⚡', color: '#3b82f6' }
+  if (lower.includes('choline')) return { icon: '🧠', color: '#3b82f6' }
+  
+  if (lower.includes('calcium') || lower.includes('phosphorus')) return { icon: '🥛', color: '#94a3b8' }
+  if (lower.includes('iron')) return { icon: '🩸', color: '#b91c1c' }
+  if (lower.includes('potassium')) return { icon: '🍌', color: '#a855f7' }
+  if (lower.includes('selenium') || lower.includes('zinc')) return { icon: '🛡️', color: '#b91c1c' }
+  
+  return { icon: '✨', color: 'white' }
+}
+
+const getFoodTypeWeight = (name: string) => {
+  const lower = name.toLowerCase()
+  // Exact user-requested order
+  if (lower.includes('milk')) return 10
+  if (lower.includes('banana')) return 20
+  if (lower.includes('spinach')) return 30
+  if (lower.includes('peanut butter')) return 40
+  if (lower.includes('sunflower')) return 50
+  
+  // Group by food categories
+  if (lower.includes('broccoli') || lower.includes('celery') || lower.includes('kale') || lower.includes('carrot')) return 100 // Veggies
+  if (lower.includes('apple') || lower.includes('strawberry') || lower.includes('orange') || lower.includes('fruit')) return 200 // Fruits
+  if (lower.includes('egg')) return 300 // Eggs
+  if (lower.includes('liver') || lower.includes('beef') || lower.includes('chicken') || lower.includes('pork') || lower.includes('meat')) return 400 // Meats
+  if (lower.includes('salmon') || lower.includes('uni') || lower.includes('mackerel') || lower.includes('fish') || lower.includes('sea urchin')) return 500 // Seafood
+  if (lower.includes('seed') || lower.includes('nut') || lower.includes('almond') || lower.includes('peanut')) return 600 // Nuts/Seeds
+  
+  return 1000 // Others (sorted alphabetically later if same weight)
+}
+
 const MealBuilder: React.FC<MealBuilderProps> = ({ data }) => {
   // Extract food items and their RDI data
   const foods = useMemo(() => {
@@ -60,10 +132,10 @@ const MealBuilder: React.FC<MealBuilderProps> = ({ data }) => {
       const row = data[i]
       const name = row['Food Item']
       if (!name.includes('%')) {
-        // Find the next row which might be the RDI row
         const nextRow = data[i + 1]
         if (nextRow && nextRow['Food Item'].includes('%')) {
           const rdiMap: Record<string, number> = {}
+          const absMap: Record<string, number> = {}
           Object.keys(nextRow).forEach(key => {
             if (key !== 'Food Item') {
               let val = nextRow[key]?.replace('%', '')
@@ -76,50 +148,48 @@ const MealBuilder: React.FC<MealBuilderProps> = ({ data }) => {
               }
               
               rdiMap[key] = num || 0
+              absMap[key] = parseFloat(row[key]) || 0
             }
           })
           items.push({
             id: name,
             name: name.replace('Total', '').trim(),
-            rdi: rdiMap
+            rdi: rdiMap,
+            absolute: absMap
           })
         }
       }
     }
+    
+    // Sort items based on the requested category weights
+    items.sort((a, b) => {
+      const weightDiff = getFoodTypeWeight(a.name) - getFoodTypeWeight(b.name)
+      if (weightDiff === 0) {
+        return a.name.localeCompare(b.name)
+      }
+      return weightDiff
+    })
+    
     return items
   }, [data])
 
   const [quantities, setQuantities] = useState<Record<string, number>>({})
 
-  const handleAdd = (id: string) => {
-    setQuantities(prev => ({ ...prev, [id]: (prev[id] || 0) + 1 }))
-  }
-
-  const handleSubtract = (id: string) => {
-    setQuantities(prev => {
-      const current = prev[id] || 0
-      if (current <= 1) {
-        const next = { ...prev }
-        delete next[id]
-        return next
-      }
-      return { ...prev, [id]: current - 1 }
-    })
-  }
-
-  // Calculate accumulated RDIs
-  const totalRDI = useMemo(() => {
-    const totals: Record<string, number> = {}
+  // Calculate accumulated RDIs and Absolutes
+  const { totalRDI, totalAbsolute } = useMemo(() => {
+    const totalsRDI: Record<string, number> = {}
+    const totalsAbs: Record<string, number> = {}
     Object.keys(quantities).forEach(id => {
       const qty = quantities[id]
       const food = foods.find(f => f.id === id)
       if (food) {
         Object.keys(food.rdi).forEach(nutrient => {
-          totals[nutrient] = (totals[nutrient] || 0) + (food.rdi[nutrient] * qty)
+          totalsRDI[nutrient] = (totalsRDI[nutrient] || 0) + (food.rdi[nutrient] * qty)
+          totalsAbs[nutrient] = (totalsAbs[nutrient] || 0) + (food.absolute[nutrient] * qty)
         })
       }
     })
-    return totals
+    return { totalRDI: totalsRDI, totalAbsolute: totalsAbs }
   }, [quantities, foods])
 
   return (
@@ -127,20 +197,52 @@ const MealBuilder: React.FC<MealBuilderProps> = ({ data }) => {
       <div className="glass-panel food-selector">
         <h2>Available Foods</h2>
         <div className="food-list">
-          {foods.map(food => (
-            <div key={food.id} className="food-item">
-              <span className="food-name">{food.name}</span>
-              <div className="controls">
-                <button onClick={() => handleSubtract(food.id)} disabled={!quantities[food.id]}>
-                  <Minus size={16} />
-                </button>
-                <span className="qty">{quantities[food.id] || 0}</span>
-                <button onClick={() => handleAdd(food.id)}>
-                  <Plus size={16} />
-                </button>
+          {foods.map(food => {
+            const { icon } = getFoodStyle(food.name)
+            return (
+              <div key={food.id} className="food-item">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ fontSize: '1.2rem' }}>{icon}</span>
+                  <span className="food-name" style={{ color: 'white' }}>{food.name}</span>
+                </div>
+                <div className="controls" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <input
+                    type="number"
+                    min="0"
+                    max="1000"
+                    value={quantities[food.id] || ''}
+                    placeholder="0"
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value, 10);
+                      setQuantities(prev => {
+                        const next = { ...prev };
+                        if (isNaN(val) || val <= 0) {
+                          delete next[food.id];
+                        } else {
+                          next[food.id] = Math.min(val, 1000);
+                        }
+                        return next;
+                      });
+                    }}
+                    style={{
+                      width: '70px',
+                      background: 'rgba(0,0,0,0.3)',
+                      border: '1px solid var(--border-color)',
+                      color: 'white',
+                      padding: '6px 8px',
+                      borderRadius: '6px',
+                      textAlign: 'center',
+                      fontSize: '1rem',
+                      outline: 'none'
+                    }}
+                  />
+                  <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+                    {food.name.toLowerCase().includes('milk') ? 'ml' : (food.name.toLowerCase().includes('salad') ? 'qty' : 'g')}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
 
@@ -151,22 +253,36 @@ const MealBuilder: React.FC<MealBuilderProps> = ({ data }) => {
             <div className="progress-list">
               {nutrients.map(nutrient => {
                 const percentage = totalRDI[nutrient] || 0
+                const absValue = totalAbsolute[nutrient] || 0
                 const isComplete = percentage >= 100
                 const shortName = nutrient.split('(')[0].trim()
                 const targetStr = RDI_TARGETS[nutrient] ? ` (${RDI_TARGETS[nutrient]})` : ''
                 
+                const unitMatch = nutrient.match(/\(([^)]+)\)/)
+                const unitStr = unitMatch ? unitMatch[1] : ''
+                
+                const { icon, color } = getNutrientStyle(nutrient)
+                
+                // Keep values to 1 decimal place, but trim trailing zeros
+                const displayAbs = Number(absValue.toFixed(1))
+                
                 return (
                   <div key={nutrient} className="progress-item">
-                    <div className="progress-label">
-                      <span>{shortName}<span style={{ opacity: 0.6, fontSize: '0.8em', marginLeft: '6px' }}>{targetStr}</span></span>
-                      <span className={isComplete ? 'complete-text' : ''}>
+                    <div className="progress-label" style={{ color: 'white' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span style={{ fontSize: '1.1rem' }}>{icon}</span>
+                        {shortName}
+                        <span style={{ opacity: 0.8, fontSize: '0.8em', marginLeft: '6px', color: 'white' }}>{targetStr}</span>
+                      </span>
+                      <span className={isComplete ? 'complete-text' : ''} style={{ color: 'white', fontWeight: isComplete ? 'bold' : 'normal' }}>
+                        <span style={{ opacity: 0.8, marginRight: '8px', fontSize: '0.85em', fontWeight: 'normal' }}>({displayAbs}{unitStr})</span>
                         {percentage.toFixed(1)}%
                       </span>
                     </div>
                     <div className="progress-bar-bg">
                       <div 
                         className={`progress-bar-fill ${isComplete ? 'complete' : ''}`}
-                        style={{ width: `${Math.min(percentage, 100)}%` }}
+                        style={{ width: `${Math.min(percentage, 100)}%`, background: isComplete ? color : `linear-gradient(90deg, ${color}88, ${color})`, boxShadow: isComplete ? `0 0 10px ${color}` : 'none' }}
                       ></div>
                     </div>
                   </div>

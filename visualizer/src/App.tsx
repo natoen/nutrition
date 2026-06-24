@@ -27,13 +27,6 @@ function App() {
 
   return (
     <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '40px 24px' }}>
-      <header style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1 className="gradient-text" style={{ fontSize: '3rem', marginBottom: '16px' }}>
-          Interactive Meal & RDI Builder
-        </h1>
-        <p style={{ color: 'var(--text-secondary)' }}>Add foods and track your RDI progression.</p>
-      </header>
-      
       {loading ? (
         <div style={{ textAlign: 'center', marginTop: '100px', color: 'var(--accent-1)' }}>
           Loading dataset...

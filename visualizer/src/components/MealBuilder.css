@@ -26,9 +26,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  background: rgba(0,0,0,0.2);
+  background: var(--food-item-bg);
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.05);
+  border: 1px solid var(--border-color);
 }
 
 .food-name {
@@ -57,8 +57,8 @@
 }
 
 .controls button:disabled {
-  background: rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.3);
+  background: var(--btn-disabled-bg);
+  color: var(--btn-disabled-text);
   cursor: not-allowed;
 }
 
@@ -112,7 +112,7 @@
 
 .progress-bar-bg {
   height: 8px;
-  background: rgba(0,0,0,0.3);
+  background: var(--progress-bg);
   border-radius: 4px;
   overflow: hidden;
 }
