@@ -55,6 +55,7 @@ const getFoodStyle = (name: string) => {
   const lower = name.toLowerCase()
   if (lower.includes('milk')) return { icon: '🥛', color: '#f8fafc' }
   if (lower.includes('banana')) return { icon: '🍌', color: '#fde047' }
+  if (lower.includes('blueberry')) return { icon: '🫐', color: '#3b82f6' }
   if (lower.includes('strawberry')) return { icon: '🍓', color: '#ef4444' }
   if (lower.includes('pineapple')) return { icon: '🍍', color: '#eab308' }
   if (lower.includes('apple')) return { icon: '🍎', color: '#ef4444' }
@@ -67,7 +68,7 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('avocado')) return { icon: '🥑', color: '#10b981' }
   if (lower.includes('natto') || lower.includes('bean')) return { icon: '🫘', color: '#a16207' }
   if (lower.includes('rice')) return { icon: '🍚', color: '#f8fafc' }
-  if (lower.includes('spinach') || lower.includes('kale')) return { icon: '🥬', color: '#10b981' }
+  if (lower.includes('spinach') || lower.includes('kale') || lower.includes('lettuce')) return { icon: '🥬', color: '#10b981' }
   if (lower.includes('broccoli')) return { icon: '🥦', color: '#10b981' }
   if (lower.includes('salad') || lower.includes('celery')) return { icon: '🥗', color: '#10b981' }
   if (lower.includes('liver') || lower.includes('beef') || lower.includes('pork')) return { icon: '🥩', color: '#ef4444' }
@@ -195,8 +196,28 @@ const MealBuilder: React.FC<MealBuilderProps> = ({ data }) => {
 
   return (
     <div className="meal-builder">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div className="glass-panel food-selector">
-        <h2>Available Foods</h2>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+          <h2 style={{ marginBottom: 0 }}>Available Foods</h2>
+          <button 
+            onClick={() => setQuantities({})}
+            style={{
+              background: 'rgba(255,255,255,0.1)',
+              color: 'white',
+              border: '1px solid rgba(255,255,255,0.2)',
+              padding: '6px 12px',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontWeight: 500,
+              transition: 'background 0.2s'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.4)'}
+            onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+          >
+            Reset
+          </button>
+        </div>
         <div className="food-list">
           {foods.map(food => {
             const { icon } = getFoodStyle(food.name)
@@ -245,6 +266,30 @@ const MealBuilder: React.FC<MealBuilderProps> = ({ data }) => {
             )
           })}
         </div>
+      </div>
+      
+      {/* Selected Foods Summary Box */}
+      {Object.keys(quantities).length > 0 && (
+        <div className="glass-panel">
+          <h3 style={{ color: 'white', fontSize: '1.1rem', marginBottom: '16px' }}>Selected Foods</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {Object.keys(quantities).map(id => {
+              const qty = quantities[id];
+              if (!qty || qty <= 0) return null;
+              const food = foods.find(f => f.id === id);
+              if (!food) return null;
+              
+              const unitStr = food.name.toLowerCase().includes('milk') ? 'ml' : (food.name.toLowerCase().includes('salad') ? 'qty' : 'g');
+              return (
+                <div key={`summary-${id}`} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.9)', fontSize: '0.95rem' }}>
+                  <span>{food.name}</span>
+                  <span style={{ fontWeight: 'bold' }}>{qty}{unitStr}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
       </div>
 
       <div className="rdi-dashboard">
