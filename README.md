@@ -55,3 +55,51 @@ simultaneous processes:
      Highly stable to heat and completely immune to water-leaching. Combined
      with the 30% moisture loss, 100g of steamed spinach contains an incredibly
      dense ~17,000 mcg of Lutein + Zeaxanthin.
+
+#### Stir-fried Pork Liver
+
+"Stir-fried" (油いため) (e.g. Rebanira - レバニラ) implies cooking the liver in
+oil. The dataset mathematically constructs this profile using the official MEXT
+base data for raw pork liver (11166) combined with standard stir-fry culinary
+parameters:
+
+1. **Cooking Fat Integration:** The calories and fat of the small amount of
+   cooking oil absorbed during the stir-frying process are added to the
+   baseline.
+2. **Physical Moisture Loss (Yield Rate):** Cooking liver causes it to shrink by
+   approximately 30%. Therefore, a 10g serving of _cooked_ liver requires about
+   14.3g of raw pork liver. A 1.43x concentration multiplier is applied to
+   account for this density.
+3. **Chemical True Retention (TR):** Stir-frying involves intense, rapid heat:
+   - **B-Vitamins (B1, B2, B3, B5, B6) (85% Retention):** Slight degradation
+     from pan heat.
+   - **Folate / B9 (80% Retention):** Heat-sensitive, but avoids water-leaching.
+   - **Minerals & Fat-Soluble Vitamins (100% Retention):** Perfectly preserved.
+     This results in an astronomical Vitamin A and Vitamin B12 concentration in
+     the final cooked weight.
+4. **Unseasoned Baseline:** To ensure data purity, the sodium from the soy sauce
+   and salt typically used in stir-frying like Rebanira is omitted to make it
+   general stir-frying, focusing strictly on the physical chemistry of the liver
+   and oil.
+
+#### Stewed Chicken Liver
+
+The data for **Stewed Chicken Liver (50g)** was custom-calculated to simulate
+the stewed cooking style (e.g. Amakara-ni - 甘辛煮), rather than using standard
+boiled or raw data.
+
+1. **Zero-Leaching Retention:** In standard boiling, massive amounts of vitamins
+   leach into the water and are discarded. In stewing, the liquid reduces into a
+   thick glaze that is consumed. Therefore, there is **zero water leaching
+   loss**, only thermal breakdown. Heat-sensitive vitamins (like Vitamin C and
+   Folate) were reduced by approximately 20-25% to account purely for thermal
+   destruction.
+2. **Physical Moisture Loss:** Simmering liver causes it to yield at about 70%.
+   To construct a 50g stewed (_cooked_) serving, the math traces back to
+   approximately 71.4g of raw chicken liver. The nutrients from 71.4g of raw
+   liver are mathematically condensed into the 50g final product.
+3. **Unseasoned Baseline:** By strict user request, the highly variable sugars
+   and sodium coming from the soy sauce and mirin used in stewing like
+   Amakara-ni glaze style were explicitly excluded to make it a general stewing
+   data. The data represents only the pure, condensed chemistry of the cooked
+   chicken liver itself.
