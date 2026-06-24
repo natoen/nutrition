@@ -15,7 +15,7 @@ const NUTRIENT_GROUPS = {
   ],
   'Water Soluble Vitamins': [
     'Vitamin B1 (Thiamin) (mg)', 'Vitamin B2 (Riboflavin) (mg)', 'Vitamin B3 (Niacin) (mg)', 
-    'Vitamin B5 (Pantothenic Acid) (mg)', 'Vitamin B6 (mg)', 'Vitamin B7 (Biotin) (mcg)', 
+    'Vitamin B5 (Pantothenic Acid) (mg)', 'Vitamin B6 (Pyridoxine) (mg)', 'Vitamin B7 (Biotin) (mcg)', 
     'Vitamin B9 (Folate) (mcg)', 'Vitamin B12 (Cobalamin) (mcg)', 'Vitamin C (mg)', 'Choline (mg)'
   ],
   Others: [
@@ -38,7 +38,7 @@ const RDI_TARGETS: Record<string, string> = {
   'Vitamin B2 (Riboflavin) (mg)': '1.3 mg',
   'Vitamin B3 (Niacin) (mg)': '16 mg',
   'Vitamin B5 (Pantothenic Acid) (mg)': '5 mg',
-  'Vitamin B6 (mg)': '1.7 mg',
+  'Vitamin B6 (Pyridoxine) (mg)': '1.7 mg',
   'Vitamin B7 (Biotin) (mcg)': '30 mcg',
   'Vitamin B9 (Folate) (mcg)': '400 mcg',
   'Vitamin B12 (Cobalamin) (mcg)': '2.4 mcg',
@@ -56,6 +56,7 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('milk')) return { icon: '🥛', color: '#f8fafc' }
   if (lower.includes('banana')) return { icon: '🍌', color: '#fde047' }
   if (lower.includes('strawberry')) return { icon: '🍓', color: '#ef4444' }
+  if (lower.includes('pineapple')) return { icon: '🍍', color: '#eab308' }
   if (lower.includes('apple')) return { icon: '🍎', color: '#ef4444' }
   if (lower.includes('orange')) return { icon: '🍊', color: '#f97316' }
   if (lower.includes('tomato')) return { icon: '🍅', color: '#ef4444' }
@@ -255,11 +256,17 @@ const MealBuilder: React.FC<MealBuilderProps> = ({ data }) => {
                 const percentage = totalRDI[nutrient] || 0
                 const absValue = totalAbsolute[nutrient] || 0
                 const isComplete = percentage >= 100
-                const shortName = nutrient.split('(')[0].trim()
+                
+                // Strip only the LAST set of parentheses (which contains the unit) to preserve names like '(Thiamin)'
+                const shortName = nutrient.replace(/\s*\([^)]+\)$/, '').trim()
+                
                 const targetStr = RDI_TARGETS[nutrient] ? ` (${RDI_TARGETS[nutrient]})` : ''
                 
-                const unitMatch = nutrient.match(/\(([^)]+)\)/)
-                const unitStr = unitMatch ? unitMatch[1] : ''
+                // Extract the unit from the LAST set of parentheses
+                const unitMatches = nutrient.match(/\(([^)]+)\)/g)
+                const unitStr = unitMatches && unitMatches.length > 0 
+                  ? unitMatches[unitMatches.length - 1].replace(/[()]/g, '') 
+                  : ''
                 
                 const { icon, color } = getNutrientStyle(nutrient)
                 
