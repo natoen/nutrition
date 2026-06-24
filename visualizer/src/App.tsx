@@ -7,7 +7,7 @@ function App() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/nutrition.csv?t=' + Date.now())
+    fetch(import.meta.env.BASE_URL + 'nutrition.csv?t=' + Date.now())
       .then(res => res.text())
       .then(csvText => {
         Papa.parse(csvText, {
