@@ -1,9 +1,7 @@
-# Nutrition Data Project
-
-## Overview
+# Nutrition
 
 This is a reference to manage everyday nutrition and hitting 100% RDI with
-nutrition dense, delicious, and varying foods.
+nutrition dense and delicious foods.
 
 ## Data Structure
 
