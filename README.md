@@ -104,3 +104,14 @@ boiled or raw data.
    Amakara-ni glaze style were explicitly excluded to make it a general stewing
    data. The data represents only the pure, condensed chemistry of the cooked
    chicken liver itself.
+
+#### Chicken Karaage (Deep Fried)
+
+"Karaage" (鶏の唐揚げ) is mathematically constructed using official MEXT data for raw chicken thigh (11119) mixed with the physics of deep frying. 
+
+1. **Yield & Tissue Density (The 1:1 Rule):** Frying drives out extreme amounts of moisture (up to 30% weight loss). However, Karaage is coated in potato starch/flour which adds physical weight back. The final calculated protein density of 1g of Karaage (0.242g protein) is nearly identical to 1g of Grilled Chicken Thigh (0.241g protein). Thus, the core chicken tissue density (and therefore all intrinsic vitamins, minerals, and amino acids) per gram remains effectively identical to grilled chicken thigh.
+2. **Oil & Carbohydrate Integration:** 
+   - **Carbohydrates:** Increased significantly (0.133g per 1g) to account for the batter crust.
+   - **Fat & Calories:** Oil absorption during deep frying increases the fat content to 0.181g per 1g, bringing the caloric density to 3.07 kcal/g.
+   - **Vitamin E & K:** A slight bump was added to account for the trace fat-soluble vitamins present in the frying oil.
+3. **Sodium Marinade:** Because Karaage is deeply marinated in soy sauce, the sodium value is set to 10mg per gram (equivalent to MEXT 11289's 2.5g salt per 100g).
