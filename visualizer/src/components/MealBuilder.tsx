@@ -78,6 +78,7 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('sunflower')) return { icon: '🌻', color: '#a16207' }
   if (lower.includes('peanut')) return { icon: '🥜', color: '#a16207' }
   if (lower.includes('chicken')) return { icon: '🍗', color: '#f59e0b' }
+  if (lower.includes('sesame') || lower.includes('ごま') || lower.includes('胡麻')) return { icon: '🫘', color: '#a16207' }
   return { icon: '🍽️', color: 'white' }
 }
 
