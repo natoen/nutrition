@@ -80,6 +80,7 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('chicken')) return { icon: '🍗', color: '#f59e0b' }
   if (lower.includes('sesame') || lower.includes('ごま') || lower.includes('胡麻')) return { icon: '🫘', color: '#a16207' }
   if (lower.includes('bread') || lower.includes('パン') || lower.includes('mischbrot')) return { icon: '🍞', color: '#fcd34d' }
+  if (lower.includes('oil') || lower.includes('油')) return { icon: '💧', color: '#eab308' }
   return { icon: '🍽️', color: 'white' }
 }
 
