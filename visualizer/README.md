@@ -1,50 +1,26 @@
-# React + TypeScript + Vite
+# Nutrition Visualizer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small React + TypeScript + Vite app that reads `public/nutrition.csv` and lets
+you build meals and see how they track against RDI.
 
-Currently, two official plugins are available:
+## Develop
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```sh
+npm install
+npm run dev      # http://localhost:5173/
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+The app fetches `nutrition.csv` at runtime relative to the Vite `base`, so
+editing `public/nutrition.csv` is reflected on reload with no rebuild.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Data
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+`public/nutrition.csv` is a copy of the repo-root `nutrition.csv`. After editing
+the root file, copy it over: `cp ../nutrition.csv public/nutrition.csv`.
+
+## Deploy
+
+Pushing to `master` triggers `.github/workflows/deploy.yml`, which builds the app
+and publishes it to GitHub Pages at https://natoen.github.io/nutrition/. There is
+no `gh-pages` branch and no committed build output — CI builds from source. The
+`base` in `vite.config.ts` is `/nutrition/` to match the Pages project path.
