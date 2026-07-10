@@ -71,8 +71,8 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('spinach') || lower.includes('kale') || lower.includes('lettuce')) return { icon: '🥬', color: '#10b981' }
   if (lower.includes('broccoli')) return { icon: '🥦', color: '#10b981' }
   if (lower.includes('salad') || lower.includes('celery')) return { icon: '🥗', color: '#10b981' }
-  if (lower.includes('liver') || lower.includes('beef') || lower.includes('pork')) return { icon: '🥩', color: '#ef4444' }
-  if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('fish')) return { icon: '🐟', color: '#f97316' }
+  if (lower.includes('liver') || lower.includes('beef') || lower.includes('pork') || lower.includes('hamburg') || lower.includes('ハンバーグ')) return { icon: '🥩', color: '#ef4444' }
+  if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('tuna') || lower.includes('マグロ') || lower.includes('fish')) return { icon: '🐟', color: '#f97316' }
   if (lower.includes('uni') || lower.includes('sea urchin') || lower.includes('ikura') || lower.includes('roe')) return { icon: '🍣', color: '#f97316' }
   if (lower.includes('egg')) return { icon: '🍳', color: '#eab308' }
   if (lower.includes('sunflower')) return { icon: '🌻', color: '#a16207' }
@@ -83,7 +83,7 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('oil') || lower.includes('油')) return { icon: '💧', color: '#eab308' }
   if (lower.includes('soba') || lower.includes('そば') || lower.includes('noodle')) return { icon: '🍜', color: '#d97706' }
   if (lower.includes('unagi') || lower.includes('eel') || lower.includes('うなぎ')) return { icon: '🐉', color: '#84cc16' }
-  if (lower.includes('ice cream') || lower.includes('häagen') || lower.includes('アイス') || lower.includes('ハーゲンダッツ')) return { icon: '🍨', color: '#fdf2f8' }
+  if (lower.includes('ice cream')) return { icon: '🍨', color: '#fdf2f8' }
   return { icon: '🍽️', color: 'white' }
 }
 
@@ -114,22 +114,38 @@ const getNutrientStyle = (name: string) => {
 
 const getFoodTypeWeight = (name: string) => {
   const lower = name.toLowerCase()
-  // Exact user-requested order
+
+  // Ice cream is always last
+  if (lower.includes('ice cream')) return 900
+
+  // Pinned individual items, in the exact requested order
   if (lower.includes('milk')) return 10
   if (lower.includes('banana')) return 20
   if (lower.includes('spinach')) return 30
-  if (lower.includes('peanut butter')) return 40
-  if (lower.includes('sunflower')) return 50
-  
-  // Group by food categories
-  if (lower.includes('broccoli') || lower.includes('celery') || lower.includes('kale') || lower.includes('carrot')) return 100 // Veggies
-  if (lower.includes('apple') || lower.includes('strawberry') || lower.includes('orange') || lower.includes('fruit')) return 200 // Fruits
-  if (lower.includes('egg')) return 300 // Eggs
-  if (lower.includes('liver') || lower.includes('beef') || lower.includes('chicken') || lower.includes('pork') || lower.includes('meat')) return 400 // Meats
-  if (lower.includes('salmon') || lower.includes('uni') || lower.includes('mackerel') || lower.includes('fish') || lower.includes('sea urchin')) return 500 // Seafood
-  if (lower.includes('seed') || lower.includes('nut') || lower.includes('almond') || lower.includes('peanut')) return 600 // Nuts/Seeds
-  
-  return 1000 // Others (sorted alphabetically later if same weight)
+  if (lower.includes('sunflower')) return 40
+
+  // Categories, in the requested order: fruits, vegetable, meat, chicken, fish, nuts, carbs
+  if (lower.includes('apple') || lower.includes('strawberry') || lower.includes('orange') ||
+      lower.includes('pineapple') || lower.includes('blueberry') || lower.includes('kiwi') ||
+      lower.includes('avocado') || lower.includes('fruit')) return 100 // Fruits
+  if (lower.includes('cabbage') || lower.includes('celery') || lower.includes('lettuce') ||
+      lower.includes('kale') || lower.includes('broccoli') || lower.includes('carrot') ||
+      lower.includes('kabocha') || lower.includes('pumpkin') || lower.includes('tomato') ||
+      lower.includes('potato') || lower.includes('salad')) return 200 // Vegetables
+  // Chicken is checked before meat so "chicken liver" lands in chicken, not meat
+  if (lower.includes('chicken')) return 400 // Chicken
+  if (lower.includes('liver') || lower.includes('beef') || lower.includes('pork') ||
+      lower.includes('hamburg') || lower.includes('meat')) return 300 // Meat
+  if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('tuna') ||
+      lower.includes('unagi') || lower.includes('eel') || lower.includes('urchin') ||
+      lower.includes('roe') || lower.includes('fish')) return 500 // Fish
+  if (lower.includes('seed') || lower.includes('nut') || lower.includes('almond') ||
+      lower.includes('peanut') || lower.includes('sesame')) return 600 // Nuts/Seeds
+  if (lower.includes('rice') || lower.includes('bread') || lower.includes('soba') ||
+      lower.includes('noodle') || lower.includes('mischbrot') || lower.includes('パン') ||
+      lower.includes('granola')) return 700 // Carbs
+
+  return 800 // Others (before ice cream)
 }
 
 const MealBuilder: React.FC<MealBuilderProps> = ({ data }) => {
