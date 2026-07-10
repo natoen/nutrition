@@ -83,6 +83,7 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('oil') || lower.includes('油')) return { icon: '💧', color: '#eab308' }
   if (lower.includes('soba') || lower.includes('そば') || lower.includes('noodle')) return { icon: '🍜', color: '#d97706' }
   if (lower.includes('unagi') || lower.includes('eel') || lower.includes('うなぎ')) return { icon: '🐉', color: '#84cc16' }
+  if (lower.includes('ice cream') || lower.includes('häagen') || lower.includes('アイス') || lower.includes('ハーゲンダッツ')) return { icon: '🍨', color: '#fdf2f8' }
   return { icon: '🍽️', color: 'white' }
 }
 
