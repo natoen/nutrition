@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import Papa from 'papaparse'
 import MealBuilder from './components/MealBuilder'
+import csvUrl from '../../nutrition.csv?url'
 
 function App() {
   const [data, setData] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch(import.meta.env.BASE_URL + 'nutrition.csv?t=' + Date.now())
+    fetch(csvUrl)
       .then(res => res.text())
       .then(csvText => {
         Papa.parse(csvText, {

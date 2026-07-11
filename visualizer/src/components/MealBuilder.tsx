@@ -43,7 +43,7 @@ const RDI_TARGETS: Record<string, string> = {
   'Vitamin B9 (Folate) (mcg)': '400 mcg',
   'Vitamin B12 (Cobalamin) (mcg)': '2.4 mcg',
   'Vitamin C (mg)': '90 mg',
-  'Choline (mg)': '550 mg',
+  'Choline (mg)': '400 mg',
   'Lutein + Zeaxanthin (mcg)': '10000 mcg',
   'Calcium (mg)': '800 mg',
   'Iron (mg)': '18 mg',
@@ -80,8 +80,10 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('chicken')) return { icon: '🍗', color: '#f59e0b' }
   if (lower.includes('sesame') || lower.includes('ごま') || lower.includes('胡麻')) return { icon: '🫘', color: '#a16207' }
   if (lower.includes('bread') || lower.includes('パン') || lower.includes('mischbrot')) return { icon: '🍞', color: '#fcd34d' }
-  if (lower.includes('oil') || lower.includes('油')) return { icon: '💧', color: '#eab308' }
+  if (lower.includes('cheese')) return { icon: '🧀', color: '#fbbf24' }
+  // Soba must be checked before oil: "Boiled" contains "oil"
   if (lower.includes('soba') || lower.includes('そば') || lower.includes('noodle')) return { icon: '🍜', color: '#d97706' }
+  if (lower.includes('oil') || lower.includes('油')) return { icon: '💧', color: '#eab308' }
   if (lower.includes('unagi') || lower.includes('eel') || lower.includes('うなぎ')) return { icon: '🐉', color: '#84cc16' }
   if (lower.includes('ice cream')) return { icon: '🍨', color: '#fdf2f8' }
   return { icon: '🍽️', color: 'white' }
@@ -144,6 +146,10 @@ const getFoodTypeWeight = (name: string) => {
   if (lower.includes('rice') || lower.includes('bread') || lower.includes('soba') ||
       lower.includes('noodle') || lower.includes('mischbrot') || lower.includes('パン') ||
       lower.includes('granola')) return 700 // Carbs
+
+  // Eggs before natto, both before the remaining others (cheeses etc.)
+  if (lower.includes('egg')) return 780
+  if (lower.includes('natto')) return 790
 
   return 800 // Others (before ice cream)
 }

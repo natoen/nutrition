@@ -5,4 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: '/nutrition/',
   plugins: [react()],
+  server: {
+    // nutrition.csv lives at the repo root, one level above the Vite root
+    fs: { allow: ['..'] },
+  },
 })
