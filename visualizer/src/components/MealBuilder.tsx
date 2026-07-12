@@ -357,8 +357,10 @@ const MealBuilder: React.FC<MealBuilderProps> = ({ data }) => {
                 
                 const { icon, color } = getNutrientStyle(nutrient)
                 
-                // Keep values to 1 decimal place, but trim trailing zeros
-                const displayAbs = Number(absValue.toFixed(1))
+                // Keep values to 2 decimal places, but trim trailing zeros, so
+                // the label agrees with the bar (1.17 mg reads as such, not a
+                // rounded-up "1.2" that looks like 100% when the bar is at ~97%)
+                const displayAbs = Number(absValue.toFixed(2))
                 
                 return (
                   <div key={nutrient} className="progress-item">
