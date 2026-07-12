@@ -53,6 +53,9 @@ const RDI_TARGETS: Record<string, string> = {
 
 const getFoodStyle = (name: string) => {
   const lower = name.toLowerCase()
+  // Oils first, so "Roasted Sesame Oil" gets the oil icon rather than the
+  // sesame (🫘) icon. Matches names ending in "oil" (see getFoodTypeWeight).
+  if (lower.trim().endsWith('oil')) return { icon: '💧', color: '#eab308' }
   if (lower.includes('milk')) return { icon: '🥛', color: '#f8fafc' }
   if (lower.includes('banana')) return { icon: '🍌', color: '#fde047' }
   if (lower.includes('blueberry')) return { icon: '🫐', color: '#3b82f6' }
@@ -72,7 +75,7 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('broccoli')) return { icon: '🥦', color: '#10b981' }
   if (lower.includes('salad') || lower.includes('celery')) return { icon: '🥗', color: '#10b981' }
   if (lower.includes('liver') || lower.includes('beef') || lower.includes('pork') || lower.includes('hamburg') || lower.includes('ハンバーグ')) return { icon: '🥩', color: '#ef4444' }
-  if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('tuna') || lower.includes('マグロ') || lower.includes('fish')) return { icon: '🐟', color: '#f97316' }
+  if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('tuna') || lower.includes('マグロ') || lower.includes('anchovy') || lower.includes('fish')) return { icon: '🐟', color: '#f97316' }
   if (lower.includes('uni') || lower.includes('sea urchin') || lower.includes('ikura') || lower.includes('roe')) return { icon: '🍣', color: '#f97316' }
   if (lower.includes('egg')) return { icon: '🍳', color: '#eab308' }
   if (lower.includes('sunflower')) return { icon: '🌻', color: '#a16207' }
@@ -120,10 +123,11 @@ const getFoodTypeWeight = (name: string) => {
   // Ice cream is always last
   if (lower.includes('ice cream')) return 900
 
-  // Pinned individual items, in the exact requested order
+  // Pinned individual items, in the exact requested order. The Steamed Spinach
+  // Salad holds the 3rd pinned spot; plain Steamed Spinach lives in Vegetables.
   if (lower.includes('milk')) return 10
   if (lower.includes('banana')) return 20
-  if (lower.includes('spinach')) return 30
+  if (lower.includes('spinach') && lower.includes('salad')) return 30
   if (lower.includes('sunflower')) return 40
 
   // Categories, in the requested order: fruits, vegetable, meat, chicken, fish, nuts, carbs
@@ -133,23 +137,33 @@ const getFoodTypeWeight = (name: string) => {
   if (lower.includes('cabbage') || lower.includes('celery') || lower.includes('lettuce') ||
       lower.includes('kale') || lower.includes('broccoli') || lower.includes('carrot') ||
       lower.includes('kabocha') || lower.includes('pumpkin') || lower.includes('tomato') ||
-      lower.includes('potato') || lower.includes('salad')) return 200 // Vegetables
+      lower.includes('potato') || lower.includes('spinach') || lower.includes('salad')) return 200 // Vegetables
   // Chicken is checked before meat so "chicken liver" lands in chicken, not meat
   if (lower.includes('chicken')) return 400 // Chicken
   if (lower.includes('liver') || lower.includes('beef') || lower.includes('pork') ||
       lower.includes('hamburg') || lower.includes('meat')) return 300 // Meat
   if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('tuna') ||
       lower.includes('unagi') || lower.includes('eel') || lower.includes('urchin') ||
-      lower.includes('roe') || lower.includes('fish')) return 500 // Fish
+      lower.includes('roe') || lower.includes('anchovy') || lower.includes('fish')) return 500 // Fish
+  // Oils (weight 680, grouped right after Beans/Legumes). Checked BEFORE
+  // Nuts/Seeds so "Roasted Sesame Oil" is not caught by "sesame". Match names
+  // ENDING in "oil" so it catches "...Sesame Oil"/"...Olive Oil" without also
+  // grabbing "Boiled Soba" or "...Tuna Oil-Packed", which merely contain the
+  // substring "oil".
+  if (lower.trim().endsWith('oil')) return 680 // Oils
   if (lower.includes('seed') || lower.includes('nut') || lower.includes('almond') ||
       lower.includes('peanut') || lower.includes('sesame')) return 600 // Nuts/Seeds
+  // Beans/legumes, immediately after Nuts/Seeds (natto is beans). Checked after
+  // the nuts rule so "peanut" stays with nuts.
+  if (lower.includes('natto') || lower.includes('納豆') || lower.includes('bean') ||
+      lower.includes('soy') || lower.includes('edamame') || lower.includes('tofu') ||
+      lower.includes('lentil')) return 650 // Beans/Legumes
   if (lower.includes('rice') || lower.includes('bread') || lower.includes('soba') ||
       lower.includes('noodle') || lower.includes('mischbrot') || lower.includes('パン') ||
       lower.includes('granola')) return 700 // Carbs
 
-  // Eggs before natto, both before the remaining others (cheeses etc.)
+  // Eggs, then the remaining others (cheeses etc.)
   if (lower.includes('egg')) return 780
-  if (lower.includes('natto')) return 790
 
   return 800 // Others (before ice cream)
 }

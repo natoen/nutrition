@@ -18,6 +18,12 @@ is a reference for hitting 100% RDI with nutrient-dense foods.
   "{TABLE_TITLE} % Daily Value (RDI)" for their last 2 rows.
 - The `Total` row holds **per-gram** nutrient values (e.g. a 9 kcal/g oil is
   `9.00`).
+- **Exception — the two salads are per-serving, not per-gram:** `King Of Kale
+  Salad` and `Steamed Spinach Salad`. Any food whose name contains "salad" is
+  measured in **quantity (whole servings)** in the visualizer, not grams, so its
+  `Total` row holds the nutrients of one complete salad (the gram-weighted sum
+  of its component ingredients) and its `% Daily Value (RDI)` row is that whole
+  serving's %DV. Every other food is per-gram (milk is entered in ml, ≈1 g/ml).
 - The `% Daily Value (RDI)` row is each per-gram value divided by that
   nutrient's RDI, so the app multiplies by grams eaten. Keep it consistent when
   you change a `Total`.
@@ -149,6 +155,40 @@ for raw chicken thigh (11119) mixed with the physics of deep frying.
 3. **Sodium Marinade:** Because Karaage is deeply marinated in soy sauce, the
    sodium value is set to 10mg per gram (equivalent to MEXT 11289's 2.5g salt
    per 100g).
+
+## Visualizer Food Ordering
+
+The order foods appear in the visualizer's "Available Foods" list is **not** the
+CSV row order — it is computed at runtime by `getFoodTypeWeight()` in
+`visualizer/src/components/MealBuilder.tsx`. Each food is assigned a numeric
+weight by keyword-matching its name (lower weight sorts first); ties break
+alphabetically.
+
+The sequence is:
+
+1. **Pinned individual items**, in this exact order: Milk, Banana, Steamed
+   Spinach Salad, Sunflower seeds. (Plain Steamed Spinach is not pinned — it
+   sorts inside Vegetables.)
+2. **Categories**, in this order: Fruits → Vegetables → Meat → Chicken → Fish →
+   Nuts/Seeds → Beans/Legumes (natto, soy, tofu, edamame, lentils) → Oils
+   (matched by name ending in "oil", e.g. sesame oil, olive oil) → Carbs
+   (rice, bread, soba, granola) → Eggs → Others (cheeses and anything
+   unmatched).
+3. **Ice cream is always last.**
+
+Two things to remember when adding a food:
+
+- **Ordering and the icon are both driven by keyword matching on the food
+  name**, in `getFoodTypeWeight()` and `getFoodStyle()` respectively. A new food
+  whose name lacks a known keyword lands in "Others" with a generic icon — add a
+  keyword rule if it should sit elsewhere.
+- **Keyword order matters within a rule.** More specific checks must come before
+  broader ones that would also match: e.g. Chicken is tested before Meat so
+  "chicken liver" is not caught by the meat rule, and the Soba/noodle check runs
+  before the Oil check because "Boiled Soba" contains the substring "oil".
+- **RDI targets** live alongside this, in `RDI_TARGETS` in the same file, and
+  must stay consistent with the CSV `% Daily Value (RDI)` denominators (see the
+  Data Structure note above).
 
 ## Deployment
 
