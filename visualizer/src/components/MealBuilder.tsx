@@ -75,7 +75,8 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('broccoli')) return { icon: '🥦', color: '#10b981' }
   if (lower.includes('salad') || lower.includes('celery')) return { icon: '🥗', color: '#10b981' }
   if (lower.includes('liver') || lower.includes('beef') || lower.includes('pork') || lower.includes('hamburg') || lower.includes('ハンバーグ')) return { icon: '🥩', color: '#ef4444' }
-  if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('tuna') || lower.includes('マグロ') || lower.includes('anchovy') || lower.includes('fish')) return { icon: '🐟', color: '#f97316' }
+  if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('tuna') || lower.includes('マグロ') || lower.includes('anchovy') || lower.includes('sawara') || lower.includes('gindara') || lower.includes('fish')) return { icon: '🐟', color: '#f97316' }
+  if (lower.includes('corn')) return { icon: '🌽', color: '#eab308' }
   if (lower.includes('uni') || lower.includes('sea urchin') || lower.includes('ikura') || lower.includes('roe')) return { icon: '🍣', color: '#f97316' }
   if (lower.includes('egg')) return { icon: '🍳', color: '#eab308' }
   if (lower.includes('sunflower')) return { icon: '🌻', color: '#a16207' }
@@ -137,14 +138,16 @@ const getFoodTypeWeight = (name: string) => {
   if (lower.includes('cabbage') || lower.includes('celery') || lower.includes('lettuce') ||
       lower.includes('kale') || lower.includes('broccoli') || lower.includes('carrot') ||
       lower.includes('kabocha') || lower.includes('pumpkin') || lower.includes('tomato') ||
-      lower.includes('potato') || lower.includes('spinach') || lower.includes('salad')) return 200 // Vegetables
+      lower.includes('potato') || lower.includes('spinach') || lower.includes('corn') ||
+      lower.includes('salad')) return 200 // Vegetables
   // Chicken is checked before meat so "chicken liver" lands in chicken, not meat
   if (lower.includes('chicken')) return 400 // Chicken
   if (lower.includes('liver') || lower.includes('beef') || lower.includes('pork') ||
       lower.includes('hamburg') || lower.includes('meat')) return 300 // Meat
   if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('tuna') ||
       lower.includes('unagi') || lower.includes('eel') || lower.includes('urchin') ||
-      lower.includes('roe') || lower.includes('anchovy') || lower.includes('fish')) return 500 // Fish
+      lower.includes('roe') || lower.includes('anchovy') || lower.includes('sawara') ||
+      lower.includes('gindara') || lower.includes('fish')) return 500 // Fish
   // Oils (weight 680, grouped right after Beans/Legumes). Checked BEFORE
   // Nuts/Seeds so "Roasted Sesame Oil" is not caught by "sesame". Match names
   // ENDING in "oil" so it catches "...Sesame Oil"/"...Olive Oil" without also
