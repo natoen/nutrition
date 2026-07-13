@@ -156,6 +156,101 @@ for raw chicken thigh (11119) mixed with the physics of deep frying.
    sodium value is set to 10mg per gram (equivalent to MEXT 11289's 2.5g salt
    per 100g).
 
+#### Steamed Vegetables (Microwave Proxy)
+
+MEXT has no 蒸し (steamed) entry for most vegetables, so steamed entries are
+built one of two ways, in this order of preference:
+
+1. **MEXT microwave (電子レンジ調理) entry, used directly.** Microwaving, like
+   steaming, cooks the vegetable in its own moisture with no water bath, so
+   there is effectively **zero leaching** — the closest measured analog to
+   steaming MEXT offers. Used as-is (÷100 for per-gram) when it exists.
+   - **Steamed Broccoli** ← MEXT microwave broccoli (06395)
+   - **Steamed Corn** ← MEXT microwave sweet corn (06339)
+   - Note these microwave entries already bake in the cooking water-loss, so
+     they read denser per 100g than raw — that is correct, not an error.
+2. **Derived from the raw baseline** when MEXT has no microwave entry, using the
+   Steamed Spinach retention model above: **folate/B9 and vitamin C at 80%**
+   (thermal degradation only, no leaching), **everything else at 100%**, at ~1:1
+   yield. Heat-stable pigments like beta-carotene are fully preserved.
+   - **Steamed Carrots** ← derived from MEXT raw carrot (folate/C × 0.80,
+     beta-carotene and all else × 1.00)
+
+#### Grilled Fish
+
+Preferred source is the MEXT 焼き (grilled) entry, used directly:
+
+- **Grilled Sawara** ← MEXT さわら 焼き (10172), measured data.
+
+When MEXT has **no** 焼き entry, grilled fish is **derived** from the raw entry
+using dry-heat physics (flagged as calculated, not measured):
+
+- **Grilled Gindara** ← derived from MEXT raw ぎんだら (10115). Applied
+  factors: **protein, minerals, and fat-soluble vitamins ×1.30** (water-loss
+  concentration, ~77% yield); **fat ×1.20** (lower than 1.30 because rendered
+  fat drips away); **B-vitamins ×1.10** (concentration net of thermal loss).
+  These multipliers are calibrated to how MEXT's own raw→焼き fish pairs behave.
+
+**Choline (both fishes).** MEXT does not report choline for fish, so it is
+estimated from USDA oily-fish values (~65–95 mg/100g), not calculated from the
+MEXT entry:
+
+- **Grilled Sawara: 85 mg/100g** — a flat typical oily-fish value (MEXT さわら
+  焼き carries no choline figure to scale from).
+- **Grilled Gindara: 90 mg/100g** — a raw-sablefish choline baseline (~70 mg/100g)
+  lifted toward the grilled figure by the same water-loss concentration applied
+  to the rest of the entry. Rounded, so it does **not** exactly equal
+  baseline × 1.30; treat it as an estimate, not a derived value.
+
+Because these are estimates, choline is one of the softest numbers in both
+rows (see "Filling MEXT '—' Micronutrients" below).
+
+#### Composite Salads (Per-Serving, not Per-Gram)
+
+Salads (`King Of Kale Salad`, `Steamed Spinach Salad`) are **whole-serving**
+entries measured in quantity, not grams (see Data Structure). Each is the
+**gram-weighted sum of its component entries**:
+
+- **Steamed Spinach Salad** = 6g Roasted Sesame Oil + 12g Ground Sesame + 100g
+  Steamed Spinach (118g total).
+- Nutrients and amino acids are summed as absolutes (`Σ grams_i × per-gram_i`).
+- Heavy metals (ppm) are **weight-averaged**, not summed — a concentration is
+  mass ÷ total weight, so `Σ(grams_i × ppm_i) / Σ grams_i`.
+- The `% Daily Value` row is then the whole serving's %DV (Total ÷ RDI), so
+  entering quantity `1` logs one complete salad.
+
+#### Filling MEXT "—" Micronutrients
+
+MEXT frequently leaves **biotin, selenium, and choline** unmeasured (shown as
+`—`, or simply not carried in that food group), and MEXT tracks no
+**lutein/zeaxanthin** at all. (Iodine is not a column in this dataset, so it is
+never filled.) These four are filled from USDA or the closest MEXT generic,
+scaled to the entry's basis. They are the **softest numbers** in any row —
+sanity-check them first when a value looks off.
+
+Exact fills for the recent entries (per 100g; *(MEXT)* = actually measured, not
+filled):
+
+| Entry | Biotin | Selenium | Choline | Lutein+Zea | Fill source |
+|---|---|---|---|---|---|
+| Steamed Broccoli | 14 µg *(MEXT)* | 2.8 µg | 38 mg | 1500 µg | Se/choline/lutein scaled from the raw-broccoli baseline (concentrated for cooking water loss) |
+| Steamed Corn | 3 µg | 0.6 µg | 23 mg | 700 µg | all four from USDA sweet corn (lutein is corn's signature carotenoid) |
+| Grilled Sawara | 5 µg | 45 µg | 85 mg | 0 | typical oily-fish values (USDA mackerel range) |
+| Grilled Gindara | 5 µg | 45 µg | 90 mg | 0 | typical/USDA sablefish; see Grilled Fish section for choline derivation |
+| Anchovy (Oil-Packed) | 22 µg *(MEXT)* | 52 µg *(MEXT)* | 90 mg | 0 | only choline filled (USDA); biotin & Se are measured |
+
+Rationale for the specific picks:
+
+- **Selenium in fish (45 µg):** fish are reliably selenium-rich (~30–60 µg/100g
+  across species); 45 µg is a mid-range oily-fish estimate used for both sawara
+  and gindara since neither MEXT entry reports it.
+- **Biotin (3–5 µg for corn/fish):** low-to-moderate typical values; broccoli
+  and anchovy keep their higher MEXT-measured figures (14 and 22 µg).
+- **Lutein/zeaxanthin:** set to 0 for fish (negligible), pulled from USDA for the
+  yellow plants where it matters — 1500 µg for broccoli, 700 µg for corn.
+- **Choline for the fishes** is derived as documented under **Grilled Fish**
+  above (85 mg sawara, 90 mg gindara).
+
 ## Visualizer Food Ordering
 
 The order foods appear in the visualizer's "Available Foods" list is **not** the
