@@ -196,6 +196,59 @@ built one of two ways, in this order of preference:
      and to the salad totals (VitA 295 → 223 RAE, VitK 173.1 → 116.1 µg, so the
      salad's VitK dropped from 144.5% to 96.75% DV).
 
+#### Raw Leafy Greens (Bioavailability-Adjusted)
+
+`Raw Kale (Bioavailable)` and `Raw Spinach (Bioavailable)` are the **raw** greens
+adjusted for what the body can actually absorb. Unlike every other entry (which
+carries *total* content), these subtract the fraction of certain nutrients that
+raw anti-nutrients render non-absorbable. The discount is a **retention factor**
+applied to the raw MEXT baseline, expressed *relative to the ordinary mixed-diet
+absorption the RDI already assumes* — so the numbers stay directly comparable to
+the total-content foods and to the %DV bars. Only nutrients with a large,
+well-documented raw penalty are cut; everything else is retained at 100%.
+
+The two greens differ mainly by **oxalate load** (spinach ~970 mg/100g is very
+high; kale ~20 mg/100g is very low). Oxalate binds divalent minerals into
+insoluble salts that pass through undigested — which is why isotope studies find
+calcium absorption of only **~5% from spinach vs ~40% from kale** (≈8× more
+from kale), and why spinach iron is largely blocked while kale's is not.
+
+| Nutrient | Raw Spinach ×factor | Raw Kale ×factor | Basis |
+|---|---|---|---|
+| Calcium | **0.17** (≈5% ÷ ~30% ref) | **1.00** | oxalate binding; kale Ca ≥ milk |
+| Iron | **0.10** | **0.60** | non-heme + oxalate; kale aided by its vit C, low oxalate |
+| Magnesium | **0.60** | **1.00** | partial oxalate binding |
+| Vitamin A (β-carotene) | **1.00** | **1.00** | fat-soluble — **not** discounted; eaten with fat (see below) |
+| Lutein + Zeaxanthin | **1.00** | **1.00** | fat-soluble — **not** discounted; eaten with fat |
+| Everything else | **1.00** | **1.00** | water-soluble vitamins, protein, fibre etc. absorb adequately raw |
+
+**Eaten-with-fat assumption.** Per the user, these greens are always eaten
+**with dietary fat** (oil, nuts, dressing, etc.). Carotenoid absorption
+(β-carotene → vitamin A, and lutein/zeaxanthin) is limited raw mainly by the
+*absence of fat*, and fat restores it — so those fat-soluble nutrients are **not
+discounted here** (factor 1.00). The only cuts that remain are the **oxalate
+mineral penalties**, which are a chemical binding effect independent of fat. If
+these were ever eaten fat-free, β-carotene/lutein absorption would drop and a
+carotenoid discount (roughly ×0.25 for vitamin A, ×0.50 for lutein) would apply.
+
+Notes and caveats:
+
+- **Raw beats cooked on the heat-sensitive vitamins.** These entries keep the
+  **full raw folate and vitamin C** (no thermal loss), so raw spinach shows more
+  folate (210 vs the steamed 168 µg/100g) and more vitamin C than its steamed
+  counterpart — and, since it is eaten with fat, its full β-carotene and lutein
+  too. The only raw penalty applied is on the oxalate-bound minerals.
+- **Baselines.** Raw kale = the MEXT-aligned `Kale (Raw)` row. Raw spinach is
+  reconstructed from `Steamed Spinach` by reversing that entry's folate/C ×0.80
+  steaming loss (÷0.80), i.e. the raw MEXT spinach baseline before steaming.
+- **Vitamin K** is left at ×1.00 here even though it is fat-soluble and also
+  absorbs better with fat, to avoid over-subtraction; treat these greens' K as an
+  upper bound.
+- **The factors are estimates**, not measured on these exact foods — the
+  *direction* (spinach minerals heavily blocked by oxalate, kale minerals fine)
+  is well established, but the exact magnitudes are literature-central picks and
+  are easy to tune in one place if you want them milder or stricter.
+
 #### Grilled Fish
 
 Preferred source is the MEXT 焼き (grilled) entry, used directly:
