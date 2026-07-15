@@ -33,8 +33,9 @@ is a reference for hitting 100% RDI with nutrient-dense foods.
   the US %DV that sources like USDA labels assume: Calcium **800 mg** (not
   1300), Potassium **3000 mg** (not 4700), Sodium **2300 mg** (not 2500),
   Iron **7.5 mg** (not 18 — the Japanese MHLW adult-male RDA; US 18 assumes
-  menstruating women), Magnesium **320 mg** (not 420 — Japanese MHLW; 320 is
-  the 75+ male bracket, 30–64 males are 370). A table computed with the wrong
+  menstruating women), Magnesium **370 mg** (not 420 — Japanese MHLW male RDA
+  for ages 30–64; 340 is the 18–29 bracket, 320 the 75+ bracket, and the 2025
+  edition raised 30–49 to 380). A table computed with the wrong
   denominator makes its progress bar disagree with the stated target — e.g. on
   2026-07-11 mixed 800/1300 calcium rows made the bar hit 100% around ~1000 mg
   while the label said 800 mg. **The bars read the CSV `% Daily Value (RDI)`
@@ -253,6 +254,18 @@ Notes and caveats:
   *direction* (spinach minerals heavily blocked by oxalate, kale minerals fine)
   is well established, but the exact magnitudes are literature-central picks and
   are easy to tune in one place if you want them milder or stricter.
+- **`Steamed Spinach` carries the SAME oxalate mineral discount** (Ca ×0.17, Fe
+  ×0.10, Mg ×0.60), and so does the `Steamed Spinach Salad` built on it. Oxalate
+  is **heat-stable** — steaming does not destroy it; it is only removed by
+  *leaching* into water, and steaming (little water contact) removes far less
+  than boiling: measured soluble-oxalate cuts are ~**42% steaming** vs ~**87%
+  boiling** for spinach. Even the 42% is not enough to free the calcium: raw
+  spinach's ~800 mg soluble oxalate (~9 mmol) is ~7× the ~49 mg calcium (~1.2
+  mmol), and after steaming ~470 mg (~5 mmol) is still ~4× — so essentially all
+  the calcium/iron stays bound. (Only aggressive boil-and-**drain** down toward
+  ~100 mg oxalate would start to free it — and that is not what "steamed" is.)
+  Steamed spinach keeps full carotenoids (cooking + fat aid absorption); only
+  its minerals are cut. Steamed **kale** needs no such discount (low oxalate).
 
 #### Grilled Fish
 

@@ -47,7 +47,7 @@ const RDI_TARGETS: Record<string, string> = {
   'Lutein + Zeaxanthin (mcg)': '10000 mcg',
   'Calcium (mg)': '800 mg',
   'Iron (mg)': '7.5 mg',
-  'Magnesium (mg)': '320 mg',
+  'Magnesium (mg)': '370 mg',
   'Potassium (mg)': '3000 mg',
   'Selenium (mcg)': '55 mcg'
 }
