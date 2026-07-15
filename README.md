@@ -175,6 +175,14 @@ built one of two ways, in this order of preference:
    yield. Heat-stable pigments like beta-carotene are fully preserved.
    - **Steamed Carrots** ← derived from MEXT raw carrot (folate/C × 0.80,
      beta-carotene and all else × 1.00)
+   - **Steamed Kale** ← derived from the raw-kale baseline (folate/C × 0.80, all
+     else × 1.00). MEXT carries **only raw kale (06080)** — no ゆで/油いため or
+     microwave entry — and USDA's only cooked kale is "boiled, drained," a
+     *leaching* preparation (its calcium ~72–150 mg, folate ~13–65 µg, C ~18–41
+     mg per 100g run far below MEXT raw because water-soluble nutrients drain
+     into the discarded water). Steaming avoids that leaching, so USDA
+     boiled-drained would understate it; deriving from the (MEXT-aligned:
+     folate 120 µg, C 80 mg, Ca 220 mg) raw baseline is the correct source.
 
 #### Grilled Fish
 
