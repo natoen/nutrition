@@ -31,10 +31,15 @@ is a reference for hitting 100% RDI with nutrient-dense foods.
   visualizer's `RDI_TARGETS` in `visualizer/src/components/MealBuilder.tsx`.
   Watch the nutrients where this project's (Japanese-style) target differs from
   the US %DV that sources like USDA labels assume: Calcium **800 mg** (not
-  1300), Potassium **3000 mg** (not 4700), Sodium **2300 mg** (not 2500). A
-  table computed with the wrong denominator makes its progress bar disagree
-  with the stated target — e.g. on 2026-07-11 mixed 800/1300 calcium rows made
-  the bar hit 100% around ~1000 mg while the label said 800 mg.
+  1300), Potassium **3000 mg** (not 4700), Sodium **2300 mg** (not 2500),
+  Iron **7.5 mg** (not 18 — the Japanese MHLW adult-male RDA; US 18 assumes
+  menstruating women), Magnesium **320 mg** (not 420 — Japanese MHLW; 320 is
+  the 75+ male bracket, 30–64 males are 370). A table computed with the wrong
+  denominator makes its progress bar disagree with the stated target — e.g. on
+  2026-07-11 mixed 800/1300 calcium rows made the bar hit 100% around ~1000 mg
+  while the label said 800 mg. **The bars read the CSV `% Daily Value (RDI)`
+  rows; `RDI_TARGETS` only sets the label — so changing an RDI means recomputing
+  that nutrient's %DV column in every table, not just editing `RDI_TARGETS`.**
 - The data are sourced from MEXT as the priority because the user is Japanese
   followed by USDA and other reputable sources when the data from MEXT are
   lacking or suspicious where cross checking is needed.
