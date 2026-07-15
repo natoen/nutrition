@@ -183,6 +183,14 @@ built one of two ways, in this order of preference:
      into the discarded water). Steaming avoids that leaching, so USDA
      boiled-drained would understate it; deriving from the (MEXT-aligned:
      folate 120 µg, C 80 mg, Ca 220 mg) raw baseline is the correct source.
+     Lutein/zeaxanthin (heat-stable, ×1.00) uses the **modern USDA FoodData
+     Central figure, 6,256 µg/100g** — *not* the legacy ~40 mg (39,550 µg)
+     figure that USDA has since revised away from. (The original bulk-imported
+     raw-kale row carried 3,933 µg/100g, a 10× scale slip off the legacy value;
+     corrected to 6,256 in both raw and steamed kale. The `King Of Kale Salad`
+     total lutein was recomputed to match — it is a gram-weighted sum with ~30g
+     kale, so its lutein rose from 1,890 to 2,586.8 µg, i.e. +30 g × (62.56 −
+     39.3333) µg/g.)
 
 #### Grilled Fish
 
