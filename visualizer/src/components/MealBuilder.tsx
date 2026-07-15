@@ -19,7 +19,7 @@ const NUTRIENT_GROUPS = {
     'Vitamin B9 (Folate) (mcg)', 'Vitamin B12 (Cobalamin) (mcg)', 'Vitamin C (mg)', 'Choline (mg)'
   ],
   Others: [
-    'Lutein + Zeaxanthin (mcg)', 'Calcium (mg)', 'Iron (mg)', 'Potassium (mg)', 'Selenium (mcg)'
+    'Lutein + Zeaxanthin (mcg)', 'Calcium (mg)', 'Iron (mg)', 'Magnesium (mg)', 'Potassium (mg)', 'Selenium (mcg)'
   ]
 }
 
@@ -47,6 +47,7 @@ const RDI_TARGETS: Record<string, string> = {
   'Lutein + Zeaxanthin (mcg)': '10000 mcg',
   'Calcium (mg)': '800 mg',
   'Iron (mg)': '18 mg',
+  'Magnesium (mg)': '420 mg',
   'Potassium (mg)': '3000 mg',
   'Selenium (mcg)': '55 mcg'
 }
