@@ -190,7 +190,11 @@ built one of two ways, in this order of preference:
      corrected to 6,256 in both raw and steamed kale. The `King Of Kale Salad`
      total lutein was recomputed to match — it is a gram-weighted sum with ~30g
      kale, so its lutein rose from 1,890 to 2,586.8 µg, i.e. +30 g × (62.56 −
-     39.3333) µg/g.)
+     39.3333) µg/g.) The raw-kale **vitamin A and vitamin K** were also
+     reconciled from old USDA to MEXT (A 480 → **240 µg RAE**/100g, K 400 →
+     **210 µg**/100g; per-gram 2.4 and 2.1), propagated to Steamed Kale (×1.00)
+     and to the salad totals (VitA 295 → 223 RAE, VitK 173.1 → 116.1 µg, so the
+     salad's VitK dropped from 144.5% to 96.75% DV).
 
 #### Grilled Fish
 
