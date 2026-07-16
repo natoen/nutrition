@@ -345,34 +345,35 @@ directly (÷100). Points worth knowing:
   which reflects the real difference (sunflower is a known Cd accumulator;
   almonds are not).
 
-#### Miso (Rice & Wheat/Barley)
+#### Miso (Rice & Barley)
 
 Both misos come from MEXT used directly (÷100), no derivation:
 
 - **Rice Miso (米みそ・淡色辛みそ)** ← MEXT **17045**, the standard everyday
   "usual" miso (light-coloured salty). MEXT also carries 甘みそ (17044) and
   赤色辛みそ (17046) if a sweet or red variant is ever wanted.
-- **Wheat/Barley Miso (麦みそ)** ← MEXT **17047**. Note **麦みそ is barley-koji
-  miso** — it is what English-speaking sellers label "wheat miso", which is why
-  the entry name carries both words (it also keeps the app's name search working
-  for either term).
+- **Barley Miso (麦みそ)** ← MEXT **17047**. Note **麦みそ is barley-koji miso**,
+  though English-speaking sellers commonly label it "wheat miso" — if you are
+  looking for a "wheat miso" product, 17047 is the correct entry. (The entry was
+  briefly named "Wheat/Barley Miso" to match that labelling; renamed to plain
+  Barley Miso on 2026-07-16 at the user's request, since 麦 is barley.)
 
 Things to know about these two rows:
 
-- **Sodium dominates them.** Rice miso is 4,900 mg/100g and wheat/barley 4,200
+- **Sodium dominates them.** Rice miso is 4,900 mg/100g and barley 4,200
   mg/100g, so a single ~18g bowl of miso soup is ~880 mg (38% DV) or ~760 mg
-  (33% DV) respectively — before any other salt in the day. Wheat/barley is the
+  (33% DV) respectively — before any other salt in the day. Barley miso is the
   lower-sodium of the two. This is the number to watch when logging miso soup;
   the entry is the **paste**, not the finished soup, so it excludes dashi and any
   added ingredients.
 - **Vitamin E is α-tocopherol only, and miso is the textbook case for that rule**
   (see Data Structure): MEXT reports rice miso as **α 0.6 mg vs γ 5.7 mg**, and
-  wheat/barley as **α 0.4 vs γ 3.5**. Counting γ would overstate vitamin E by
+  barley as **α 0.4 vs γ 3.5**. Counting γ would overstate vitamin E by
   ~10×. Only the α figures are entered.
 - **Biotin is MEXT-measured and high**: 12.0 µg/100g (rice) and 8.4 µg (barley),
   so an 18g bowl carries ~7% and ~5% DV.
 - **Two MEXT "Tr" (trace) values are entered as 0**: rice miso's pantothenic acid
-  (B5) and wheat/barley miso's B12. The B5 "Tr" is *suspicious* — wheat/barley
+  (B5) and barley miso's B12. The B5 "Tr" is *suspicious* — barley
   miso measures 0.26 mg and USDA generic miso 0.256 mg, so rice miso reading
   below MEXT's 0.01 mg reporting floor looks like an artifact rather than a real
   difference. It is left at MEXT's value per this repo's MEXT-priority rule; the
@@ -381,6 +382,17 @@ Things to know about these two rows:
   normally carried. Filled from USDA generic miso (0.86 mg/100g) for both. USDA's
   generic miso is a rice miso, so the barley figure is the softer of the two.
 - **Amino acids are MEXT-measured** (アミノ酸成分表, per 100g), not USDA fills.
+- **No cooking adjustment is applied for dissolving miso in hot soup, and none is
+  needed.** Unlike the steamed/stir-fried entries above, there is nothing worth
+  deducting: (1) miso's only heat-sensitive nutrient in meaningful supply is
+  folate, and an 18g serving holds just 6.3–12.2 µg, so even the harshest factor
+  this repo uses (the 80% steaming retention) costs **~0.3–0.6% DV**; (2)
+  vitamin C is already 0, so there is nothing to destroy; (3) there is **zero
+  leaching** — the broth is consumed, the same reasoning as Stewed Chicken Liver;
+  and (4) dissolving happens off the boil, gentler than the 100°C the retention
+  factors assume. The traditional "don't boil the miso" rule is about **aroma and
+  live koji cultures** (which this dataset does not track), not vitamins. Sodium,
+  the row's dominant figure, is a mineral and is fully heat-stable regardless.
 - **Heavy metals** reuse the `Natto` row's soy baseline (As 0.0003, Cd 0.0013, Hg
   0.0001, Pb 0.0005 ppm) as the dataset's closest soy analog.
 
@@ -408,7 +420,7 @@ filled):
 | Grilled Gindara | 5 µg | 45 µg | 90 mg | 0 | typical/USDA sablefish; see Grilled Fish section for choline derivation |
 | Anchovy (Oil-Packed) | 22 µg *(MEXT)* | 52 µg *(MEXT)* | 90 mg | 0 | only choline filled (USDA); biotin & Se are measured |
 | Rice Miso (米みそ) | 12.0 µg *(MEXT)* | 9 µg *(MEXT)* | 72.4 mg | 0 | choline + **manganese (0.86 mg)** from USDA generic miso; biotin & Se measured |
-| Wheat/Barley Miso (麦みそ) | 8.4 µg *(MEXT)* | 2 µg *(MEXT)* | 56.1 mg | 0 | manganese 0.86 mg from USDA generic miso; choline scaled ×0.78 (protein 9.7/12.5) off rice miso, as choline tracks the soybean fraction |
+| Barley Miso (麦みそ) | 8.4 µg *(MEXT)* | 2 µg *(MEXT)* | 56.1 mg | 0 | manganese 0.86 mg from USDA generic miso; choline scaled ×0.78 (protein 9.7/12.5) off rice miso, as choline tracks the soybean fraction |
 
 Rationale for the specific picks:
 
