@@ -81,12 +81,15 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('kiwi')) return { icon: '🥝', color: '#84cc16' }
   if (lower.includes('avocado')) return { icon: '🥑', color: '#10b981' }
   if (lower.includes('natto') || lower.includes('bean')) return { icon: '🫘', color: '#a16207' }
-  if (lower.includes('rice')) return { icon: '🍚', color: '#f8fafc' }
   if (lower.includes('spinach') || lower.includes('kale') || lower.includes('lettuce')) return { icon: '🥬', color: '#10b981' }
   if (lower.includes('broccoli')) return { icon: '🥦', color: '#10b981' }
   if (lower.includes('salad') || lower.includes('celery')) return { icon: '🥗', color: '#10b981' }
   if (lower.includes('liver') || lower.includes('beef') || lower.includes('pork') || lower.includes('hamburg') || lower.includes('ハンバーグ')) return { icon: '🥩', color: '#ef4444' }
   if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('tuna') || lower.includes('マグロ') || lower.includes('anchovy') || lower.includes('sawara') || lower.includes('gindara') || lower.includes('fish')) return { icon: '🐟', color: '#f97316' }
+  // Miso pastes, AFTER the fish rule so "Canned Mackerel Miso-Packed" stays a
+  // fish, and BEFORE rice so "Rice Miso" is not caught by the rice (🍚) rule.
+  if (lower.includes('miso') || lower.includes('みそ') || lower.includes('味噌')) return { icon: '🍲', color: '#b45309' }
+  if (lower.includes('rice')) return { icon: '🍚', color: '#f8fafc' }
   if (lower.includes('corn')) return { icon: '🌽', color: '#eab308' }
   if (lower.includes('uni') || lower.includes('sea urchin') || lower.includes('ikura') || lower.includes('roe')) return { icon: '🍣', color: '#f97316' }
   if (lower.includes('egg')) return { icon: '🍳', color: '#eab308' }
@@ -169,11 +172,13 @@ const getFoodTypeWeight = (name: string) => {
   if (lower.trim().endsWith('oil')) return 680 // Oils
   if (lower.includes('seed') || lower.includes('nut') || lower.includes('almond') ||
       lower.includes('peanut') || lower.includes('sesame')) return 600 // Nuts/Seeds
-  // Beans/legumes, immediately after Nuts/Seeds (natto is beans). Checked after
-  // the nuts rule so "peanut" stays with nuts.
+  // Beans/legumes, immediately after Nuts/Seeds (natto and miso are soybeans).
+  // Checked after the nuts rule so "peanut" stays with nuts, and before the Carbs
+  // rule so "Rice Miso" is not caught by "rice".
   if (lower.includes('natto') || lower.includes('納豆') || lower.includes('bean') ||
       lower.includes('soy') || lower.includes('edamame') || lower.includes('tofu') ||
-      lower.includes('lentil')) return 650 // Beans/Legumes
+      lower.includes('lentil') || lower.includes('miso') ||
+      lower.includes('みそ')) return 650 // Beans/Legumes
   if (lower.includes('rice') || lower.includes('bread') || lower.includes('soba') ||
       lower.includes('noodle') || lower.includes('mischbrot') || lower.includes('パン') ||
       lower.includes('granola')) return 700 // Carbs

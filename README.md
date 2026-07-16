@@ -345,11 +345,54 @@ directly (÷100). Points worth knowing:
   which reflects the real difference (sunflower is a known Cd accumulator;
   almonds are not).
 
+#### Miso (Rice & Wheat/Barley)
+
+Both misos come from MEXT used directly (÷100), no derivation:
+
+- **Rice Miso (米みそ・淡色辛みそ)** ← MEXT **17045**, the standard everyday
+  "usual" miso (light-coloured salty). MEXT also carries 甘みそ (17044) and
+  赤色辛みそ (17046) if a sweet or red variant is ever wanted.
+- **Wheat/Barley Miso (麦みそ)** ← MEXT **17047**. Note **麦みそ is barley-koji
+  miso** — it is what English-speaking sellers label "wheat miso", which is why
+  the entry name carries both words (it also keeps the app's name search working
+  for either term).
+
+Things to know about these two rows:
+
+- **Sodium dominates them.** Rice miso is 4,900 mg/100g and wheat/barley 4,200
+  mg/100g, so a single ~18g bowl of miso soup is ~880 mg (38% DV) or ~760 mg
+  (33% DV) respectively — before any other salt in the day. Wheat/barley is the
+  lower-sodium of the two. This is the number to watch when logging miso soup;
+  the entry is the **paste**, not the finished soup, so it excludes dashi and any
+  added ingredients.
+- **Vitamin E is α-tocopherol only, and miso is the textbook case for that rule**
+  (see Data Structure): MEXT reports rice miso as **α 0.6 mg vs γ 5.7 mg**, and
+  wheat/barley as **α 0.4 vs γ 3.5**. Counting γ would overstate vitamin E by
+  ~10×. Only the α figures are entered.
+- **Biotin is MEXT-measured and high**: 12.0 µg/100g (rice) and 8.4 µg (barley),
+  so an 18g bowl carries ~7% and ~5% DV.
+- **Two MEXT "Tr" (trace) values are entered as 0**: rice miso's pantothenic acid
+  (B5) and wheat/barley miso's B12. The B5 "Tr" is *suspicious* — wheat/barley
+  miso measures 0.26 mg and USDA generic miso 0.256 mg, so rice miso reading
+  below MEXT's 0.01 mg reporting floor looks like an artifact rather than a real
+  difference. It is left at MEXT's value per this repo's MEXT-priority rule; the
+  practical cost is <1% DV per serving either way.
+- **Manganese is "—" (unmeasured) in MEXT for BOTH misos** — unusual, since Mn is
+  normally carried. Filled from USDA generic miso (0.86 mg/100g) for both. USDA's
+  generic miso is a rice miso, so the barley figure is the softer of the two.
+- **Amino acids are MEXT-measured** (アミノ酸成分表, per 100g), not USDA fills.
+- **Heavy metals** reuse the `Natto` row's soy baseline (As 0.0003, Cd 0.0013, Hg
+  0.0001, Pb 0.0005 ppm) as the dataset's closest soy analog.
+
+Cross-check confidence: USDA generic miso agrees closely with MEXT 17045 on
+copper (0.41 vs 0.39), selenium (7 vs 9 µg) and protein (12.8 vs 12.5 g), which
+is why USDA is a safe fill source for the gaps above.
+
 #### Filling MEXT "—" Micronutrients
 
-MEXT frequently leaves **biotin, selenium, and choline** unmeasured (shown as
-`—`, or simply not carried in that food group), and MEXT tracks no
-**lutein/zeaxanthin** at all. (Iodine is not a column in this dataset, so it is
+MEXT frequently leaves **biotin, selenium, choline, and (for miso) manganese**
+unmeasured (shown as `—`, or simply not carried in that food group), and MEXT
+tracks no **lutein/zeaxanthin** at all. (Iodine is not a column in this dataset, so it is
 never filled.) These four are filled from USDA or the closest MEXT generic,
 scaled to the entry's basis. They are the **softest numbers** in any row —
 sanity-check them first when a value looks off.
@@ -364,6 +407,8 @@ filled):
 | Grilled Sawara | 5 µg | 45 µg | 85 mg | 0 | typical oily-fish values (USDA mackerel range) |
 | Grilled Gindara | 5 µg | 45 µg | 90 mg | 0 | typical/USDA sablefish; see Grilled Fish section for choline derivation |
 | Anchovy (Oil-Packed) | 22 µg *(MEXT)* | 52 µg *(MEXT)* | 90 mg | 0 | only choline filled (USDA); biotin & Se are measured |
+| Rice Miso (米みそ) | 12.0 µg *(MEXT)* | 9 µg *(MEXT)* | 72.4 mg | 0 | choline + **manganese (0.86 mg)** from USDA generic miso; biotin & Se measured |
+| Wheat/Barley Miso (麦みそ) | 8.4 µg *(MEXT)* | 2 µg *(MEXT)* | 56.1 mg | 0 | manganese 0.86 mg from USDA generic miso; choline scaled ×0.78 (protein 9.7/12.5) off rice miso, as choline tracks the soybean fraction |
 
 Rationale for the specific picks:
 
@@ -392,7 +437,7 @@ The sequence is:
    from Steamed Spinach Salad on 2026-07-16; both salads and plain Steamed
    Spinach now sort inside Vegetables.)
 2. **Categories**, in this order: Fruits → Vegetables → Meat → Chicken → Fish →
-   Nuts/Seeds → Beans/Legumes (natto, soy, tofu, edamame, lentils) → Oils
+   Nuts/Seeds → Beans/Legumes (natto, miso, soy, tofu, edamame, lentils) → Oils
    (matched by name ending in "oil", e.g. sesame oil, olive oil) → Carbs
    (rice, bread, soba, granola) → Eggs → Others (cheeses and anything
    unmatched).
@@ -408,10 +453,20 @@ Two things to remember when adding a food:
   broader ones that would also match: e.g. Chicken is tested before Meat so
   "chicken liver" is not caught by the meat rule, and the Soba/noodle check runs
   before the Oil check because "Boiled Soba" contains the substring "oil".
-  **Composites are the sharpest case** — they are named after their ingredients,
-  so "Blueberry Spinach Smoothie" would otherwise be caught by the blueberry
-  (Fruits, 🫐) or spinach (Vegetables, 🥬) rules; its smoothie check therefore
-  runs first in both functions.
+  **Composites and dishes named after an ingredient are the sharpest case.**
+  "Blueberry Spinach Smoothie" would otherwise be caught by the blueberry
+  (Fruits, 🫐) or spinach (Vegetables, 🥬) rules, so its smoothie check runs
+  first in both functions. Miso is a **two-sided** example worth studying before
+  you add a keyword: the miso check must run **before** the rice rule (or "Rice
+  Miso" takes the 🍚 icon) but **after** the fish rule (or "Canned Mackerel
+  Miso-Packed (鯖味噌煮)" — a fish dish, not a paste — takes the 🍲 icon). In
+  `getFoodStyle()` the miso rule therefore sits between them, and the rice rule
+  was moved below fish to make that ordering possible. `getFoodTypeWeight()`
+  needs no such care only because its fish rule (500) already precedes
+  Beans/Legumes (650).
+- **Check for collisions across the whole food list when adding a keyword**, not
+  just against the food you are adding — a new substring rule silently
+  re-icons/re-sorts every existing name that happens to contain it.
 - **RDI targets** live alongside this, in `RDI_TARGETS` in the same file, and
   must stay consistent with the CSV `% Daily Value (RDI)` denominators (see the
   Data Structure note above).
