@@ -18,12 +18,16 @@ is a reference for hitting 100% RDI with nutrient-dense foods.
   "{TABLE_TITLE} % Daily Value (RDI)" for their last 2 rows.
 - The `Total` row holds **per-gram** nutrient values (e.g. a 9 kcal/g oil is
   `9.00`).
-- **Exception — the two salads are per-serving, not per-gram:** `King Of Kale
-  Salad` and `Steamed Spinach Salad`. Any food whose name contains "salad" is
-  measured in **quantity (whole servings)** in the visualizer, not grams, so its
-  `Total` row holds the nutrients of one complete salad (the gram-weighted sum
-  of its component ingredients) and its `% Daily Value (RDI)` row is that whole
-  serving's %DV. Every other food is per-gram (milk is entered in ml, ≈1 g/ml).
+- **Exception — the composites are per-serving, not per-gram:** `King Of Kale
+  Salad`, `Steamed Spinach Salad`, and `Blueberry Spinach Smoothie`. Any food
+  whose name contains "salad" **or "smoothie"** is measured in **quantity (whole
+  servings)** in the visualizer, not grams, so its `Total` row holds the
+  nutrients of one complete serving (the gram-weighted sum of its component
+  ingredients) and its `% Daily Value (RDI)` row is that whole serving's %DV.
+  The keyword test lives in `isPerServing()` in `MealBuilder.tsx` — a new
+  composite whose name matches neither keyword will be treated as per-gram and
+  read ~200× too high. Every other food is per-gram (milk is entered in ml,
+  ≈1 g/ml).
 - The `% Daily Value (RDI)` row is each per-gram value divided by that
   nutrient's RDI, so the app multiplies by grams eaten. Keep it consistent when
   you change a `Total`.
@@ -296,19 +300,50 @@ MEXT entry:
 Because these are estimates, choline is one of the softest numbers in both
 rows (see "Filling MEXT '—' Micronutrients" below).
 
-#### Composite Salads (Per-Serving, not Per-Gram)
+#### Composite Salads & Smoothies (Per-Serving, not Per-Gram)
 
-Salads (`King Of Kale Salad`, `Steamed Spinach Salad`) are **whole-serving**
-entries measured in quantity, not grams (see Data Structure). Each is the
-**gram-weighted sum of its component entries**:
+Composites (`King Of Kale Salad`, `Steamed Spinach Salad`, `Blueberry Spinach
+Smoothie`) are **whole-serving** entries measured in quantity, not grams (see
+Data Structure). Each is the **gram-weighted sum of its component entries**:
 
 - **Steamed Spinach Salad** = 6g Roasted Sesame Oil + 12g Ground Sesame + 100g
   Steamed Spinach (118g total).
+- **Blueberry Spinach Smoothie** = 100g Blueberry + 100g `Raw Spinach
+  (Bioavailable)` + 10g Roasted Almonds (210g total).
 - Nutrients and amino acids are summed as absolutes (`Σ grams_i × per-gram_i`).
 - Heavy metals (ppm) are **weight-averaged**, not summed — a concentration is
   mass ÷ total weight, so `Σ(grams_i × ppm_i) / Σ grams_i`.
 - The `% Daily Value` row is then the whole serving's %DV (Total ÷ RDI), so
-  entering quantity `1` logs one complete salad.
+  entering quantity `1` logs one complete serving.
+
+The smoothie builds on the **bioavailability-adjusted raw spinach**, not the
+plain raw MEXT baseline, so it inherits that entry's oxalate mineral discount
+(Ca ×0.17, Fe ×0.10, Mg ×0.60) — which is why a spinach-heavy drink still only
+reaches ~5% DV calcium. The almonds are the only fat source, which matters: the
+eaten-with-fat assumption behind raw spinach's undiscounted β-carotene and
+lutein (see Raw Leafy Greens) is satisfied by the 10g of almonds, so the
+serving's vitamin A (~353 µg RAE) and lutein (~12,280 µg) stand at full value.
+Note its **vitamin K is ~241% DV** — by far the serving's largest number, from
+the 100g of raw spinach; per that same section, treat the K as an upper bound.
+
+#### Roasted Almonds
+
+`Roasted Almonds` is per-gram, from **MEXT アーモンド いり 無塩 (05040)** used
+directly (÷100). Points worth knowing:
+
+- **Vitamin E is α-tocopherol only: 29.0 mg/100g** (the roasted figure; raw is
+  30.0), per the project-wide rule — almonds are one of the densest α-tocopherol
+  foods in the dataset, so 10g alone carries ~19% DV.
+- **Biotin 60.6 µg/100g is MEXT-measured**, not filled, and is unusually high —
+  10g covers ~20% DV. It is not an error.
+- **Choline (52.1 mg/100g) and lutein (1 µg/100g)** are the filled values (USDA;
+  MEXT carries neither), so they are the softest numbers in the row.
+- **Amino acids** come from USDA dry-roasted almonds, scaled ×0.956 onto the
+  MEXT protein basis (20.3g vs USDA's 21.2g per 100g).
+- **Heavy metals** use typical tree-nut baselines (As 0.001, Cd 0.005, Hg
+  0.0001, Pb 0.001 ppm) — notably ~4× lower cadmium than the sunflower seed row,
+  which reflects the real difference (sunflower is a known Cd accumulator;
+  almonds are not).
 
 #### Filling MEXT "—" Micronutrients
 
@@ -352,9 +387,10 @@ alphabetically.
 
 The sequence is:
 
-1. **Pinned individual items**, in this exact order: Milk, Banana, Steamed
-   Spinach Salad, Sunflower seeds. (Plain Steamed Spinach is not pinned — it
-   sorts inside Vegetables.)
+1. **Pinned individual items**, in this exact order: Milk, Banana, Blueberry
+   Spinach Smoothie, Sunflower seeds. (The smoothie took the 3rd pinned spot
+   from Steamed Spinach Salad on 2026-07-16; both salads and plain Steamed
+   Spinach now sort inside Vegetables.)
 2. **Categories**, in this order: Fruits → Vegetables → Meat → Chicken → Fish →
    Nuts/Seeds → Beans/Legumes (natto, soy, tofu, edamame, lentils) → Oils
    (matched by name ending in "oil", e.g. sesame oil, olive oil) → Carbs
@@ -372,6 +408,10 @@ Two things to remember when adding a food:
   broader ones that would also match: e.g. Chicken is tested before Meat so
   "chicken liver" is not caught by the meat rule, and the Soba/noodle check runs
   before the Oil check because "Boiled Soba" contains the substring "oil".
+  **Composites are the sharpest case** — they are named after their ingredients,
+  so "Blueberry Spinach Smoothie" would otherwise be caught by the blueberry
+  (Fruits, 🫐) or spinach (Vegetables, 🥬) rules; its smoothie check therefore
+  runs first in both functions.
 - **RDI targets** live alongside this, in `RDI_TARGETS` in the same file, and
   must stay consistent with the CSV `% Daily Value (RDI)` denominators (see the
   Data Structure note above).

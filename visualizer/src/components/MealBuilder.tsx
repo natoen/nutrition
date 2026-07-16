@@ -52,11 +52,21 @@ const RDI_TARGETS: Record<string, string> = {
   'Selenium (mcg)': '55 mcg'
 }
 
+// Whole-serving entries: measured in quantity (servings), not grams. Their CSV
+// Total row holds one complete serving rather than a per-gram value.
+const isPerServing = (name: string) => {
+  const lower = name.toLowerCase()
+  return lower.includes('salad') || lower.includes('smoothie')
+}
+
 const getFoodStyle = (name: string) => {
   const lower = name.toLowerCase()
   // Oils first, so "Roasted Sesame Oil" gets the oil icon rather than the
   // sesame (🫘) icon. Matches names ending in "oil" (see getFoodTypeWeight).
   if (lower.trim().endsWith('oil')) return { icon: '💧', color: '#eab308' }
+  // Smoothie before its ingredients, so "Blueberry Spinach Smoothie" is not
+  // caught by the blueberry (🫐) or spinach (🥬) rules.
+  if (lower.includes('smoothie')) return { icon: '🥤', color: '#8b5cf6' }
   if (lower.includes('milk')) return { icon: '🥛', color: '#f8fafc' }
   if (lower.includes('banana')) return { icon: '🍌', color: '#fde047' }
   if (lower.includes('blueberry')) return { icon: '🫐', color: '#3b82f6' }
@@ -81,6 +91,7 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('uni') || lower.includes('sea urchin') || lower.includes('ikura') || lower.includes('roe')) return { icon: '🍣', color: '#f97316' }
   if (lower.includes('egg')) return { icon: '🍳', color: '#eab308' }
   if (lower.includes('sunflower')) return { icon: '🌻', color: '#a16207' }
+  if (lower.includes('almond')) return { icon: '🌰', color: '#a16207' }
   if (lower.includes('peanut')) return { icon: '🥜', color: '#a16207' }
   if (lower.includes('chicken')) return { icon: '🍗', color: '#f59e0b' }
   if (lower.includes('sesame') || lower.includes('ごま') || lower.includes('胡麻')) return { icon: '🫘', color: '#a16207' }
@@ -125,11 +136,12 @@ const getFoodTypeWeight = (name: string) => {
   // Ice cream is always last
   if (lower.includes('ice cream')) return 900
 
-  // Pinned individual items, in the exact requested order. The Steamed Spinach
-  // Salad holds the 3rd pinned spot; plain Steamed Spinach lives in Vegetables.
+  // Pinned individual items, in the exact requested order. The Blueberry Spinach
+  // Smoothie holds the 3rd pinned spot; the salads and plain Steamed Spinach all
+  // live in Vegetables.
   if (lower.includes('milk')) return 10
   if (lower.includes('banana')) return 20
-  if (lower.includes('spinach') && lower.includes('salad')) return 30
+  if (lower.includes('smoothie')) return 30
   if (lower.includes('sunflower')) return 40
 
   // Categories, in the requested order: fruits, vegetable, meat, chicken, fish, nuts, carbs
@@ -305,7 +317,7 @@ const MealBuilder: React.FC<MealBuilderProps> = ({ data }) => {
                     }}
                   />
                   <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
-                    {food.name.toLowerCase().includes('milk') ? 'ml' : (food.name.toLowerCase().includes('salad') ? 'qty' : 'g')}
+                    {food.name.toLowerCase().includes('milk') ? 'ml' : (isPerServing(food.name) ? 'qty' : 'g')}
                   </span>
                 </div>
               </div>
@@ -325,7 +337,7 @@ const MealBuilder: React.FC<MealBuilderProps> = ({ data }) => {
               const food = foods.find(f => f.id === id);
               if (!food) return null;
               
-              const unitStr = food.name.toLowerCase().includes('milk') ? 'ml' : (food.name.toLowerCase().includes('salad') ? 'qty' : 'g');
+              const unitStr = food.name.toLowerCase().includes('milk') ? 'ml' : (isPerServing(food.name) ? 'qty' : 'g');
               return (
                 <div key={`summary-${id}`} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.9)', fontSize: '0.95rem' }}>
                   <span>{food.name}</span>
