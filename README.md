@@ -400,6 +400,32 @@ Cross-check confidence: USDA generic miso agrees closely with MEXT 17045 on
 copper (0.41 vs 0.39), selenium (7 vs 9 µg) and protein (12.8 vs 12.5 g), which
 is why USDA is a safe fill source for the gaps above.
 
+#### Raclette Cheese
+
+**MEXT carries no raclette entry** (its natural-cheese list stops at Edam,
+Emmental, Gouda, Cheddar, Camembert, etc.), so per the sourcing rule the row
+comes from the **Norwegian Food Safety Authority's Matvaretabellen** ("Cheese,
+Raclette"), an official government food-composition database, used directly
+(÷100): 357 kcal, protein 26.4 g, fat 27.9 g, carbs 0, sodium 728 mg, Ca 671
+mg, P 492 mg, Zn 3.9 mg, vitamin A 263 µg RAE, B12 1.4 µg, folate 49 µg,
+vitamin E 0.7 mg (α-tocopherol) per 100g.
+
+- **Gap fills come from the `Gouda Cheese` row**, the dataset's closest
+  semi-hard cheese analog (not USDA): B5 0.32 mg, biotin 2.5 µg, vitamin K 12
+  µg, choline 15 mg, manganese 0.01 mg per 100g. These are the softest numbers
+  in the row.
+- **Amino acids** are the Gouda profile scaled ×1.023 to raclette's protein
+  basis (26.4 vs 25.8 g/100g).
+- **Heavy metals** reuse the standard cheese baseline shared by
+  Gouda/Edam/Cheddar/Blue (As 0.0005, Cd 0.0005, Hg 0.0002, Pb 0.001 ppm).
+- **Selenium 8 µg/100g is measured** (Matvaretabellen), notably lower than the
+  ~14 µg the other cheese rows carry — a real source difference, not an error.
+- **Sodium 728 mg/100g** (≈1.8 g salt) sits below Gouda/Cheddar's 800 mg; a
+  typical 30g melted serving is ~218 mg (~9.5% DV).
+- The name "Raclette Cheese" is keyword-matched by the visualizer's existing
+  `cheese` rule (🧀, Others category); "raclette" collides with no other
+  keyword, so no `MealBuilder.tsx` change was needed.
+
 #### Filling MEXT "—" Micronutrients
 
 MEXT frequently leaves **biotin, selenium, choline, and (for miso) manganese**
@@ -421,6 +447,7 @@ filled):
 | Anchovy (Oil-Packed) | 22 µg *(MEXT)* | 52 µg *(MEXT)* | 90 mg | 0 | only choline filled (USDA); biotin & Se are measured |
 | Rice Miso (米みそ) | 12.0 µg *(MEXT)* | 9 µg *(MEXT)* | 72.4 mg | 0 | choline + **manganese (0.86 mg)** from USDA generic miso; biotin & Se measured |
 | Barley Miso (麦みそ) | 8.4 µg *(MEXT)* | 2 µg *(MEXT)* | 56.1 mg | 0 | manganese 0.86 mg from USDA generic miso; choline scaled ×0.78 (protein 9.7/12.5) off rice miso, as choline tracks the soybean fraction |
+| Raclette Cheese | 2.5 µg | 8 µg *(Matvaretabellen)* | 15 mg | 0 | biotin/choline (plus B5, vit K, Mn) from the Gouda Cheese row — closest semi-hard analog; base data is Matvaretabellen (no MEXT raclette entry) |
 
 Rationale for the specific picks:
 
