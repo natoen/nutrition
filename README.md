@@ -426,6 +426,45 @@ vitamin E 0.7 mg (α-tocopherol) per 100g.
   `cheese` rule (🧀, Others category); "raclette" collides with no other
   keyword, so no `MealBuilder.tsx` change was needed.
 
+#### Canned Albacore Tuna (Water- & Oil-Packed)
+
+Both rows are MEXT ホワイト (albacore/びんなが) canned entries used directly
+(÷100), the white-meat counterparts of the キハダ ライト entries behind the two
+yellowfin rows:
+
+- **Canned Albacore Tuna Water-Packed (ビンナガマグロ水煮)** ← MEXT **10261**
+  (水煮 フレーク ホワイト).
+- **Canned Albacore Tuna Oil-Packed (ビンナガマグロ油漬)** ← MEXT **10264**
+  (油漬 フレーク ホワイト). These are the only albacore canned entries MEXT
+  carries; 味付けフレーク (10262) is generic まぐろ類, not albacore.
+
+Why albacore earns its own rows instead of logging against the yellowfin ones:
+per 100g the oil-packed albacore has **2× the vitamin D (4.0 vs 2.0 µg), ~3× the
+vitamin E (α 8.3 vs 2.8 mg), ~2× the B12 (2.0 vs 1.1 µg), and 3.6× the iron
+(1.8 vs 0.5 mg)** of oil-packed yellowfin, at similar macros; B6 and potassium
+run somewhat lower. MEXT vitamin A is **Tr → entered 0**.
+
+Fills and derived values, mirroring the yellowfin rows' pattern:
+
+- **Selenium** (MEXT "—"): USDA white/albacore canned tuna — **65.7 µg**/100g
+  water-packed, **60.3 µg** oil-packed (the yellowfin rows use USDA light-tuna
+  70.6/76 the same way). Canned tuna is the dataset's densest selenium source
+  either way (~110–120% DV per 100g).
+- **Choline** (MEXT "—"): **29.3 mg**/100g, the same USDA canned-tuna figure all
+  the tuna rows share (USDA carries no choline for white-in-oil, so the
+  oil-packed fill is the softer of the two).
+- **Biotin** (MEXT "—"): 0, consistent with the yellowfin rows.
+- **Vitamin K, oil-packed**: MEXT 10264 leaves K unmeasured, so it is filled
+  with **44 µg**/100g from MEXT **10263** (油漬 ライト), where the K is measured
+  and comes from the packing oil — the same oil medium, so the closest-MEXT
+  analog. Water-packed K is a measured MEXT **(0)**.
+- **Amino acids**: the corresponding yellowfin row's profile scaled to the
+  albacore protein basis — ×18.3/16.0 (=1.144) water, ×18.8/17.7 (=1.062) oil.
+- **Heavy metals**: same baseline as the yellowfin rows except **mercury 0.35
+  ppm** (FDA monitoring mean for albacore; effectively identical to the
+  yellowfin rows' 0.354 — the "white tuna is high-mercury" warning is relative
+  to *skipjack* light tuna at ~0.14 ppm, not yellowfin).
+
 #### Filling MEXT "—" Micronutrients
 
 MEXT frequently leaves **biotin, selenium, choline, and (for miso) manganese**
@@ -448,6 +487,8 @@ filled):
 | Rice Miso (米みそ) | 12.0 µg *(MEXT)* | 9 µg *(MEXT)* | 72.4 mg | 0 | choline + **manganese (0.86 mg)** from USDA generic miso; biotin & Se measured |
 | Barley Miso (麦みそ) | 8.4 µg *(MEXT)* | 2 µg *(MEXT)* | 56.1 mg | 0 | manganese 0.86 mg from USDA generic miso; choline scaled ×0.78 (protein 9.7/12.5) off rice miso, as choline tracks the soybean fraction |
 | Raclette Cheese | 2.5 µg | 8 µg *(Matvaretabellen)* | 15 mg | 0 | biotin/choline (plus B5, vit K, Mn) from the Gouda Cheese row — closest semi-hard analog; base data is Matvaretabellen (no MEXT raclette entry) |
+| Canned Albacore Water-Packed | 0 | 65.7 µg | 29.3 mg | 0 | Se/choline from USDA white canned tuna, same pattern as the yellowfin rows |
+| Canned Albacore Oil-Packed | 0 | 60.3 µg | 29.3 mg | 0 | Se from USDA white-in-oil; choline reuses the shared USDA canned-tuna figure (softest); vit K 44 µg filled from MEXT 10263 (same packing oil) |
 
 Rationale for the specific picks:
 
