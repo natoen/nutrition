@@ -465,6 +465,47 @@ Fills and derived values, mirroring the yellowfin rows' pattern:
   yellowfin rows' 0.354 — the "white tuna is high-mercury" warning is relative
   to *skipjack* light tuna at ~0.14 ppm, not yellowfin).
 
+#### Mango
+
+Per user request, the priority source was **Philippine (carabao) mango** — but
+the authoritative Philippine database (**FNRI PhilFCT**,
+`i.fnri.dost.gov.ph/fct/library`) sits behind a login and no reputable
+secondary source carries a full per-100g carabao micronutrient panel. So per the
+user's stated fallback ("if you cannot find any data, use the mangoes sold in
+Japan next"), the `Mango` row is built from **MEXT マンゴー 生 (07132)** used
+directly (÷100). This is a close proxy for the intended fruit: Japan's fresh
+imported mango is predominantly the **Philippine carabao** (plus Mexican), so the
+generic MEXT mango largely *is* the carabao mango as sold in Japan. If FNRI
+carabao data is ever obtained, this row is the one to revisit.
+
+MEXT 07132 per 100g: 68 kcal, protein 0.6 g, fat 0.1 g, carbs 16.9 g, fibre
+1.3 g, Na 1 mg, K 170 mg, Ca 15 mg, Mg 12 mg, P 12 mg, Fe 0.2 mg, Zn 0.1 mg, Cu
+0.08 mg, Mn 0.1 mg, vitamin A 51 µg RAE (β-carotene 610 µg), folate **84 µg**,
+vitamin C **20 mg**, vitamin B6 0.13 mg, B5 0.22 mg, niacin 0.7 mg, biotin 0.8
+µg, vitamin K 3 µg, vitamin D/B12 0.
+
+Things to know about this row:
+
+- **Vitamin E is α-tocopherol only: 1.8 mg/100g** (the current MEXT 8th-edition
+  figure), per the project-wide rule. Some older mirrors (e.g. Slism) still show
+  the 7th-edition **0.9 mg** — do not use it. At 1.8 mg, a 150g mango carries
+  ~18% DV vitamin E, one of this row's stronger numbers alongside folate.
+- **Folate and vitamin C are the headline nutrients** — 84 µg and 20 mg per
+  100g, so a ~150g serving is ~32% DV folate and ~33% DV vitamin C, both raw and
+  heat-intact (mango is eaten raw).
+- **Choline (7.6 mg) and lutein+zeaxanthin (23 µg)** are filled from **USDA raw
+  mango** — MEXT carries neither — so they are the softest numbers in the row.
+- **Selenium is MEXT-measured at 0** (kept, not filled — USDA's 0.6 µg is
+  negligible either way).
+- **Amino acids** come from USDA raw mango scaled ×0.732 onto the MEXT protein
+  basis (0.6 g vs USDA's 0.82 g/100g); mango protein is tiny, so every per-gram
+  value rounds to ≤0.0004 g.
+- **Heavy metals** use the dataset's standard **fruit baseline** shared by
+  banana/blueberry (As 0.0001, Cd 0.0001, Hg 0, Pb 0.0001 ppm).
+- The name "Mango" is keyword-matched by new `mango` rules added to
+  `getFoodStyle()` (🥭) and `getFoodTypeWeight()` (Fruits, weight 100) in
+  `MealBuilder.tsx`; "mango" collides with no other food name.
+
 #### Filling MEXT "—" Micronutrients
 
 MEXT frequently leaves **biotin, selenium, choline, and (for miso) manganese**
@@ -489,6 +530,7 @@ filled):
 | Raclette Cheese | 2.5 µg | 8 µg *(Matvaretabellen)* | 15 mg | 0 | biotin/choline (plus B5, vit K, Mn) from the Gouda Cheese row — closest semi-hard analog; base data is Matvaretabellen (no MEXT raclette entry) |
 | Canned Albacore Water-Packed | 0 | 65.7 µg | 29.3 mg | 0 | Se/choline from USDA white canned tuna, same pattern as the yellowfin rows |
 | Canned Albacore Oil-Packed | 0 | 60.3 µg | 29.3 mg | 0 | Se from USDA white-in-oil; choline reuses the shared USDA canned-tuna figure (softest); vit K 44 µg filled from MEXT 10263 (same packing oil) |
+| Mango | 0.8 µg *(MEXT)* | 0 *(MEXT)* | 7.6 mg | 23 µg | biotin & Se MEXT-measured; choline + lutein from USDA raw mango (MEXT carries neither) |
 
 Rationale for the specific picks:
 

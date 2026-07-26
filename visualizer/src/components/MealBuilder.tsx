@@ -74,6 +74,7 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('pineapple')) return { icon: '🍍', color: '#eab308' }
   if (lower.includes('apple')) return { icon: '🍎', color: '#ef4444' }
   if (lower.includes('orange')) return { icon: '🍊', color: '#f97316' }
+  if (lower.includes('mango')) return { icon: '🥭', color: '#f59e0b' }
   if (lower.includes('tomato')) return { icon: '🍅', color: '#ef4444' }
   if (lower.includes('potato')) return { icon: '🥔', color: '#d97706' }
   if (lower.includes('carrot')) return { icon: '🥕', color: '#f97316' }
@@ -150,7 +151,7 @@ const getFoodTypeWeight = (name: string) => {
   // Categories, in the requested order: fruits, vegetable, meat, chicken, fish, nuts, carbs
   if (lower.includes('apple') || lower.includes('strawberry') || lower.includes('orange') ||
       lower.includes('pineapple') || lower.includes('blueberry') || lower.includes('kiwi') ||
-      lower.includes('avocado') || lower.includes('fruit')) return 100 // Fruits
+      lower.includes('avocado') || lower.includes('mango') || lower.includes('fruit')) return 100 // Fruits
   if (lower.includes('cabbage') || lower.includes('celery') || lower.includes('lettuce') ||
       lower.includes('kale') || lower.includes('broccoli') || lower.includes('carrot') ||
       lower.includes('kabocha') || lower.includes('pumpkin') || lower.includes('tomato') ||
