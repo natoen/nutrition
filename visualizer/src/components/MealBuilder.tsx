@@ -87,6 +87,10 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('salad') || lower.includes('celery')) return { icon: '🥗', color: '#10b981' }
   if (lower.includes('liver') || lower.includes('beef') || lower.includes('pork') || lower.includes('hamburg') || lower.includes('ハンバーグ')) return { icon: '🥩', color: '#ef4444' }
   if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('tuna') || lower.includes('マグロ') || lower.includes('anchovy') || lower.includes('sawara') || lower.includes('gindara') || lower.includes('fish')) return { icon: '🐟', color: '#f97316' }
+  // Shellfish. MUST stay above the oil (💧) rule: both clam names begin with
+  // "Boiled", which contains the substring "oil" — the same trap documented for
+  // "Boiled Soba".
+  if (lower.includes('clam') || lower.includes('shijimi') || lower.includes('asari') || lower.includes('しじみ') || lower.includes('あさり')) return { icon: '🐚', color: '#f97316' }
   // Miso pastes, AFTER the fish rule so "Canned Mackerel Miso-Packed" stays a
   // fish, and BEFORE rice so "Rice Miso" is not caught by the rice (🍚) rule.
   if (lower.includes('miso') || lower.includes('みそ') || lower.includes('味噌')) return { icon: '🍲', color: '#b45309' }
@@ -164,7 +168,9 @@ const getFoodTypeWeight = (name: string) => {
   if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('tuna') ||
       lower.includes('unagi') || lower.includes('eel') || lower.includes('urchin') ||
       lower.includes('roe') || lower.includes('anchovy') || lower.includes('sawara') ||
-      lower.includes('gindara') || lower.includes('fish')) return 500 // Fish
+      lower.includes('gindara') || lower.includes('fish') ||
+      lower.includes('clam') || lower.includes('shijimi') || lower.includes('asari') ||
+      lower.includes('しじみ') || lower.includes('あさり')) return 500 // Fish (incl. shellfish)
   // Oils (weight 680, grouped right after Beans/Legumes). Checked BEFORE
   // Nuts/Seeds so "Roasted Sesame Oil" is not caught by "sesame". Match names
   // ENDING in "oil" so it catches "...Sesame Oil"/"...Olive Oil" without also

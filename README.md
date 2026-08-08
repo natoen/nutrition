@@ -28,6 +28,14 @@ is a reference for hitting 100% RDI with nutrient-dense foods.
   composite whose name matches neither keyword will be treated as per-gram and
   read ~200× too high. Every other food is per-gram (milk is entered in ml,
   ≈1 g/ml).
+- **Exception — the two clams are per gram of SHELL-ON weight, not edible
+  portion:** `Boiled Shijimi Clam (Shell-On g)` and `Boiled Asari Clam
+  (Shell-On g)`. Every other row (and MEXT itself) is *edible portion*; these
+  two are deliberately divided down by MEXT's 廃棄率 so the number you type is
+  the weight you actually put in the pot, shell included. See the **Boiled
+  Shijimi & Asari Clams** section for the factors. Entering *shelled meat*
+  weight against these rows under-reads by 4× (shijimi) or 3.3× (asari); the
+  basis is in the food name to make that hard to do by accident.
 - The `% Daily Value (RDI)` row is each per-gram value divided by that
   nutrient's RDI, so the app multiplies by grams eaten. Keep it consistent when
   you change a `Total`.
@@ -308,8 +316,8 @@ Data Structure). Each is the **gram-weighted sum of its component entries**:
 
 - **Steamed Spinach Salad** = 6g Roasted Sesame Oil + 12g Ground Sesame + 100g
   Steamed Spinach (118g total).
-- **Blueberry Spinach Smoothie** = 100g Blueberry + 100g `Raw Spinach
-  (Bioavailable)` + 10g Roasted Almonds (210g total).
+- **Blueberry Spinach Smoothie** = 100g Blueberry + 82g `Raw Spinach
+  (Bioavailable)` + 18g Roasted Almonds (200g total).
 - Nutrients and amino acids are summed as absolutes (`Σ grams_i × per-gram_i`).
 - Heavy metals (ppm) are **weight-averaged**, not summed — a concentration is
   mass ÷ total weight, so `Σ(grams_i × ppm_i) / Σ grams_i`.
@@ -319,12 +327,16 @@ Data Structure). Each is the **gram-weighted sum of its component entries**:
 The smoothie builds on the **bioavailability-adjusted raw spinach**, not the
 plain raw MEXT baseline, so it inherits that entry's oxalate mineral discount
 (Ca ×0.17, Fe ×0.10, Mg ×0.60) — which is why a spinach-heavy drink still only
-reaches ~5% DV calcium. The almonds are the only fat source, which matters: the
-eaten-with-fat assumption behind raw spinach's undiscounted β-carotene and
-lutein (see Raw Leafy Greens) is satisfied by the 10g of almonds, so the
-serving's vitamin A (~353 µg RAE) and lutein (~12,280 µg) stand at full value.
-Note its **vitamin K is ~241% DV** — by far the serving's largest number, from
-the 100g of raw spinach; per that same section, treat the K as an upper bound.
+reaches ~7.5% DV calcium. The almonds are the only fat source, which matters:
+the eaten-with-fat assumption behind raw spinach's undiscounted β-carotene and
+lutein (see Raw Leafy Greens) is satisfied by the 18g of almonds, so the
+serving's vitamin A (~290 µg RAE) and lutein (~10,084 µg) stand at full value.
+Note its **vitamin K is ~201% DV** — by far the serving's largest number, from
+the 82g of raw spinach; per that same section, treat the K as an upper bound.
+
+The 18g of almonds also make this the dataset's strongest smoothie for **vitamin
+E (7.42 mg, ~49% DV)** and **biotin (12.26 µg, ~41% DV)** — both almond-driven,
+so they scale with that component, not the spinach.
 
 #### Roasted Almonds
 
@@ -506,6 +518,84 @@ Things to know about this row:
   `getFoodStyle()` (🥭) and `getFoodTypeWeight()` (Fruits, weight 100) in
   `MealBuilder.tsx`; "mango" collides with no other food name.
 
+#### Boiled Shijimi & Asari Clams (Shell-On Basis)
+
+Both rows come from the **raw** MEXT entries — しじみ 生 (**10297**) and あさり 生
+(**10281**), 八訂増補2023 via `fooddb.mext.go.jp` — not from MEXT's cooked
+entries, and both are rebased onto **shell-on weight**.
+
+**Why raw, not MEXT's 水煮/蒸し.** MEXT carries しじみ 水煮 (10413) and あさり 蒸し
+(10466), but those measure the *meat after the cooking liquid was discarded*.
+These clams are boiled ~1 minute for **miso soup, and the broth is drunk**, so
+there is **zero leaching loss** — the same reasoning as Stewed Chicken Liver and
+Miso. Using 水煮 would understate the serving: comparing 生 against 水煮 at its
+~49% meat yield implies roughly **40% of the calcium, 40% of the B12 and 60% of
+the potassium** leave the meat for the water. In this dish that water is the
+soup. Only thermal degradation is deducted, per the Steamed Spinach model:
+
+- **Folate / B9 & Vitamin C: ×0.80.** Both are tiny here either way (a 50g
+  shell-on serving is ~2.6 µg folate).
+- **Everything else — minerals, B12, fat-soluble vitamins, amino acids: ×1.00.**
+
+**The shell-on rebase.** Unlike every other row, these are **per gram of clam in
+the shell**, so the number entered is the weight actually put in the pot. MEXT's
+edible-portion values are multiplied by the edible fraction from its 廃棄率:
+
+| | 廃棄率 | edible fraction | per-gram factor |
+|---|---|---|---|
+| Shijimi | 75% | **0.25** | per-100g-meat ÷ 100 × 0.25 |
+| Asari | 70% | **0.30** | per-100g-meat ÷ 100 × 0.30 |
+
+**The shell itself contributes nothing, and that is correct.** 廃棄率 is a
+weight-accounting figure, not a claim about nutrient transfer — no shell calcium
+is counted. Shell is ~95% calcium carbonate, near-insoluble in water (~14 mg/L);
+miso soup's ~pH 5.5 barely touches a smooth, low-surface-area shell in 60
+seconds. Extracting carbonate calcium takes hours plus acid — the bone-broth
+literature yields only ~5–30 mg per cup after 12+ hours. The real contribution
+is low single-digit mg, under 1% DV.
+
+Things to know about these two rows:
+
+- **Both are B12 monsters, and that is the headline.** Per 100g meat, shijimi is
+  **68.0 µg** and asari **44.8 µg** — 28× and 19× the 2.4 µg target. Even on the
+  diluted shell-on basis a 50g serving is **8.5 µg (354% DV)** shijimi or
+  **6.7 µg (280% DV)** asari. One bowl covers B12 several times over.
+- **Watch asari's sodium.** 800 mg/100g meat = 2.4 mg per shell-on gram, so a 50g
+  serving is **120 mg (5% DV) before any miso is added** — and an 18g bowl of
+  rice miso is another ~880 mg. Shijimi is far lower (180 mg/100g meat, ~22 mg
+  per serving), making it the better choice if sodium is the binding constraint.
+- **Shijimi is the mineral one:** per 50g shell-on serving, iron **1.04 mg (14%
+  DV)**, calcium 30 mg, manganese 0.35 mg (15% DV), plus 33 µg RAE/100g vitamin A
+  and 1.7 mg α-tocopherol — all of which asari lacks. Asari's counter-strengths
+  are **magnesium** (92 vs 10 mg/100g meat) and measured biotin.
+- **Vitamin E is α-tocopherol only** per the project-wide rule (shijimi 1.7 mg,
+  asari 0.4 mg per 100g meat).
+- **Beware non-MEXT mirrors — they still serve 七訂 values**, the same trap as
+  mango/Slism. For asari, older mirrors show iron **3.8 mg**, B12 **52.4 µg**,
+  sodium **870 mg**, protein 6.0g; the current edition is **2.2 mg, 44.8 µg,
+  800 mg, 5.7 g**. For shijimi, 七訂 shows 64 kcal / B12 68.4 µg vs the current
+  **54 kcal / 68.0 µg**. `fooddb.mext.go.jp` is the source of truth.
+- **Amino acids are MEXT-measured** (アミノ酸成分表, per 100g edible), then scaled
+  by the same edible fraction.
+- **Heavy metals are the softest and most variable part of these rows.** Clams
+  are filter feeders and are used as pollution *biomonitors*, so real values
+  swing by an order of magnitude with harvest water — treat these as category
+  baselines, not properties of your specific clams. Stored ppm are rebased to
+  shell-on weight like every other column; the underlying **meat** concentrations
+  are:
+
+  | | Arsenic | Cadmium | Mercury | Lead |
+  |---|---|---|---|---|
+  | Shijimi (freshwater *Corbicula*) | 0.1 | 0.016 | 0.01 | 0.006 |
+  | Asari (marine Manila clam) | 1.5 | 0.07 | 0.04 | 0.20 |
+
+  Asari's arsenic looks alarming next to the fish rows but is **total** arsenic,
+  which in marine bivalves is overwhelmingly organic arsenobetaine — non-toxic
+  and excreted; marine shellfish routinely run 1–4 ppm total As. Freshwater
+  shijimi carries far less because arsenobetaine is a marine-food phenomenon.
+  Both clams are **low-mercury** (0.01–0.04 ppm) — roughly a tenth of the
+  albacore rows' 0.35 ppm.
+
 #### Filling MEXT "—" Micronutrients
 
 MEXT frequently leaves **biotin, selenium, choline, and (for miso) manganese**
@@ -531,12 +621,20 @@ filled):
 | Canned Albacore Water-Packed | 0 | 65.7 µg | 29.3 mg | 0 | Se/choline from USDA white canned tuna, same pattern as the yellowfin rows |
 | Canned Albacore Oil-Packed | 0 | 60.3 µg | 29.3 mg | 0 | Se from USDA white-in-oil; choline reuses the shared USDA canned-tuna figure (softest); vit K 44 µg filled from MEXT 10263 (same packing oil) |
 | Mango | 0.8 µg *(MEXT)* | 0 *(MEXT)* | 7.6 mg | 23 µg | biotin & Se MEXT-measured; choline + lutein from USDA raw mango (MEXT carries neither) |
+| Boiled Shijimi Clam | 21.6 µg | 35 µg | 65 mg | 0 | *per 100g meat, before the shell-on rebase.* Both biotin and Se are MEXT "—" for shijimi and are borrowed wholesale from the あさり row (closest MEXT bivalve); choline from USDA clams, mixed species, raw |
+| Boiled Asari Clam | 21.6 µg *(MEXT)* | 35 µg *(MEXT)* | 65 mg | 0 | *per 100g meat, before the shell-on rebase.* Only choline filled (USDA clams, mixed species, raw); biotin & Se are measured |
 
 Rationale for the specific picks:
 
 - **Selenium in fish (45 µg):** fish are reliably selenium-rich (~30–60 µg/100g
   across species); 45 µg is a mid-range oily-fish estimate used for both sawara
   and gindara since neither MEXT entry reports it.
+- **Shijimi's biotin (21.6 µg) is the weakest fill in the dataset.** MEXT leaves
+  it "—" for shijimi, and bivalve biotin varies enormously in the entries that
+  *are* measured — あさり 21.6 µg vs かき (oyster) ~4.8 µg, a 4.5× spread. Taking
+  あさり's figure is a closest-analog guess with a wide error bar, not a derived
+  value; it is worth ~7% DV per serving, so the practical cost of being wrong is
+  small. Shijimi's selenium (35 µg, same source) is soft for the same reason.
 - **Biotin (3–5 µg for corn/fish):** low-to-moderate typical values; broccoli
   and anchovy keep their higher MEXT-measured figures (14 and 22 µg).
 - **Lutein/zeaxanthin:** set to 0 for fish (negligible), pulled from USDA for the
@@ -558,7 +656,8 @@ The sequence is:
    Spinach Smoothie, Sunflower seeds. (The smoothie took the 3rd pinned spot
    from Steamed Spinach Salad on 2026-07-16; both salads and plain Steamed
    Spinach now sort inside Vegetables.)
-2. **Categories**, in this order: Fruits → Vegetables → Meat → Chicken → Fish →
+2. **Categories**, in this order: Fruits → Vegetables → Meat → Chicken → Fish
+   (**shellfish included** — the clams share the Fish weight of 500) →
    Nuts/Seeds → Beans/Legumes (natto, miso, soy, tofu, edamame, lentils) → Oils
    (matched by name ending in "oil", e.g. sesame oil, olive oil) → Carbs
    (rice, bread, soba, granola) → Eggs → Others (cheeses and anything
@@ -575,6 +674,11 @@ Two things to remember when adding a food:
   broader ones that would also match: e.g. Chicken is tested before Meat so
   "chicken liver" is not caught by the meat rule, and the Soba/noodle check runs
   before the Oil check because "Boiled Soba" contains the substring "oil".
+  **That "Boiled" → "oil" trap has now bitten twice** — both clam entries begin
+  with "Boiled", so the shellfish rule (🐚) must also sit above the Oil rule in
+  `getFoodStyle()`; it is placed directly after the fish rule. Any future
+  "Boiled …" entry needs the same care. (`getFoodTypeWeight()` is safe here
+  because its Oils rule matches only names *ending* in "oil".)
   **Composites and dishes named after an ingredient are the sharpest case.**
   "Blueberry Spinach Smoothie" would otherwise be caught by the blueberry
   (Fruits, 🫐) or spinach (Vegetables, 🥬) rules, so its smoothie check runs
