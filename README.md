@@ -518,6 +518,46 @@ Things to know about this row:
   `getFoodStyle()` (🥭) and `getFoodTypeWeight()` (Fruits, weight 100) in
   `MealBuilder.tsx`; "mango" collides with no other food name.
 
+#### Peach
+
+`Peach (White-Fleshed 白桃)` is per-gram, from **MEXT もも 白肉種 生 (07136)** used
+directly (÷100) — the white-fleshed 白桃 that dominates Japanese production
+(Hakutō, Akatsuki and similar). MEXT per 100g: 38 kcal, protein 0.6 g, fat 0.1 g,
+carbs 10.2 g, fibre 1.3 g, Na 1 mg, K 180 mg, Ca 4 mg, Mg 7 mg, P 18 mg, Fe
+0.1 mg, Zn 0.1 mg, Cu 0.05 mg, Mn 0.04 mg, vitamin C 8 mg, folate 5 µg, B5
+0.13 mg, niacin 0.6 mg, biotin 0.3 µg, vitamin K 1 µg.
+
+- **MEXT also carries 黄肉種 (yellow-fleshed) as 07184**, and it is a genuinely
+  different food, not a rounding difference: 48 kcal, β-carotene **210 µg** vs
+  white's **5 µg** (vitamin A 17 vs ~0 µg RAE), α-tocopherol 1.3 vs 0.7 mg,
+  fibre 1.9 vs 1.3 g, but *less* vitamin C (6 vs 8 mg). If yellow peaches are
+  what's actually being eaten, add a second row from 07184 rather than logging
+  against this one.
+- **Vitamin A is 0.** MEXT reports the white peach's retinol activity equivalent
+  as **Tr**, consistent with its 5 µg β-carotene. A white peach is not a vitamin
+  A food; the yellow one mildly is.
+- **The headline numbers are modest but real**: a 200g peach is ~18% DV vitamin
+  C, ~12% DV potassium, ~9% DV fibre and ~9% DV vitamin E, for 76 kcal.
+- **Lutein (2 µg) is a rescaled fill and the softest number in the row.** MEXT
+  tracks no lutein, and USDA's only raw peach is **yellow**-fleshed (91 µg/100g).
+  Since lutein is a carotenoid and this row is the *white* variety, using 91
+  directly would overstate it ~40×. It is scaled by the two MEXT entries'
+  β-carotene ratio — 91 × (5 ÷ 210) ≈ 2 µg — the same closest-analog scaling used
+  for barley miso's choline. Peach is a negligible lutein source either way.
+- **Choline (6.1 mg) is filled from USDA raw peach unscaled**, because choline is
+  not a carotenoid and does not track flesh colour. Watch the unit trap here:
+  USDA-derived sites often quote 9.39 mg choline and 140 µg lutein, which are
+  **per 154g cup**, not per 100g.
+- **Biotin (0.3 µg) and selenium (0) are MEXT-measured**, not filled.
+- **Aspartic acid dominates the amino acids** — 260 mg of the 480 mg total per
+  100g, i.e. over half. That is correct and characteristic of peach, which
+  carries a large free-aspartate pool; the remaining amino acids are all ≤34 mg.
+- **Heavy metals** use the dataset's standard **fruit baseline** shared by
+  banana/blueberry/mango (As 0.0001, Cd 0.0001, Hg 0, Pb 0.0001 ppm).
+- The name is keyword-matched by new `peach`/`桃` rules in `getFoodStyle()` (🍑)
+  and `getFoodTypeWeight()` (Fruits, weight 100). **`もも` is deliberately NOT a
+  keyword** — see the Visualizer Food Ordering notes.
+
 #### Boiled Shijimi & Asari Clams (Shell-On Basis)
 
 Both rows come from the **raw** MEXT entries — しじみ 生 (**10297**) and あさり 生
@@ -596,6 +636,158 @@ Things to know about these two rows:
   Both clams are **low-mercury** (0.01–0.04 ppm) — roughly a tenth of the
   albacore rows' 0.35 ppm.
 
+#### Barley Rice (麦ご飯)
+
+`Barley Rice (麦ご飯 5割麦)` is per-gram and is a **blend**, not a single MEXT
+entry — MEXT has no 麦ご飯 row. It is the gram-weighted mix of **MEXT 押麦 めし
+(01170)** and this dataset's own `Cooked White Rice` row.
+
+**The ratio is 5割麦 — equal rice and barley by DRY grain**, per the user (the
+more common everyday convention is 2〜3割; the big 押麦 brands print 米1合 + 押麦
+50g on the bag, ≈25%). Two ratios are in play and they are easy to confuse:
+
+| basis | barley share |
+|---|---|
+| dry grain (what you measure into the pot) | **50%** |
+| **cooked weight (what the per-gram row holds)** | **57.1%** |
+
+They differ because barley expands more than rice: 重量変化率 **280% for 押麦めし**
+vs **210% for 白米めし**. So 100g + 100g dry → 280g + 210g = 490g cooked, and
+barley is 280/490 = 57.1% of it. Both expansion figures were cross-checked
+against MEXT's own dry-vs-めし energy ratios (押麦 329/118 = 2.79; 精白米
+342/156 = 2.19). **If the ratio ever changes, the cooked-weight fractions must be
+recomputed — do not just edit the dry percentage.**
+
+- **Fibre is the entire point of this row.** Cooked 押麦 carries **4.2g/100g**
+  against white rice's 0.3g, so a 150g bowl goes from ~0.45g fibre (plain white
+  rice) to **3.79g (13.5% DV)** — an 8× lift, for slightly *fewer* calories
+  (1.34 vs 1.56 kcal/g, since barley is less energy-dense than rice).
+- **Magnesium, manganese and biotin also ride with the barley**: per 150g bowl,
+  Mg 13.1 mg, Mn 0.43 mg (12.5% DV — barley's 0.24 mg/100g dwarfs rice's), biotin
+  1.0 µg.
+- **Several MEXT values are Tr and are entered as 0**: sodium, B2, vitamin E and
+  selenium for the barley. The rice row supplies small non-zero amounts of some
+  of these, so the blend is not zero where rice contributes.
+- **Choline (13.4 mg/100g barley) is the only fill** — USDA *barley, pearled,
+  cooked*; MEXT carries none. It is the softest number in the barley half.
+- **Amino acids are MEXT-measured** (アミノ酸成分表 for 01170). Note barley is
+  glutamic-acid- and proline-heavy (590 and 280 mg/100g of a 2,300 mg total),
+  characteristic of a hordein-type cereal protein.
+- **Heavy metals use a grain baseline with deliberately LOW arsenic**
+  (As 0.00005 ppm) — about a third of the rice rows' 0.00015–0.0002. That is
+  real, not an oversight: paddy-grown rice is a well-known arsenic accumulator
+  and barley is not, so blending barley in actually *dilutes* the arsenic of a
+  bowl of rice.
+- The name is matched by the **existing** `rice` rule (🍚, Carbs 700) — no new
+  keyword was added. See the Visualizer notes for why a bare `麦` keyword must
+  never be added.
+
+#### Wagyu Beef — Stew & Roast Cuts
+
+Two **和牛肉** (wagyu) rows, both **derived from raw MEXT entries into cooked
+weight**, so the gram you log is the gram you eat off the plate, not the raw
+weight you bought:
+
+- **`Wagyu Stew Beef (シチュー用牛肉 Stewed)`** ← MEXT **11006** 和牛肉 かた
+  赤肉 生 (chuck, lean) — 角切り cubes with no separable fat on them.
+- **`Wagyu Roast Beef (ローストビーフ用牛肉)`** ← MEXT **11021** 和牛肉 もも 赤肉
+  生 (round, lean) — the standard ウチモモ roast-beef block.
+
+**Breed matters more than almost anything else here.** MEXT splits beef four ways
+— ［和牛肉］/［乳用肥育牛肉］/［交雑牛肉］/［輸入牛肉］ — and they are not
+interchangeable. Per the user these rows use **和牛肉** throughout. Logging wagyu
+against an imported-beef row would understate fat badly.
+
+**Cut and trim matter nearly as much.** Within wagyu, MEXT carries 脂身つき /
+皮下脂肪なし / 赤肉 for most cuts, and the spread is enormous: wagyu ばら 脂身つき
+is **472 kcal / 50g fat** per 100g against かた 赤肉's **183 kcal / 12.2g** —
+2.6×, same animal. If a different cut or trim is ever wanted, swap the MEXT
+number at the top of the derivation rather than scaling these rows.
+
+**What MEXT's three trim levels actually mean — marbling is NOT excluded by
+赤肉.** This is the easiest thing to get wrong, because 赤肉/赤身 reads like
+"lean, so barely any fat":
+
+| level | 皮下脂肪 (cap) | 筋間脂肪 (between muscles) | 筋内脂肪 = **marbling/サシ** |
+|---|---|---|---|
+| 脂身つき | included | included | **included** |
+| 皮下脂肪なし | removed | included | **included** |
+| 赤肉 | removed | removed | **still included** |
+
+The levels separate only the fat a butcher can physically cut away. Intramuscular
+fat cannot be separated from muscle, so **赤肉 keeps every bit of the marbling** —
+which is exactly why wagyu かた 赤肉 still carries **12.2 g fat/100g**, roughly
+3× a lean imported-beef round. In a marbled wagyu cut that 12.2 g essentially
+*is* the サシ. A wagyu 赤肉 row reading ~4 g fat would mean the marbling had been
+wrongly excluded, and would be an error.
+
+**These rows use 赤肉** (both of them), per the user: the 角切り cubes as bought
+carry visible marbling but no separable fat to trim off. Note the cut, not just
+the trim, is an assumption — supermarket シチュー用 trays are commonly すね, ばら,
+もも, or a deliberate mix, and MEXT carries **no すね entry at all** (もも is the
+usual proxy). かた is the pick here.
+
+**Trimming fat concentrates the minerals, it does not only remove calories.**
+Going 脂身つき → 赤肉 on the chuck raises iron from 0.9 to **2.7 mg/100g** and
+zinc from 4.9 to 5.7, because those live in muscle tissue and the fat was
+diluting them. So the lean row is not merely "the same meat minus fat" — it is
+denser in almost everything except fat and calories.
+
+**Cooking derivations** (both are *calculated*, not measured):
+
+| | yield | concentration | fat | B2/B3/B5/B6/B12 | B1 | folate | vit C |
+|---|---|---|---|---|---|---|---|
+| Stewed | 65% | ×1.538 | ×1.538 | ×0.85 | ×0.75 | ×0.80 | ×0.75 |
+| Roasted | 80% | ×1.25 | **×1.18** | ×0.85 | ×0.80 | ×0.85 | ×0.80 |
+
+(retentions are applied *on top of* the concentration factor)
+
+- **Stewed assumes zero leaching, because the sauce is eaten** — the same
+  reasoning as Stewed Chicken Liver and the clams. Nutrients (and rendered fat)
+  that leave the meat end up in the シチュー, so **fat takes the full ×1.538**
+  rather than the reduced factor used for dry heat. B1 gets the harshest
+  retention (0.75) because thiamin is the most heat-labile B vitamin and a stew
+  is a long, hot, wet cook.
+- **Roasted uses the Grilled Fish dry-heat model**: **fat ×1.18 rather than
+  ×1.25**, because some fat renders out and drips away and is *not* recovered.
+  B1 survives better than in the stew (0.80) since roast beef is cooked gently to
+  rare/medium and rested.
+- **Roast-beef energy is recomputed from the derived macros**, not scaled — the
+  differing fat factor makes a flat scale wrong. Atwater (4/9/4) is applied to the
+  cooked macros then corrected by the raw Atwater:MEXT ratio (183.9 vs 176, a
+  4.5% overshoot), giving **213.5 kcal/100g cooked**. The stew needs no such care
+  because every macro there shares one factor, so its energy is a clean ×1.538.
+- **Both are unseasoned baselines.** Sodium is the raw meat's only (47/48 mg per
+  100g raw); the roux, wine, demi-glace and salt of a real シチュー and the soy/salt
+  of a roast-beef marinade are all excluded, per the same convention as Stewed
+  Chicken Liver and Stir-fried Pork Liver. **A real beef stew's sodium comes
+  almost entirely from what you add, so this row will understate a seasoned dish.**
+- **Heavy metals are concentrated by the yield factor too** (ppm is mass/mass, so
+  losing water raises the concentration) — ×1.538 and ×1.25 respectively, off the
+  standard beef baseline already shared by `Beef Hire/Tenderloin` (As 0.0001,
+  Cd 0.0001, Hg 0, Pb 0.0002 ppm).
+- **Amino acids: the round's are MEXT-measured; the chuck's are scaled.** MEXT
+  renders no amino-acid panel for 11006, so the measured **11021** profile is
+  scaled onto the chuck-lean protein basis (×20.2/21.3 = 0.948) — the same
+  closest-analog scaling used for raclette←gouda and albacore←yellowfin.
+
+What the two rows are actually good for, per 100g cooked:
+
+| | Stew (chuck 赤肉) | Roast (round 赤肉) |
+|---|---|---|
+| Calories | 282 | **214** |
+| Protein | **31.1 g (62% DV)** | 26.6 g (53% DV) |
+| Fat | 18.8 g (24% DV) | **12.6 g (16% DV)** |
+| Iron | **4.2 mg (55%)** | 3.5 mg (47%) |
+| Zinc | **8.8 mg (80%)** | 5.6 mg (51%) |
+| B12 | **2.22 µg (93%)** | 1.38 µg (58%) |
+
+Now that both are 赤肉 the two rows are much closer, and both are strong protein
+sources. The stew row leads on everything except calories and fat, largely because
+its 65% stewing yield concentrates harder than the roast's 80% — **100g of the
+stewed beef is nearly a full day of B12 and 80% of a day's zinc**. The roast row
+stays the leaner choice per gram of protein.
+
 #### Filling MEXT "—" Micronutrients
 
 MEXT frequently leaves **biotin, selenium, choline, and (for miso) manganese**
@@ -621,6 +813,10 @@ filled):
 | Canned Albacore Water-Packed | 0 | 65.7 µg | 29.3 mg | 0 | Se/choline from USDA white canned tuna, same pattern as the yellowfin rows |
 | Canned Albacore Oil-Packed | 0 | 60.3 µg | 29.3 mg | 0 | Se from USDA white-in-oil; choline reuses the shared USDA canned-tuna figure (softest); vit K 44 µg filled from MEXT 10263 (same packing oil) |
 | Mango | 0.8 µg *(MEXT)* | 0 *(MEXT)* | 7.6 mg | 23 µg | biotin & Se MEXT-measured; choline + lutein from USDA raw mango (MEXT carries neither) |
+| Peach (White-Fleshed) | 0.3 µg *(MEXT)* | 0 *(MEXT)* | 6.1 mg | 2 µg | biotin & Se MEXT-measured; choline from USDA raw peach; lutein from USDA *yellow* peach rescaled ×(5/210) by the MEXT white:yellow β-carotene ratio |
+| Barley Rice (麦ご飯) | 0.8 µg *(MEXT)* | 0 *(MEXT Tr)* | 13.4 mg | 0 | *barley half only, per 100g cooked 押麦.* Biotin & Se from MEXT 01170; choline from USDA barley, pearled, cooked. The rice half contributes its own row's values |
+| Wagyu Stew Beef (chuck 赤肉) | 2.0 µg | 17 µg | 84 mg | 0 | *per 100g raw, before the ×1.538 cooking concentration.* Biotin & Se are MEXT "—" for all 和牛肉, borrowed from **MEXT 11030** (乳用肥育牛肉 かた 脂身つき) and protein-scaled ×20.2/17.1; choline from USDA beef chuck 87 mg scaled ×20.2/21 |
+| Wagyu Roast Beef (round) | 2.1 µg | 17 µg | 88 mg | 0 | *per 100g raw, before the ×1.25 cooking concentration.* Same 11030 source, protein-scaled ×21.3/17.1 since the round is leaner and denser in protein; choline USDA beef ×21.3/21 |
 | Boiled Shijimi Clam | 21.6 µg | 35 µg | 65 mg | 0 | *per 100g meat, before the shell-on rebase.* Both biotin and Se are MEXT "—" for shijimi and are borrowed wholesale from the あさり row (closest MEXT bivalve); choline from USDA clams, mixed species, raw |
 | Boiled Asari Clam | 21.6 µg *(MEXT)* | 35 µg *(MEXT)* | 65 mg | 0 | *per 100g meat, before the shell-on rebase.* Only choline filled (USDA clams, mixed species, raw); biotin & Se are measured |
 
@@ -629,6 +825,13 @@ Rationale for the specific picks:
 - **Selenium in fish (45 µg):** fish are reliably selenium-rich (~30–60 µg/100g
   across species); 45 µg is a mid-range oily-fish estimate used for both sawara
   and gindara since neither MEXT entry reports it.
+- **All 和牛肉 selenium and biotin are fills, for every wagyu row.** MEXT leaves
+  both "—" across the entire ［和牛肉］ group, so they come from ［乳用肥育牛肉］
+  (dairy-fattened steer), the closest MEXT beef with measured values. The breed
+  differs but selenium and biotin track feed and organ chemistry far more than
+  marbling, so this is a much safer borrow than the shijimi one below. Note MEXT
+  leaves them "—" for many dairy-beef cuts too (e.g. 11053 そともも) — **11030 is
+  one of the few with both measured**, which is why it is the source.
 - **Shijimi's biotin (21.6 µg) is the weakest fill in the dataset.** MEXT leaves
   it "—" for shijimi, and bivalve biotin varies enormously in the entries that
   *are* measured — あさり 21.6 µg vs かき (oyster) ~4.8 µg, a 4.5× spread. Taking
@@ -693,6 +896,20 @@ Two things to remember when adding a food:
 - **Check for collisions across the whole food list when adding a keyword**, not
   just against the food you are adding — a new substring rule silently
   re-icons/re-sorts every existing name that happens to contain it.
+- **The best keyword is often no new keyword at all.** `Barley Rice (麦ご飯
+  5割麦)`, `Wagyu Stew Beef (シチュー用牛肉 Stewed)` and `Wagyu Roast Beef
+  (ローストビーフ用牛肉)` were all added with **zero** changes to either function:
+  the English words `rice` and `beef` in their names already route them to Carbs
+  (🍚) and Meat (🥩). Naming a new food so an existing rule catches it correctly
+  is safer than adding a rule. In particular, **do not add a bare `麦` keyword**
+  to make 麦ご飯 match — `麦` is also in `Barley Miso (麦みそ)`, and depending on
+  where the rule landed it would drag the miso into Carbs or repaint it 🍚.
+  (Today the miso survives only because its own `miso`/`みそ` rule runs first.)
+- **Also weigh collisions with names that do not exist yet**, where a Japanese
+  keyword is ambiguous. Peach is the case in point: it matches `peach` and `桃`
+  but deliberately **not `もも`**, because 鶏もも is chicken thigh and the Fruits
+  rule runs *above* the chicken rule in both functions — a future 鶏もも entry
+  would silently become a 🍑 in Fruits. `桃` carries no such ambiguity.
 - **RDI targets** live alongside this, in `RDI_TARGETS` in the same file, and
   must stay consistent with the CSV `% Daily Value (RDI)` denominators (see the
   Data Structure note above).
