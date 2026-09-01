@@ -788,6 +788,100 @@ its 65% stewing yield concentrates harder than the roast's 80% — **100g of the
 stewed beef is nearly a full day of B12 and 80% of a day's zinc**. The roast row
 stays the leaner choice per gram of protein.
 
+#### Squid (Grilled & Tempura) and Grilled Chicken Breast
+
+All three are **MEXT-measured cooked entries used directly** (÷100) — no cooking
+derivation, no retention factors, no yield assumptions. They are among the
+best-sourced rows in the dataset; contrast the wagyu rows, which had to be
+derived raw→cooked.
+
+- **`Grilled Squid (するめいか焼き)`** ← MEXT **10347** するめいか 焼き
+- **`Fried Squid (するめいか天ぷら)`** ← MEXT **10419** するめいか 胴 皮なし 天ぷら
+- **`Grilled Chicken Breast (むね 皮なし焼き)`** ← MEXT **11288** 若どり むね
+  皮なし 焼き
+
+**"Fried squid" here means 天ぷら, not パン粉 イカフライ.** MEXT's only *measured
+cooked* squid-fry entry is the tempura one, so it is used rather than deriving a
+breaded fry. MEXT does carry いかフライ at **18008**, but that is
+「フライ用冷凍食品／冷凍」 — the breaded product **before** you fry it, so it
+carries neither the absorbed oil nor the cooking water loss and would badly
+understate the eaten food. If panko イカフライ is what is actually eaten, it needs
+constructing the way `Chicken Karaage` was (raw squid + breading carbs + oil
+absorption), not swapping in 18008. Note 10419 is 胴 (mantle) 皮なし — the body
+tube, which is what fry is normally cut from.
+
+**The chicken breast is 皮なし (skinless).** MEXT carries both, and the skin is a
+large difference — per 100g grilled: **皮つき (11287) 215 kcal / 34.7g protein /
+9.1g fat** vs **皮なし (11288) 177 kcal / 38.8g protein / 3.3g fat**. Skin-on is
+~2.8× the fat. Swap the entry number if the skin is eaten.
+
+Things worth knowing about these rows:
+
+- **Grilled chicken breast is the most protein-dense row in the entire dataset:
+  38.8 g/100g, 77.6% DV.** That is not an error — MEXT's 焼き entries are measured
+  *after* the cooking water loss, so a 100g cooked portion traces back to ~140g
+  raw. It is also 18 mg niacin (112% DV) and 2.58 mg B5 (52% DV) per 100g.
+- **Grilled squid is the leanest protein in the dataset** — 23.6g protein for
+  **1.0g fat and 108 kcal**. It also carries **5.4 µg B12 (225% DV)** and 46 µg
+  selenium (84% DV) per 100g, plus an unusually high 2.5 mg α-tocopherol for a
+  seafood.
+- **The tempura row INCLUDES the batter (衣) and the absorbed oil** — it is the
+  whole fried piece as eaten, not the squid inside it. So `100` against this row
+  means 100g of tempura on the plate, not 100g of squid meat. Verified against
+  MEXT's own same-cut raw entry, **10418 するめいか 胴 皮なし 生**:
+
+  | per 100g | raw mantle (10418) | tempura (10419) | source |
+  |---|---|---|---|
+  | Carbohydrates | 0.1 g | **6.3 g** | flour |
+  | **Dietary fibre** | **(0)** | **0.8 g** | **flour — decisive** |
+  | Fat | 0.6 g | **10.8 g** | frying oil |
+  | Manganese | 0.01 mg | 0.06 mg | wheat |
+  | Calcium | 10 mg | 26 mg | batter |
+  | Vitamin K | — | 6 µg | oil |
+  | Protein | 18.6 g | 16.7 g | *diluted* |
+
+  **The fibre is the proof**: squid is an animal and carries no fibre at all, so
+  0.8 g/100g can only be wheat. The second proof is that **protein falls** — dry
+  heat drives off water and should *concentrate* it (grilling does exactly that,
+  to 23.6 g), so a drop to 16.7 g is only possible if non-protein batter mass was
+  added. Because B12 comes solely from the squid (flour and oil have none),
+  3.8 ÷ 4.3 implies **100 g of tempura carries roughly 85 g of raw squid's
+  worth**; selenium independently gives ~82 g.
+- **Squid grilled vs tempura is therefore a clean before/after of deep frying**,
+  both from the same MEXT species: calories 108 → 175, fat 1.0 → 10.8 g, and the
+  micronutrients dilute in step (B12 5.4 → 3.8 µg, selenium 46 → 31 µg). Note the
+  grilled row is whole squid and the tempura row is 胴 皮なし, so for a strictly
+  like-for-like comparison use 10418 above as the baseline.
+- **Vitamin E rises with frying** (2.5 → 3.0 mg) because the frying oil
+  contributes α-tocopherol — the same effect noted for the oil-packed tuna rows.
+  Vitamin K likewise goes 0 → 6 µg, and vitamin D 0 → 0.2 µg, both from the oil.
+- **Grilled squid's vitamin K is a MEXT "—" entered as 0**, not a measured zero.
+  するめいか 生 carries 0 and dry grilling adds no fat, so 0 is the right fill; the
+  tempura row's 6 µg is measured and comes from the batter oil.
+- **Manganese for grilled squid is MEXT Tr → 0.**
+- **Amino acids are MEXT-measured for all three** (アミノ酸成分表), not scaled
+  fills. The chicken breast totals 39,000 mg/100g, the highest in the dataset.
+- **Choline is the only nutrient filled in any of the three** (MEXT carries none
+  for these), each protein-scaled from a USDA baseline: squid 65 mg/100g at
+  15.58g protein → **98 mg** grilled and **70 mg** tempura; roasted chicken breast
+  82.5 mg at ~31g protein → **103 mg**. Watch the standard unit trap here —
+  USDA-derived sites quote choline per 3 oz (85 g), so a "67.8 mg" figure is
+  **79.7** mg/100g, not the ~239 a careless ×3 would give.
+- **Squid heavy metals are category baselines with wide error bars**, like the
+  clams. Total arsenic looks high (1.2 ppm grilled) but, exactly as with the
+  asari row, marine cephalopod arsenic is overwhelmingly organic arsenobetaine —
+  non-toxic and excreted. Cadmium concentrates in squid **viscera**, not the
+  mantle, so the tempura row (胴 only, plus batter dilution) is set lower across
+  the board: As 0.8, Cd 0.015, Hg 0.017, Pb 0.007 vs the grilled row's 1.2 /
+  0.03 / 0.025 / 0.01. Both are low-mercury. The chicken row reuses the existing
+  poultry baseline (As 0.0001, Cd 0.0001, Hg 0, Pb 0.0002).
+- **Squid sodium is worth noting**: grilled is 330 mg/100g *before* any soy sauce,
+  since grilling concentrates the squid's own salt. The tempura is lower (180 mg)
+  from batter dilution.
+- The squid rows needed a **new `squid`/`するめ` keyword** (🦑, Fish weight 500);
+  the chicken breast needed nothing, matching the existing `chicken` rule. See the
+  Visualizer notes for why a bare `いか` keyword must never be used.
+
 #### Filling MEXT "—" Micronutrients
 
 MEXT frequently leaves **biotin, selenium, choline, and (for miso) manganese**
@@ -814,6 +908,9 @@ filled):
 | Canned Albacore Oil-Packed | 0 | 60.3 µg | 29.3 mg | 0 | Se from USDA white-in-oil; choline reuses the shared USDA canned-tuna figure (softest); vit K 44 µg filled from MEXT 10263 (same packing oil) |
 | Mango | 0.8 µg *(MEXT)* | 0 *(MEXT)* | 7.6 mg | 23 µg | biotin & Se MEXT-measured; choline + lutein from USDA raw mango (MEXT carries neither) |
 | Peach (White-Fleshed) | 0.3 µg *(MEXT)* | 0 *(MEXT)* | 6.1 mg | 2 µg | biotin & Se MEXT-measured; choline from USDA raw peach; lutein from USDA *yellow* peach rescaled ×(5/210) by the MEXT white:yellow β-carotene ratio |
+| Grilled Squid | 6.3 µg *(MEXT)* | 46 µg *(MEXT)* | 98 mg | 0 | only choline filled (USDA squid raw 65 mg, protein-scaled ×23.6/15.58); biotin & Se measured. **Vitamin K is also a fill (0)** — MEXT "—", and するめいか 生 carries 0 |
+| Fried Squid (天ぷら) | 4.4 µg *(MEXT)* | 31 µg *(MEXT)* | 70 mg | 0 | only choline filled (same USDA squid basis, ×16.7/15.58); everything else measured, including the batter-oil vitamins K/D/E |
+| Grilled Chicken Breast | 5.3 µg *(MEXT)* | 29 µg *(MEXT)* | 103 mg | 0 | only choline filled (USDA roasted breast 82.5 mg, protein-scaled ×38.8/31); biotin & Se measured |
 | Barley Rice (麦ご飯) | 0.8 µg *(MEXT)* | 0 *(MEXT Tr)* | 13.4 mg | 0 | *barley half only, per 100g cooked 押麦.* Biotin & Se from MEXT 01170; choline from USDA barley, pearled, cooked. The rice half contributes its own row's values |
 | Wagyu Stew Beef (chuck 赤肉) | 2.0 µg | 17 µg | 84 mg | 0 | *per 100g raw, before the ×1.538 cooking concentration.* Biotin & Se are MEXT "—" for all 和牛肉, borrowed from **MEXT 11030** (乳用肥育牛肉 かた 脂身つき) and protein-scaled ×20.2/17.1; choline from USDA beef chuck 87 mg scaled ×20.2/21 |
 | Wagyu Roast Beef (round) | 2.1 µg | 17 µg | 88 mg | 0 | *per 100g raw, before the ×1.25 cooking concentration.* Same 11030 source, protein-scaled ×21.3/17.1 since the round is leaner and denser in protein; choline USDA beef ×21.3/21 |
@@ -906,10 +1003,16 @@ Two things to remember when adding a food:
   where the rule landed it would drag the miso into Carbs or repaint it 🍚.
   (Today the miso survives only because its own `miso`/`みそ` rule runs first.)
 - **Also weigh collisions with names that do not exist yet**, where a Japanese
-  keyword is ambiguous. Peach is the case in point: it matches `peach` and `桃`
-  but deliberately **not `もも`**, because 鶏もも is chicken thigh and the Fruits
-  rule runs *above* the chicken rule in both functions — a future 鶏もも entry
-  would silently become a 🍑 in Fruits. `桃` carries no such ambiguity.
+  keyword is ambiguous. There are now two worked examples, and both were resolved
+  by picking a *narrower* keyword:
+  - **Peach** matches `peach` and `桃` but deliberately **not `もも`**, because
+    鶏もも is chicken thigh and the Fruits rule runs *above* the chicken rule in
+    both functions — a future 鶏もも entry would silently become a 🍑 in Fruits.
+    `桃` carries no such ambiguity.
+  - **Squid** matches `squid` and `するめ` but deliberately **not `いか`**,
+    because いか is a substring of **すいか (watermelon)** — a future すいか entry
+    would land in Fish as a 🦑. `するめ` is specific to the squid species actually
+    used here. (The same caution would apply to `たこ`/octopus vs たこやき.)
 - **RDI targets** live alongside this, in `RDI_TARGETS` in the same file, and
   must stay consistent with the CSV `% Daily Value (RDI)` denominators (see the
   Data Structure note above).
