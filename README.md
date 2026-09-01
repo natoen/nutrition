@@ -882,6 +882,55 @@ Things worth knowing about these rows:
   the chicken breast needed nothing, matching the existing `chicken` rule. See the
   Visualizer notes for why a bare `いか` keyword must never be used.
 
+#### Low-Fat Milk
+
+`Low-Fat Milk (加工乳 低脂肪)` is from **MEXT 13005 加工乳 低脂肪** used directly
+(÷100), and like the existing `Regular Whole Milk / Hokkaido` row (MEXT 13003
+普通牛乳) it is **entered in ml**, not grams (≈1 g/ml).
+
+**It is not simply "whole milk minus the fat".** Japanese 加工乳 低脂肪 is
+manufactured by removing butterfat and topping the non-fat solids back up, so the
+protein, calcium, potassium and B2 all come out *higher* than whole milk, not
+lower. What actually falls is the fat and everything that dissolves in it:
+
+| per 200 ml glass | Whole (13003) | Low-fat (13005) | |
+|---|---|---|---|
+| Calories | 122 | **84** | −31% |
+| Fat | 7.6 g | **2.0 g** | −74% |
+| Protein | 6.6 g | **7.6 g** | **+15%** |
+| Calcium | 220 mg | **260 mg (32.5% DV)** | **+18%** |
+| Potassium | 300 mg | **380 mg** | +27% |
+| Vitamin B2 | 0.30 mg | **0.36 mg (27.7% DV)** | +20% |
+| Sodium | 82 mg | 120 mg | **+46%** |
+| Vitamin A | 76 µg RAE | **26 µg** | **−66%** |
+| Vitamin D | 0.6 µg | **0** | **gone** |
+| Vitamin E | 0.2 mg | **0** | **gone** |
+| Vitamin K | 4 µg | **0** | **gone** |
+
+- **The fat-soluble vitamin collapse is the thing to know.** A, D, E and K ride in
+  the butterfat, so skimming it takes them along: MEXT reports **D, E and K all as
+  Tr** for 13005 (entered as 0) and vitamin A drops by two thirds. If milk is a
+  meaningful vitamin D or A source in the day, swapping whole → low-fat silently
+  removes it. Conversely, if milk is being drunk for **calcium and protein per
+  calorie, low-fat is strictly better** — 32.5% DV calcium for 84 kcal.
+- **Watch the sodium.** 60 mg/100ml vs whole milk's 41 — nearly +50%, from the
+  added non-fat solids. Small in absolute terms, but it moves the wrong way.
+- **Four MEXT Tr values are entered as 0**: vitamin D, vitamin E, vitamin K and
+  folate (plus vitamin C). Note whole milk's folate is a measured 5 µg, so this
+  is a real difference in the source data, not a transcription slip.
+- **Choline (18 mg) is the only fill** — MEXT carries none for milk. It is the
+  whole-milk row's 16 mg protein-scaled ×3.8/3.3; that lands on 18.4, which
+  agrees closely with USDA lowfat milk (~17.7 mg), so the two methods converge.
+- **Amino acids are MEXT-measured** (アミノ酸成分表 for 13005), not scaled from the
+  whole-milk row — and they are correspondingly higher across the board (総計
+  3,900 mg vs whole milk's ~3,400).
+- **Heavy metals are 0 across the board**, matching the existing whole-milk row's
+  dairy baseline.
+- The name is matched by the **existing** `milk` rule, so it needs no new keyword
+  and inherits both the 🥛 icon and the **ml** unit. It also inherits milk's
+  pinned weight of 10, so the two milk rows now sort together at the very top of
+  the list ("Low-Fat" before "Regular" on the alphabetical tiebreak).
+
 #### Filling MEXT "—" Micronutrients
 
 MEXT frequently leaves **biotin, selenium, choline, and (for miso) manganese**
@@ -908,6 +957,7 @@ filled):
 | Canned Albacore Oil-Packed | 0 | 60.3 µg | 29.3 mg | 0 | Se from USDA white-in-oil; choline reuses the shared USDA canned-tuna figure (softest); vit K 44 µg filled from MEXT 10263 (same packing oil) |
 | Mango | 0.8 µg *(MEXT)* | 0 *(MEXT)* | 7.6 mg | 23 µg | biotin & Se MEXT-measured; choline + lutein from USDA raw mango (MEXT carries neither) |
 | Peach (White-Fleshed) | 0.3 µg *(MEXT)* | 0 *(MEXT)* | 6.1 mg | 2 µg | biotin & Se MEXT-measured; choline from USDA raw peach; lutein from USDA *yellow* peach rescaled ×(5/210) by the MEXT white:yellow β-carotene ratio |
+| Low-Fat Milk (加工乳 低脂肪) | 2.0 µg *(MEXT)* | 3 µg *(MEXT)* | 18 mg | 0 | only choline filled — the whole-milk row's 16 mg protein-scaled ×3.8/3.3; agrees with USDA lowfat milk ~17.7 mg. Biotin & Se measured |
 | Grilled Squid | 6.3 µg *(MEXT)* | 46 µg *(MEXT)* | 98 mg | 0 | only choline filled (USDA squid raw 65 mg, protein-scaled ×23.6/15.58); biotin & Se measured. **Vitamin K is also a fill (0)** — MEXT "—", and するめいか 生 carries 0 |
 | Fried Squid (天ぷら) | 4.4 µg *(MEXT)* | 31 µg *(MEXT)* | 70 mg | 0 | only choline filled (same USDA squid basis, ×16.7/15.58); everything else measured, including the batter-oil vitamins K/D/E |
 | Grilled Chicken Breast | 5.3 µg *(MEXT)* | 29 µg *(MEXT)* | 103 mg | 0 | only choline filled (USDA roasted breast 82.5 mg, protein-scaled ×38.8/31); biotin & Se measured |
@@ -955,7 +1005,10 @@ The sequence is:
 1. **Pinned individual items**, in this exact order: Milk, Banana, Blueberry
    Spinach Smoothie, Sunflower seeds. (The smoothie took the 3rd pinned spot
    from Steamed Spinach Salad on 2026-07-16; both salads and plain Steamed
-   Spinach now sort inside Vegetables.)
+   Spinach now sort inside Vegetables.) **"Milk" is a keyword, not a single
+   row** — every name containing "milk" shares the pinned weight of 10, so the
+   two milk rows (Low-Fat, Regular Whole) both sit at the top and order between
+   themselves alphabetically. Any future milk lands there too.
 2. **Categories**, in this order: Fruits → Vegetables → Meat → Chicken → Fish
    (**shellfish included** — the clams share the Fish weight of 500) →
    Nuts/Seeds → Beans/Legumes (natto, miso, soy, tofu, edamame, lentils) → Oils
