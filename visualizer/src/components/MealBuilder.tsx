@@ -75,6 +75,9 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('apple')) return { icon: '🍎', color: '#ef4444' }
   if (lower.includes('orange')) return { icon: '🍊', color: '#f97316' }
   if (lower.includes('mango')) return { icon: '🥭', color: '#f59e0b' }
+  // Watermelon. Safe above the squid rule ONLY because squid matches するめ, not
+  // a bare いか — note すいか is not a substring of するめいか either way.
+  if (lower.includes('watermelon') || lower.includes('すいか') || lower.includes('西瓜')) return { icon: '🍉', color: '#ef4444' }
   // Peach matches "桃" but deliberately NOT "もも": 鶏もも is chicken thigh, and
   // this rule sits above the chicken rule, so もも would steal it as a peach.
   if (lower.includes('peach') || lower.includes('桃')) return { icon: '🍑', color: '#fb7185' }
@@ -162,7 +165,8 @@ const getFoodTypeWeight = (name: string) => {
   if (lower.includes('apple') || lower.includes('strawberry') || lower.includes('orange') ||
       lower.includes('pineapple') || lower.includes('blueberry') || lower.includes('kiwi') ||
       lower.includes('avocado') || lower.includes('mango') || lower.includes('peach') ||
-      lower.includes('桃') || lower.includes('fruit')) return 100 // Fruits
+      lower.includes('桃') || lower.includes('watermelon') || lower.includes('すいか') ||
+      lower.includes('西瓜') || lower.includes('fruit')) return 100 // Fruits
   if (lower.includes('cabbage') || lower.includes('celery') || lower.includes('lettuce') ||
       lower.includes('kale') || lower.includes('broccoli') || lower.includes('carrot') ||
       lower.includes('kabocha') || lower.includes('pumpkin') || lower.includes('tomato') ||

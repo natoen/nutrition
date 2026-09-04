@@ -882,6 +882,54 @@ Things worth knowing about these rows:
   the chicken breast needed nothing, matching the existing `chicken` rule. See the
   Visualizer notes for why a bare `いか` keyword must never be used.
 
+#### Watermelon (すいか)
+
+`Watermelon (すいか 赤肉種)` is per-gram, from **MEXT 07077 すいか 赤肉種 生**
+(red-flesh) used directly (÷100). MEXT also carries a 黄肉種 (yellow-flesh)
+variant; as with the peach pair, the difference would be mainly carotenoids, so
+add a second row rather than reusing this one if yellow watermelon is ever eaten.
+
+**This row is the FLESH only.** MEXT's 廃棄率 for watermelon is **40%** — that is
+the rind and seeds, discarded before the composition is measured. So log the
+weight of red flesh you actually eat, not the weight of the wedge including rind.
+
+**About the white/green rind** (per the user, sometimes bitten into at the
+bottom): **there is no MEXT entry for it, and it is not worth modelling.** The
+white layer is ~95% water and very low in sugar, so a stray 10–20 g of it is a
+couple of kcal — noise against a 400 g serving of flesh. Its one genuinely
+distinctive compound is **citrulline, which is *higher* in the rind than in the
+flesh** — but citrulline is **not one of this dataset's 18 amino-acid columns**,
+so it would not show up even if a rind row existed. Nothing is lost by ignoring
+it; just log the flesh.
+
+Things worth knowing:
+
+- **Watermelon is a surprisingly strong vitamin A source for a fruit** — 69 µg
+  RAE/100g, from 830 µg β-carotene. A 400 g wedge is **31% DV vitamin A** and
+  **44% DV vitamin C (40 mg)**, plus 16% DV potassium, for 164 kcal.
+- **It is mostly water and sugar otherwise**: 9.5 g carbohydrate and only 0.3 g
+  fibre per 100g, so a large serving moves carbohydrate meaningfully (a 400 g
+  wedge is 38 g, ~14% DV) while contributing almost no fibre.
+- **Arginine is 51 mg of the 326 mg total amino acids — about 16%**, far and away
+  the largest. That is characteristic of watermelon and is the tracked shadow of
+  the citrulline story above; the protein content is tiny either way (0.6 g/100g).
+- **Lycopene is watermelon's signature carotenoid and is NOT tracked** by this
+  dataset (there is no lycopene column, only lutein+zeaxanthin). The 8 µg lutein
+  figure is therefore a poor summary of watermelon's carotenoid content — the
+  vitamin A / β-carotene figure is the meaningful one.
+- **Choline (4.1 mg) and lutein (8 µg) are the only fills**, both USDA raw
+  watermelon; MEXT carries neither. Biotin (0.9 µg) and selenium (0) are
+  MEXT-measured, as are the amino acids.
+- **Heavy metals** use the standard fruit baseline shared by
+  banana/blueberry/mango/peach (As 0.0001, Cd 0.0001, Hg 0, Pb 0.0001 ppm).
+- **The keyword trap predicted in the Visualizer notes was real, and the earlier
+  choice held.** Watermelon needed new `watermelon`/`すいか`/`西瓜` rules (🍉,
+  Fruits 100), and the Fruits rule runs *above* the squid rule. Verified
+  explicitly: `'するめいか'.includes('すいか')` is **false**, so the squid rows keep
+  🦑 — while `'すいか'.includes('いか')` is **true**, which is exactly why the
+  squid rule was written against `するめ` and never a bare `いか`. Had it used
+  `いか`, adding this food would have silently turned watermelon into squid.
+
 #### Canned Sanma (秋刀魚) — Both MEXT Variants
 
 **MEXT carries exactly two canned さんま entries, and both are here.** The さんま
@@ -1018,6 +1066,7 @@ filled):
 | Canned Albacore Oil-Packed | 0 | 60.3 µg | 29.3 mg | 0 | Se from USDA white-in-oil; choline reuses the shared USDA canned-tuna figure (softest); vit K 44 µg filled from MEXT 10263 (same packing oil) |
 | Mango | 0.8 µg *(MEXT)* | 0 *(MEXT)* | 7.6 mg | 23 µg | biotin & Se MEXT-measured; choline + lutein from USDA raw mango (MEXT carries neither) |
 | Peach (White-Fleshed) | 0.3 µg *(MEXT)* | 0 *(MEXT)* | 6.1 mg | 2 µg | biotin & Se MEXT-measured; choline from USDA raw peach; lutein from USDA *yellow* peach rescaled ×(5/210) by the MEXT white:yellow β-carotene ratio |
+| Watermelon (すいか 赤肉種) | 0.9 µg *(MEXT)* | 0 *(MEXT)* | 4.1 mg | 8 µg | biotin & Se MEXT-measured; choline + lutein from USDA raw watermelon. Note lutein badly under-describes watermelon's carotenoids — its signature pigment is **lycopene**, which this dataset has no column for |
 | Canned Sanma 味付け | 7.7 µg | 33 µg | 59 mg | 0 | both biotin & Se are MEXT "—" for the cans; borrowed from **MEXT 10173 さんま 皮つき 生** (7.4 µg / 32 µg — same fish, raw) and protein-scaled ×18.9/18.1. Choline from the Canned Mackerel row ×18.9/20.9 |
 | Canned Sanma かば焼 | 7.1 µg | 31 µg | 54 mg | 0 | same 10173 source, protein-scaled ×17.4/18.1; choline from Canned Mackerel ×17.4/20.9 |
 | Low-Fat Milk (加工乳 低脂肪) | 2.0 µg *(MEXT)* | 3 µg *(MEXT)* | 18 mg | 0 | only choline filled — the whole-milk row's 16 mg protein-scaled ×3.8/3.3; agrees with USDA lowfat milk ~17.7 mg. Biotin & Se measured |
@@ -1126,9 +1175,14 @@ Two things to remember when adding a food:
     both functions — a future 鶏もも entry would silently become a 🍑 in Fruits.
     `桃` carries no such ambiguity.
   - **Squid** matches `squid` and `するめ` but deliberately **not `いか`**,
-    because いか is a substring of **すいか (watermelon)** — a future すいか entry
-    would land in Fish as a 🦑. `するめ` is specific to the squid species actually
-    used here. (The same caution would apply to `たこ`/octopus vs たこやき.)
+    because いか is a substring of **すいか (watermelon)**. `するめ` is specific to
+    the squid species actually used here. (The same caution would apply to
+    `たこ`/octopus vs たこやき.) **This one stopped being hypothetical**: すいか was
+    added on 2026-09-04, and because the squid rule had been written against
+    `するめ`, no collision occurred. Both directions are asserted in the code
+    comments — `'するめいか'.includes('すいか')` is false (watermelon's rule, which
+    runs first, does not steal the squid rows) and `'すいか'.includes('いか')` is
+    true (a bare いか rule would have stolen watermelon).
 - **RDI targets** live alongside this, in `RDI_TARGETS` in the same file, and
   must stay consistent with the CSV `% Daily Value (RDI)` denominators (see the
   Data Structure note above).
