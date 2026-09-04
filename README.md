@@ -882,6 +882,67 @@ Things worth knowing about these rows:
   the chicken breast needed nothing, matching the existing `chicken` rule. See the
   Visualizer notes for why a bare `いか` keyword must never be used.
 
+#### Canned Sanma (秋刀魚) — Both MEXT Variants
+
+**MEXT carries exactly two canned さんま entries, and both are here.** The さんま
+block runs 10173–10178 (生 皮つき/皮なし, 焼き, 開き干し, みりん干し, then the two
+cans) and stops there — **10179 is しいら (dolphinfish)**, which is how the set was
+confirmed complete. Both are used directly (÷100):
+
+- **`Canned Sanma Seasoned (さんま缶詰 味付け)`** ← MEXT **10177**
+- **`Canned Sanma Kabayaki (さんま缶詰 かば焼)`** ← MEXT **10178**
+
+**There is no 水煮 (plain water-packed) canned sanma in MEXT**, unlike the mackerel
+and tuna rows which have one. Japanese sanma cans are sold seasoned — 味付け or
+かば焼 — so both of these carry added sugar and soy, and neither is an unseasoned
+baseline. That is a real difference from `Canned Mackerel Water-Packed`, and it
+is why both rows are sodium-heavy (see below).
+
+| per 100g can | 味付け (10177) | かば焼 (10178) |
+|---|---|---|
+| Calories | 259 | 219 |
+| Protein | 18.9 g | 17.4 g |
+| Fat | 18.9 g | 13.0 g |
+| Carbohydrates | 5.6 g | **9.7 g** |
+| **Vitamin D** | **13.0 µg (65% DV)** | **12.0 µg (60% DV)** |
+| **Vitamin B12** | **12.0 µg (500% DV)** | **12.0 µg (500% DV)** |
+| Calcium | **280 mg (35% DV)** | 250 mg (31% DV) |
+| Sodium | 540 mg (23% DV) | **600 mg (26% DV)** |
+| Iron | 1.9 mg | **2.9 mg** |
+| Zinc | **1.1 mg** | **0.1 mg** |
+
+- **Vitamin D is the standout.** 13 µg/100g is 65% DV from one can. That is the
+  dataset's **third**-densest source per 100g, behind Salmon Roe (47 µg) and
+  Grilled Unagi (19 µg), but ahead of grilled salmon and canned mackerel (11 µg
+  each) — and unlike roe, a whole 100g can is an ordinary portion. Paired with
+  500% DV B12, one can covers both nutrients several times over.
+- **The calcium is real and comes from the softened bones**, which are eaten in a
+  canned fish. 280 mg/100g beats a glass of milk, and is far above any fresh-fish
+  row in the dataset (grilled sawara is 11 mg).
+- **Sodium is the cost.** Both are seasoned products, so a 100g can is roughly a
+  quarter of a day's sodium *before* rice or miso soup. かば焼 is the saltier and
+  also much the sweeter (9.7 g carbohydrate from the tare glaze).
+- **かば焼's zinc (0.1 mg) is an order of magnitude below 味付け's (1.1 mg).**
+  That is what MEXT reports for both, not a transcription error — it is the single
+  largest discrepancy between the two rows and worth knowing if zinc matters.
+- **Two MEXT values are `Tr` and two are `(0)`, all entered as 0**: B1 is Tr in
+  both; vitamin K and vitamin C are `(0)` in both.
+- **Selenium and biotin are fills** — MEXT leaves both "—" for the canned entries,
+  so they come from **MEXT 10173 さんま 皮つき 生** (Se 32 µg, biotin 7.4 µg), the
+  same fish raw, protein-scaled to each can. Being the same species, this is a
+  tighter borrow than the cross-species fills elsewhere in this dataset.
+- **Choline is filled from the `Canned Mackerel` row** (65 mg/100g), the dataset's
+  closest canned-oily-fish analog, protein-scaled — 59 mg and 54 mg. It is the
+  softest number in both rows.
+- **Amino acids are MEXT-measured** for both (アミノ酸成分表), not scaled.
+- **Heavy metals: sanma is genuinely low-mercury.** At **0.02 ppm** these sit far
+  below grilled sawara (0.08) and gindara (0.45), because sanma is a small,
+  short-lived, low-trophic pelagic fish that has little time or trophic position
+  to accumulate methylmercury. As 0.001, Cd 0.002, Pb 0.001 ppm.
+- The rows needed a new **`sanma`/`さんま`/`秋刀魚`** keyword on the fish rule
+  (🐟, weight 500). Verified it does **not** disturb `Grilled Unagi (Kabayaki)`,
+  which keeps its 🐉 — the unagi rule matches on `unagi`, not on `kabayaki`.
+
 #### Low-Fat Milk
 
 `Low-Fat Milk (加工乳 低脂肪)` is from **MEXT 13005 加工乳 低脂肪** used directly
@@ -957,6 +1018,8 @@ filled):
 | Canned Albacore Oil-Packed | 0 | 60.3 µg | 29.3 mg | 0 | Se from USDA white-in-oil; choline reuses the shared USDA canned-tuna figure (softest); vit K 44 µg filled from MEXT 10263 (same packing oil) |
 | Mango | 0.8 µg *(MEXT)* | 0 *(MEXT)* | 7.6 mg | 23 µg | biotin & Se MEXT-measured; choline + lutein from USDA raw mango (MEXT carries neither) |
 | Peach (White-Fleshed) | 0.3 µg *(MEXT)* | 0 *(MEXT)* | 6.1 mg | 2 µg | biotin & Se MEXT-measured; choline from USDA raw peach; lutein from USDA *yellow* peach rescaled ×(5/210) by the MEXT white:yellow β-carotene ratio |
+| Canned Sanma 味付け | 7.7 µg | 33 µg | 59 mg | 0 | both biotin & Se are MEXT "—" for the cans; borrowed from **MEXT 10173 さんま 皮つき 生** (7.4 µg / 32 µg — same fish, raw) and protein-scaled ×18.9/18.1. Choline from the Canned Mackerel row ×18.9/20.9 |
+| Canned Sanma かば焼 | 7.1 µg | 31 µg | 54 mg | 0 | same 10173 source, protein-scaled ×17.4/18.1; choline from Canned Mackerel ×17.4/20.9 |
 | Low-Fat Milk (加工乳 低脂肪) | 2.0 µg *(MEXT)* | 3 µg *(MEXT)* | 18 mg | 0 | only choline filled — the whole-milk row's 16 mg protein-scaled ×3.8/3.3; agrees with USDA lowfat milk ~17.7 mg. Biotin & Se measured |
 | Grilled Squid | 6.3 µg *(MEXT)* | 46 µg *(MEXT)* | 98 mg | 0 | only choline filled (USDA squid raw 65 mg, protein-scaled ×23.6/15.58); biotin & Se measured. **Vitamin K is also a fill (0)** — MEXT "—", and するめいか 生 carries 0 |
 | Fried Squid (天ぷら) | 4.4 µg *(MEXT)* | 31 µg *(MEXT)* | 70 mg | 0 | only choline filled (same USDA squid basis, ×16.7/15.58); everything else measured, including the batter-oil vitamins K/D/E |
