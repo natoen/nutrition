@@ -882,6 +882,96 @@ Things worth knowing about these rows:
   the chicken breast needed nothing, matching the existing `chicken` rule. See the
   Visualizer notes for why a bare `いか` keyword must never be used.
 
+#### Coconut Water (ココナッツウォーター)
+
+`Coconut Water (ココナッツウォーター)` is per-gram (entered in ml, ≈1 g/ml), from
+**MEXT 07157 ココナッツウォーター** used directly (÷100).
+
+**"Coconut juice" means coconut WATER here, not coconut milk** — they are
+different foods and MEXT carries both:
+
+| per 100g | ウォーター (07157) | ミルク (07158) |
+|---|---|---|
+| Calories | **22** | **157** |
+| Fat | 0.1 g | **16.0 g** |
+| Protein | 0.2 g | 1.9 g |
+| Carbohydrate | 5.0 g | 2.8 g |
+
+Coconut **water** is the thin liquid inside the nut; coconut **milk** is pressed
+from the grated flesh and is **7× the calories and 160× the fat**. If the intent
+was the cooking ingredient (curries, etc.), that is 07158 and needs its own row.
+
+- **Beware old editions here specifically.** MEXT split these two entries because
+  **earlier editions filed coconut water's values under coconut milk** — a
+  documented mislabelling, not a revision. Any pre-八訂 source for "ココナッツミルク"
+  may actually be water. Same class of trap as the 七訂 values for mango/asari.
+- **Potassium and manganese are the only notable numbers.** A 250 ml glass is
+  575 mg potassium (**19% DV**) and 0.40 mg manganese (**17% DV**) for 55 kcal.
+  Everything else is trace — B5 and B6 are MEXT-measured **0**, vitamin A, E and
+  D are 0, and copper is Tr.
+- **It is not the electrolyte drink it is marketed as, on sodium**: 11 mg/100g is
+  negligible (a 250 ml glass is 28 mg, ~1% DV). The potassium is the real story.
+- **Four values are MEXT "—" and filled**: selenium (1 µg) and choline (1.1 mg)
+  from USDA coconut water; vitamin K filled as **0** (USDA reports 0); biotin as
+  **0**. With 0.2 g protein and 22 kcal, none of these move anything.
+- **Amino acids are MEXT-measured** (total 220 mg/100g).
+- **Heavy metals** use the standard fruit baseline.
+- The name needed new `coconut`/`ココナッツ` rules (🥥, Fruits 100). **Watch the
+  `nut` substring**: "coconut" contains "nut", so it is only classed as fruit
+  because `getFoodTypeWeight`'s Fruits rule runs *above* Nuts/Seeds. Verified —
+  it returns 100, and the four Nuts/Seeds rows are unaffected. If those rules are
+  ever reordered, coconut silently becomes a nut.
+
+#### Sauteed Spinach (油いため)
+
+`Sauteed Spinach (ほうれんそう 油いため)` is per-gram, from **MEXT 06359 ほうれんそう
+葉 通年平均 油いため** — a *measured* cooked entry, so unlike `Steamed Spinach`
+(which is derived from the raw baseline) no retention factors are applied.
+
+**It carries the SAME oxalate mineral discount** as `Steamed Spinach` and `Raw
+Spinach (Bioavailable)` — **Ca ×0.17, Fe ×0.10, Mg ×0.60** — applied on top of
+MEXT's measured values. This is not optional: sautéing cooks the leaf in **oil,
+not water, so there is ZERO leaching** — even less oxalate is removed than by
+steaming (~42% of soluble oxalate). If anything, sautéed spinach's minerals are
+*more* tightly bound than the steamed row's. The stored values are therefore:
+
+| per 100g | MEXT measured | ×discount | stored |
+|---|---|---|---|
+| Calcium | 88 mg | ×0.17 | **15.0 mg** |
+| Iron | 1.2 mg | ×0.10 | **0.12 mg** |
+| Magnesium | 52 mg | ×0.60 | **31.2 mg** |
+
+Everything else is MEXT's measured value untouched.
+
+- **Sautéing concentrates hard** — spinach sheds a lot of water. Against the raw
+  baseline (06267) the factors are **vitamin A 630/350 = 1.80**, β-carotene
+  7600/4200 = 1.81, protein 3.8/2.2 = 1.73. That is why 100 g of sautéed spinach
+  reads far denser than 100 g of steamed: **vitamin K 510 vs 270 µg (425% DV!)**,
+  vitamin A 630 vs 350 µg RAE, vitamin E 4.8 vs 2.07 mg, lutein 22,000 vs
+  12,200 µg. Remember 100 g of sautéed spinach started as ~180 g raw.
+- **Folate is the one thing that goes DOWN** — 140 µg vs steamed's 168 — because
+  MEXT's sautéing is hotter and longer than the 80%-retention steaming model.
+  Sautéed spinach is the better choice for everything *except* folate and the
+  water-soluble vitamins.
+- **The added oil is most of the calories**: 91 kcal vs steamed's 20, with 8.1 g
+  fat against 0.43 g. That fat is not a downside for absorption — it is exactly
+  the "eaten with fat" condition the Raw Leafy Greens section relies on, so the
+  carotenoids here are genuinely well absorbed.
+- **Fills, all concentration-scaled from the raw baseline**: selenium
+  (MEXT raw 3 µg → **5.2**), biotin (MEXT raw 2.9 µg → **5.0**), choline (USDA
+  raw 19.3 mg → **33**), lutein (USDA raw 12,200 µg → **22,000**, scaled by the
+  carotenoid ratio 1.80 rather than the protein ratio).
+- **Note an inconsistency with the older `Steamed Spinach` row**: it carries
+  selenium 1 µg and biotin 1.53 µg, which look like USDA figures, where **MEXT
+  measures raw spinach at 3 µg and 2.9 µg**. This new row follows the repo's
+  MEXT-priority rule instead. The two rows therefore disagree on those two
+  nutrients; the steamed row is the suspect one and is worth revisiting.
+- **Amino acids are MEXT-measured** for the sautéed entry (total 3,500 mg/100g).
+- **Heavy metals** are the Steamed Spinach ppm concentrated by the same 1.73
+  water-loss factor (ppm is mass/mass).
+- The name is caught by the **existing** `spinach` rule (🥬, Vegetables 200); no
+  keyword change was needed.
+
 #### Watermelon (すいか)
 
 `Watermelon (すいか 赤肉種)` is per-gram, from **MEXT 07077 すいか 赤肉種 生**
@@ -1066,6 +1156,8 @@ filled):
 | Canned Albacore Oil-Packed | 0 | 60.3 µg | 29.3 mg | 0 | Se from USDA white-in-oil; choline reuses the shared USDA canned-tuna figure (softest); vit K 44 µg filled from MEXT 10263 (same packing oil) |
 | Mango | 0.8 µg *(MEXT)* | 0 *(MEXT)* | 7.6 mg | 23 µg | biotin & Se MEXT-measured; choline + lutein from USDA raw mango (MEXT carries neither) |
 | Peach (White-Fleshed) | 0.3 µg *(MEXT)* | 0 *(MEXT)* | 6.1 mg | 2 µg | biotin & Se MEXT-measured; choline from USDA raw peach; lutein from USDA *yellow* peach rescaled ×(5/210) by the MEXT white:yellow β-carotene ratio |
+| Coconut Water | 0 | 1 µg | 1.1 mg | 0 | MEXT "—" for biotin, Se **and vitamin K**; Se + choline from USDA coconut water, vitamin K and biotin filled as 0. At 22 kcal / 0.2 g protein none of these move anything |
+| Sauteed Spinach | 5.0 µg | 5.2 µg | 33 mg | 22,000 µg | all four concentration-scaled off the raw baseline (06267): biotin & Se from **MEXT raw spinach** (2.9 / 3 µg) ×1.73, choline from USDA raw spinach ×1.73, lutein from USDA raw spinach ×1.80 (carotenoid ratio). Note this uses MEXT for Se/biotin where `Steamed Spinach` used USDA — see that section |
 | Watermelon (すいか 赤肉種) | 0.9 µg *(MEXT)* | 0 *(MEXT)* | 4.1 mg | 8 µg | biotin & Se MEXT-measured; choline + lutein from USDA raw watermelon. Note lutein badly under-describes watermelon's carotenoids — its signature pigment is **lycopene**, which this dataset has no column for |
 | Canned Sanma 味付け | 7.7 µg | 33 µg | 59 mg | 0 | both biotin & Se are MEXT "—" for the cans; borrowed from **MEXT 10173 さんま 皮つき 生** (7.4 µg / 32 µg — same fish, raw) and protein-scaled ×18.9/18.1. Choline from the Canned Mackerel row ×18.9/20.9 |
 | Canned Sanma かば焼 | 7.1 µg | 31 µg | 54 mg | 0 | same 10173 source, protein-scaled ×17.4/18.1; choline from Canned Mackerel ×17.4/20.9 |

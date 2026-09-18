@@ -78,6 +78,9 @@ const getFoodStyle = (name: string) => {
   // Watermelon. Safe above the squid rule ONLY because squid matches するめ, not
   // a bare いか — note すいか is not a substring of するめいか either way.
   if (lower.includes('watermelon') || lower.includes('すいか') || lower.includes('西瓜')) return { icon: '🍉', color: '#ef4444' }
+  // Coconut. Note "coconut" CONTAINS "nut" — getFoodTypeWeight only classes it as
+  // fruit because its Fruits rule runs above the Nuts/Seeds rule. Keep it that way.
+  if (lower.includes('coconut') || lower.includes('ココナッツ')) return { icon: '🥥', color: '#a16207' }
   // Peach matches "桃" but deliberately NOT "もも": 鶏もも is chicken thigh, and
   // this rule sits above the chicken rule, so もも would steal it as a peach.
   if (lower.includes('peach') || lower.includes('桃')) return { icon: '🍑', color: '#fb7185' }
@@ -166,7 +169,10 @@ const getFoodTypeWeight = (name: string) => {
       lower.includes('pineapple') || lower.includes('blueberry') || lower.includes('kiwi') ||
       lower.includes('avocado') || lower.includes('mango') || lower.includes('peach') ||
       lower.includes('桃') || lower.includes('watermelon') || lower.includes('すいか') ||
-      lower.includes('西瓜') || lower.includes('fruit')) return 100 // Fruits
+      lower.includes('西瓜') || lower.includes('coconut') || lower.includes('ココナッツ') ||
+      lower.includes('fruit')) return 100 // Fruits
+      // NOTE: "coconut" contains the substring "nut". This Fruits rule MUST stay
+      // above the Nuts/Seeds rule below, or coconut water sorts as a nut.
   if (lower.includes('cabbage') || lower.includes('celery') || lower.includes('lettuce') ||
       lower.includes('kale') || lower.includes('broccoli') || lower.includes('carrot') ||
       lower.includes('kabocha') || lower.includes('pumpkin') || lower.includes('tomato') ||
