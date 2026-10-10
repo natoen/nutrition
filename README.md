@@ -46,8 +46,11 @@ is a reference for hitting 100% RDI with nutrient-dense foods.
   1300), Potassium **3000 mg** (not 4700), Sodium **2300 mg** (not 2500),
   Iron **7.5 mg** (not 18 — the Japanese MHLW adult-male RDA; US 18 assumes
   menstruating women), Magnesium **370 mg** (not 420 — Japanese MHLW male RDA
-  for ages 30–64; 340 is the 18–29 bracket, 320 the 75+ bracket, and the 2025
-  edition raised 30–49 to 380). A table computed with the wrong
+  at the **30–49 bracket of the 2025 edition**, the user's age; 340 is 18–29, 370
+  is 50–64, 350 is 65–74 and 330 is 75+), Copper **0.9 mg** (2025, 30–64) and Zinc
+  **9.5 mg**
+  (2025, 30–64 — see the Copper, Magnesium & Zinc note below; the 2020 edition
+  said 11). A table computed with the wrong
   denominator makes its progress bar disagree with the stated target — e.g. on
   2026-07-11 mixed 800/1300 calcium rows made the bar hit 100% around ~1000 mg
   while the label said 800 mg. **The bars read the CSV `% Daily Value (RDI)`
@@ -201,7 +204,13 @@ built one of two ways, in this order of preference:
      into the discarded water). Steaming avoids that leaching, so USDA
      boiled-drained would understate it; deriving from the (MEXT-aligned:
      folate 120 µg, C 80 mg, Ca 220 mg) raw baseline is the correct source.
-     Lutein/zeaxanthin (heat-stable, ×1.00) uses the **modern USDA FoodData
+     **Kale vitamin E reconciled to MEXT on 2026-10-11.** The raw-kale baseline had carried
+**1.33 mg/100g**, a USDA(0.66)/MEXT(2.4) hybrid flagged since July. It is now MEXT's
+**2.4 mg α-tocopherol/100g** in both `Steamed Kale` and `Raw Kale (Bioavailable)`
+(vitamin E is heat-stable, so the steamed row takes ×1.00). `King Of Kale Salad` holds
+30 g of kale, so its vitamin E rose **3.06 → 3.381 mg/serving (20.4% → 22.5% DV)**.
+
+Lutein/zeaxanthin (heat-stable, ×1.00) uses the **modern USDA FoodData
      Central figure, 6,256 µg/100g** — *not* the legacy ~40 mg (39,550 µg)
      figure that USDA has since revised away from. (The original bulk-imported
      raw-kale row carried 3,933 µg/100g, a 10× scale slip off the legacy value;
@@ -882,6 +891,308 @@ Things worth knowing about these rows:
   the chicken breast needed nothing, matching the existing `chicken` rule. See the
   Visualizer notes for why a bare `いか` keyword must never be used.
 
+#### Filipino-Style Batch — Tomato, Sunny Lettuce, Kidney Beans, Crab, Fried Fish, Fried Wings
+
+Seven rows added together (2026-09-20). Four are MEXT used directly; three are
+fried and therefore derived.
+
+**Used directly (÷100), all MEXT:**
+
+- **`Tomato (Raw 赤色トマト)`** ← MEXT **06182** 赤色トマト 果実 生
+- **`Sunny Lettuce (Raw サニーレタス)`** ← MEXT **06315** サニーレタス 葉 生
+- **`Kidney Beans (Boiled いんげんまめ)`** ← MEXT **04008** いんげんまめ 全粒 ゆで
+- **`Boiled Crab (ずわいがに ゆで)`** ← MEXT **10336** ずわいがに ゆで
+
+**The frying model (shared by the three fried rows).** None of these are battered
+— Filipino-style fried fish and plain fried wings go into the oil bare. The model
+is the same one used for the squid 素揚げ reasoning:
+
+```
+100 g raw  →  75 g after water loss  →  +5 g absorbed oil  →  80 g fried
+per 100 g fried: raw solids × 1.25, plus 6.25 g of frying oil
+```
+
+On top of the ×1.25 concentration, thermal retention is applied: **B-vitamins
+×0.85, folate ×0.80, vitamin C ×0.75**, minerals and fat-soluble vitamins ×1.00.
+The oil contributes 9 kcal/g plus α-tocopherol (15.2 mg/100g) and vitamin K
+(120 µg/100g), which is why all three fried rows gain vitamin E and K.
+
+- **`Fried Tilapia (ティラピア)`** ← MEXT **10212** ナイルティラピア 生, fried.
+  **Tilapia is a surprise vitamin D source — 11.0 µg/100g raw**, which survives
+  frying intact (fat-soluble, ×1.25) to **13.8 µg/100g fried, 69% DV**. That is
+  higher than the canned sanma rows.
+- **`Fried Bangus (サバヒー)`** ← **USDA raw milkfish**, fried. **MEXT carries no
+  milkfish at all** — it is a tropical aquaculture species — so this is the only
+  row in the dataset with no MEXT basis whatsoever. See the caveats below.
+- **`Fried Chicken Wings (手羽 揚げ)`** ← MEXT **11218** 若どり 手羽 皮つき 生,
+  fried. **Fat uses a reduced ×1.05 factor, not ×1.25**, because skin-on poultry
+  *renders fat out* during frying — the same reasoning as the Grilled Fish model,
+  where rendered fat drips away rather than concentrating.
+
+Things worth knowing:
+
+- **Kidney beans are the dataset's fibre champion: 13.6 g/100g.** A 150 g serving
+  is **7.3 g fibre (26% DV)** plus 14 g protein, and MEXT measures the biotin
+  (3.7 µg) rather than leaving it "—". Sodium is Tr → 0, so this is the rare
+  protein source that adds no salt.
+- **Sunny lettuce massively outperforms the romaine rows** on the numbers that
+  matter for a leaf: 170 µg RAE vitamin A, 160 µg vitamin K, 120 µg folate and
+  **1.8 mg iron** per 100g. It is a genuinely different food from iceberg/romaine,
+  not a garnish.
+- **Tomato's lycopene is NOT tracked** — the dataset has no lycopene column, and
+  the 123 µg lutein fill badly under-describes it, exactly as with watermelon.
+  Read the vitamin A figure (45 µg RAE) instead.
+- **Boiled crab is measured, not derived**, and is a strong low-calorie protein:
+  15 g protein and only 65 kcal per 100g, with **7.2 µg B12 (300% DV)**, 120 mg
+  calcium and 3.1 mg zinc. Note MEXT's ずわいがに is **snow crab**; if the intended
+  crab is Philippine alimasag, MEXT's species match is **がざみ (10332)** but it
+  exists only **raw**, which is why the measured boiled snow crab was used instead.
+- **Fried wings are the most calorie-dense of the three** at 292 kcal/100g (21.3 g
+  fat), against fried bangus 241 and fried tilapia 211.
+
+Fills and soft numbers:
+
+- **`Fried Bangus` is the softest row in the dataset.** Its base is USDA raw
+  milkfish, and USDA reports **no vitamin D, E or K** for it — vitamin D is
+  entered as **0 rather than invented**, which likely *understates* a fatty fish.
+  Its **amino acids are the tilapia profile scaled ×20.5/19.8** onto the milkfish
+  protein basis, not measured. Treat the whole row as an estimate.
+- **Selenium and biotin for tilapia are MEXT "—"**, filled with the repo's
+  standard fish estimates (45 µg, 5 µg).
+- **Crab's selenium (34 µg) and choline (81 mg) are USDA fills**; its biotin
+  (4.3 µg) comes from MEXT's raw ずわいがに entry.
+- **Heavy metals**: crab uses a crustacean baseline (As 1.5 ppm — again
+  overwhelmingly organic arsenobetaine, as with asari and squid; Cd 0.05, Hg 0.03,
+  Pb 0.01). The two fried fish use the standard fish baseline; wings reuse the
+  poultry baseline.
+
+Two visualizer traps were hit and handled in this batch:
+
+- **`Boiled Crab` contains the substring "oil"** — the fourth time this has
+  happened (Boiled Soba, both clams, now crab). The 🦀 rule is placed above the
+  oil rule.
+- **"Milkfish" contains "milk"**, which would have pinned the row to the top of
+  the list with a 🥛 icon *and an `ml` unit*. The row is therefore named
+  **`Fried Bangus (サバヒー)`** with no "Milkfish" in it. If anyone renames it,
+  that trap returns.
+
+#### Aduna Super Cacao Powder
+
+A **branded product**, not a MEXT entry, so it is sourced in three tiers:
+
+| tier | source | nutrients |
+|---|---|---|
+| 1 | **the user's packaging panel**, confirmed identical to the manufacturer's 275 g panel at `aduna.com/products/cacao-powder-275g` | 321 kcal, protein 22 g, fat 11 g, carb 50 g total, fibre 33 g, salt 0 g, Mg 495 mg, Ca 130 mg, **K 1526 mg**, **P 738 mg** |
+| 2 | **MEXT 16048 ココア ピュアココア** | all vitamins, Cu, **Fe**, Zn |
+| 2b | USDA unsweetened cocoa | Mn 3.84 mg, Se 14 µg, choline 12 mg, lutein 0 |
+
+**The energy cross-check confirms the carbohydrate basis exactly.** The packaging's
+"carb 50 g" could have been EU-style *available* carbohydrate or total-including-fibre.
+Atwater against the label:
+
+```
+22×4 + 11×9 + 17×4 + 33×2  =  88 + 99 + 68 + 66  =  321 kcal   (label: 321)
+```
+
+An exact match — so the 50 g **is total carbohydrate including the 33 g of fibre**,
+splitting as 17 g available + 33 g fibre, which is also precisely what the
+manufacturer's panel prints. Had the 50 g been available carb, energy would compute to
+~387 kcal, 20% above the label.
+
+**Beware aggregated search results for this product.** A search summary gave fibre 36 g,
+K 2050 mg, Mg 600 mg, protein 24 g and **iron 40 mg**, and three of those briefly went
+into this row before the manufacturer's page was read directly. It was a mash-up: Aduna
+sells the powder in **two pack sizes whose panels differ**, and retailer listings add
+stale values. Neither official panel lists iron at all:
+
+| per 100 g | 275 g pack (matches the user's) | 100 g pack |
+|---|---|---|
+| Energy | **321 kcal** | 319 kcal |
+| Carbohydrate | 17 g | 19.5 g |
+| Fibre | **33 g** | 25.5 g |
+| Protein | **22 g** | 22.8 g |
+| Magnesium | **495 mg** | 478 mg |
+| Potassium | **1526 mg** | 1515 mg |
+| Phosphorus | **738 mg** | 731 mg |
+| Salt | 0 g | 0.025 g |
+
+- **Iron is stored as 4.2 mg/100g — a POLYPHENOL-DISCOUNTED value, not total content.**
+  See the dedicated note below. The total-content figure is **14.0 mg** (MEXT 14.0,
+  USDA 13.9); *neither* Aduna panel reports iron at all, so the "40 mg" that appeared
+  in an aggregated search summary has no manufacturer source and was never used.
+- **Potassium and phosphorus now come from the manufacturer**, not MEXT — 1526 and
+  738 mg against MEXT's 2800 and 660. The potassium correction is large (−45%) and
+  matters: MEXT's generic ピュアココア is simply a different powder.
+- **Sodium is 10 mg**, from the 100 g pack's printed salt 0.025 g. The 275 g pack rounds
+  salt to 0 g, which is a rounding floor rather than a measured zero.
+- **Biotin (26.8 µg) now comes from Fineli**, the Finnish national food composition
+  database (THL), which reports **7.5 µg per 28 g** for unsweetened cocoa powder.
+  MEXT leaves biotin "—" for *both* its cocoa entries (ピュアココア 16048 **and**
+  ミルクココア 16049), and USDA FoodData Central does not carry biotin at all, so Fineli
+  is the only national database with a figure. **This replaced an unsourced 3 µg
+  estimate on 2026-10-11 — a 9× correction.** The 3 µg was guessed from a vague
+  "cocoa literature ~2–6 µg" impression and was simply wrong; 26.8 µg fits the
+  seed/nut pattern of the surrounding MEXT-measured rows:
+
+  | row (per 100g) | biotin |
+  |---|---|
+  | Roasted Almonds *(MEXT)* | 60.6 µg |
+  | Raw Sunflower Seeds | 33.0 µg |
+  | **Aduna Cacao *(Fineli)*** | **26.8 µg** |
+  | Natto *(MEXT)* | 18.0 µg |
+  | Ground Sesame / Peanut Butter | 15.0 µg |
+  | Rice Miso *(MEXT)* | 12.0 µg |
+
+  A 20 g serving went from 0.60 µg (2% DV) to **5.36 µg (17.9% DV)** — so biotin is now
+  one of this row's better nutrients rather than a rounding error. Fineli is a
+  secondary source for this dataset (not MEXT, not USDA), so treat it as softer than a
+  MEXT-measured value, but it is a real named national database rather than a guess.
+- **Amino acids** are the MEXT ピュアココア profile scaled ×22/18.5 to the label's
+  protein basis.
+
+What the row is actually good for, per **20 g** (a typical dose):
+
+| | per 20 g | %DV |
+|---|---|---|
+| **Copper** | 0.76 mg | **84%** |
+| **Manganese** | 0.77 mg | **33%** |
+| **Magnesium** | 99 mg | **27%** |
+| **Fibre** | 7.2 g | **26%** |
+| Potassium | 560 mg | 19% |
+| Iron | 2.8 mg | 37% |
+| Calories | 64 | 3% |
+
+**Copper is the headline** — cocoa is the densest copper source in the dataset among
+single foods (3.8 mg/100g; only the three composite salads/smoothies total higher).
+A 20 g spoonful covers most of a day's copper.
+
+Two caveats worth knowing:
+
+- **Cadmium: this row is the dataset's highest at 0.095 ppm**, and that is *because*
+  cacao is a well-known cadmium accumulator. **Origin dominates the number** — Ghana
+  (which Aduna sources from) averages **0.094 mg/kg** in cocoa powder against **Peru
+  0.53** and **Ecuador 0.44**, a 5× spread, and the EU limit for consumer cocoa powder
+  is 0.60. So the figure used is the Ghana-specific mean, and it is low *for cacao*.
+  A South American powder would warrant ~0.5 ppm here. Arsenic 0.05, mercury 0.005,
+  lead 0.05 ppm.
+- **Flavanols — the thing this product is actually sold for — are NOT tracked.** Aduna
+  markets ~200 mg flavanols per 20 g serving and "twice the flavanols of regular
+  cacao", but this dataset has no flavanol or theobromine column, exactly as with
+  lycopene (tomato/watermelon) and citrulline (watermelon). Nothing in the row
+  reflects the premium; read it as a mineral and fibre source.
+- The name needed new `cacao`/`cocoa`/`カカオ`/`ココア` rules (🍫). **`cocoa` is not a
+  substring of `coconut`** (c-o-c-o-a vs c-o-c-o-n-u-t), so the coconut row is safe,
+  and "Aduna" contains no `nut`. Sort weight is left at the Others default (800).
+
+##### Iron is polyphenol-discounted (×0.30)
+
+**This row's iron is the one value that does NOT match a label or a composition table.**
+Stored: **4.2 mg/100g**, which is MEXT/USDA's 14.0 mg × **0.30**. This follows the same
+convention as the `Raw Spinach (Bioavailable)` / `Steamed Spinach` oxalate discount —
+a retention factor expressed *relative to the ordinary mixed-diet absorption the RDI
+already assumes*, so the number stays comparable to the %DV bars.
+
+Cacao is an unusually hostile matrix for non-heme iron, carrying **three** inhibitors at
+once: polyphenols, oxalate (**total 619–783 mg/100g, soluble ~360–567**, i.e. comparable
+to spinach's load) and phytate (**590–750 mg/100g**). Two studies bracket the factor:
+
+| source | design | implies |
+|---|---|---|
+| **Hurrell, Reddy & Cook 1999**, *Br J Nutr* | **human**, erythrocyte radio-Fe incorporation, cocoa beverage + bread meal | **71% inhibition** → ×0.29 |
+| **Yokoi & Konomi**, *Br J Nutr* | rat, Hb-regeneration efficiency, 20-day repletion | cocoa-iron **RBV 45.9–48.8%** vs ferrous sulphate (≈ferric citrate's 47.8%) → ×0.47 |
+
+**×0.30 is taken from the human study, deliberately the conservative end.** The two
+measure different things: Hurrell measured cocoa suppressing *a meal's* iron, while the
+rat RBV measured cocoa's *own* iron — and rat repletion assays generally read more
+favourably than human absorption. Cocoa's intrinsic iron sits in the same polyphenol
+matrix that produced the 71% figure, so the human number is the better guide. Treat
+**×0.29–0.47 as the real uncertainty band**; if a milder reading is wanted, ×0.45 is
+defensible on the rat data.
+
+Practical effect: a 20 g serving reads **0.84 mg (11% DV)** instead of 2.80 mg (37% DV).
+
+Two honest caveats about this discount:
+
+- **It makes the dataset inconsistent, in a known way.** Other phytate- and
+  polyphenol-rich non-heme sources here — natto, kidney beans, ground sesame, almonds,
+  the breads, barley rice — carry **total** iron with no discount. Only spinach and now
+  cacao are adjusted. The justification is the README's own test (*"only nutrients with
+  a large, well-documented raw penalty are cut"*), and a 71% human-measured inhibition
+  clears it. But a reader comparing cacao's iron to kidney beans' is not comparing like
+  with like.
+- **Calcium is also discounted — ×0.33. Zinc and magnesium are NOT.** See below.
+
+##### Calcium is oxalate-discounted (×0.33); zinc deliberately is not
+
+**Calcium: 130 → 42.9 mg/100g (×0.33).** Cacao's soluble oxalate exceeds its own calcium
+in molar terms, so most of that calcium is present as calcium oxalate before it is even
+swallowed:
+
+```
+soluble oxalate  469 mg ÷ 88   = 5.33 mmol
+calcium          130 mg ÷ 40.1 = 3.24 mmol     -> oxalate exceeds calcium 1.65 : 1
+```
+
+The factor comes from **Heaney & Weaver, "Oxalate: effect on calcium absorbability"
+(*AJCN* 1989)**, which measured fractional calcium absorption in humans:
+
+| | fractional absorption |
+|---|---|
+| calcium oxalate, alone | **0.100** |
+| calcium oxalate + milk | 0.140 |
+| milk calcium (reference) | **0.358** |
+
+0.100 ÷ ~0.30 reference ≈ **0.33**. Note this is **milder than spinach's ×0.17**, and
+that is deliberate — the same paper observed that calcium oxalate absorbed *better* than
+the spinach calcium they had measured previously, and cacao's oxalate:calcium ratio
+(1.65:1) is far less extreme than spinach's ~7:1.
+
+Counter-evidence worth knowing: studies at Creighton found chocolate does **not** impair
+calcium absorption from *chocolate milk*. That is not a contradiction — it concerns
+**milk's** calcium, which arrives in such excess that a spoonful of cocoa's oxalate
+cannot bind much of it (Heaney & Weaver saw no interference with milk calcium either).
+The discount here applies only to cacao's **own** 130 mg.
+
+In practice this barely moves: a 20 g serving goes from 3.2% to **1.1% DV**. Cacao is
+not a calcium food either way.
+
+**Zinc is phytate-discounted — ×0.42. Getting the phytate figure right reversed this
+conclusion.** Zinc bioavailability is predicted by the **phytate:zinc molar ratio**
+(WHO/IZiNCG), and the answer hinges entirely on which phytate number is used:
+
+| phytate source | mg/100g | phytate:zinc ratio | WHO bracket |
+|---|---|---|---|
+| Nigerian cocoa **beverages** | 590–750 | 8.3–10.6 | 5–15, moderate (30–35% abs) |
+| **cocoa POWDER, commonly cited** | **1684–1796** | **~24.6** | **>15, LOW (10–15% abs)** |
+| **measured cocoa nibs, defatted to powder** | **980 → ~1817** | **~25.7** | **>15, LOW (10–15% abs)** |
+
+The 590–750 figure was for cocoa *beverages* — diluted drink powders, not pure cacao —
+and it put cacao in the same moderate bracket a mixed diet occupies, implying no
+discount. **Pure cacao is roughly 2.5× higher**, and two independent routes agree:
+
+- The commonly quoted range for cocoa powder is 1684–1796 mg/100g.
+- Independently, cocoa **nibs** measure 0.98 g/100g. Nibs are ~52% fat and this powder
+  is 11%, so defatting concentrates the non-fat solids ×1.85 → **~1817 mg/100g**. That
+  the two routes converge is what makes the figure trustworthy.
+
+At a ratio of ~25 cacao sits in WHO's **low** bracket, 10–15% absorption (midpoint
+12.5%), against the ~30% mixed-diet absorption the zinc RDI assumes:
+**12.5 ÷ 30 = 0.42**. A 20 g serving reads **6.2% DV** instead of 14.7%.
+
+Caveat: the 1684–1796 range is widely quoted but one commentator notes they could not
+locate the primary study, and **fermentation and roasting both lower phytate**, so a
+well-fermented Ghanaian powder may sit at the lower end. The nib-derived cross-check is
+the stronger leg of the argument.
+
+**Magnesium is still not discounted.** Oxalate binds it only partially (spinach gets
+×0.60 on a ~7:1 oxalate:calcium ratio; cacao's is 1.65:1), and at 495 mg/100g magnesium
+is this row's second-best nutrient — a speculative cut would do more harm than good.
+
+So this row carries **three** bioavailability discounts — iron ×0.30, zinc ×0.42,
+calcium ×0.33 — while copper, magnesium, manganese, potassium, phosphorus and fibre are
+total content. Per 20 g the row reads: copper **84% DV**, manganese 33%, magnesium 26%,
+fibre 24%, iron 11%, zinc 6%, calcium 1%.
+
 #### Coconut Water (ココナッツウォーター)
 
 `Coconut Water (ココナッツウォーター)` is per-gram (entered in ml, ≈1 g/ml), from
@@ -1156,6 +1467,14 @@ filled):
 | Canned Albacore Oil-Packed | 0 | 60.3 µg | 29.3 mg | 0 | Se from USDA white-in-oil; choline reuses the shared USDA canned-tuna figure (softest); vit K 44 µg filled from MEXT 10263 (same packing oil) |
 | Mango | 0.8 µg *(MEXT)* | 0 *(MEXT)* | 7.6 mg | 23 µg | biotin & Se MEXT-measured; choline + lutein from USDA raw mango (MEXT carries neither) |
 | Peach (White-Fleshed) | 0.3 µg *(MEXT)* | 0 *(MEXT)* | 6.1 mg | 2 µg | biotin & Se MEXT-measured; choline from USDA raw peach; lutein from USDA *yellow* peach rescaled ×(5/210) by the MEXT white:yellow β-carotene ratio |
+| Tomato (Raw) | 2.3 µg *(MEXT)* | 1 µg *(MEXT)* | 6.7 mg | 123 µg | biotin & Se MEXT-measured; choline + lutein USDA raw tomato. **Lycopene is untracked** — lutein under-describes this row badly |
+| Sunny Lettuce (Raw) | 0.7 µg | 0.6 µg | 9.9 mg | 1,730 µg | biotin & Se are MEXT "—"; all four from USDA red leaf lettuce |
+| Kidney Beans (Boiled) | 3.7 µg *(MEXT)* | 0 *(MEXT Tr)* | 27.1 mg | 0 | only choline filled (USDA kidney beans, boiled); biotin measured |
+| Boiled Crab | 4.3 µg | 34 µg | 81 mg | 0 | biotin from MEXT's raw ずわいがに; Se + choline from USDA cooked crab |
+| Fried Tilapia | 5.0 µg | 45 µg | 85 mg | 0 | *pre-frying, per 100g raw.* Both MEXT "—"; repo's standard fish estimates |
+| Fried Bangus | 5.0 µg | 12.6 µg *(USDA)* | 85 mg | 0 | *pre-frying.* **No MEXT basis at all** — USDA raw milkfish. USDA reports no vitamin D/E/K; D entered as 0 rather than invented. Amino acids are the tilapia profile scaled ×20.5/19.8. Softest row in the dataset |
+| Fried Chicken Wings | 3.1 µg *(MEXT)* | 14 µg *(MEXT)* | 70 mg | 0 | *pre-frying.* Only choline filled (USDA chicken wing, protein-scaled) |
+| Aduna Super Cacao Powder | 26.8 µg *(Fineli)* | 14 µg | 12 mg | 0 | branded product, not MEXT. Biotin from **Fineli** (Finnish THL database, 7.5 µg/28 g) — MEXT leaves it "—" for both its cocoa entries and USDA carries no biotin at all. Se/choline/Mn from USDA unsweetened cocoa. **Iron is polyphenol-discounted; total content is 14.0 mg (MEXT), deliberately not the 40 mg from an aggregated search summary** |
 | Coconut Water | 0 | 1 µg | 1.1 mg | 0 | MEXT "—" for biotin, Se **and vitamin K**; Se + choline from USDA coconut water, vitamin K and biotin filled as 0. At 22 kcal / 0.2 g protein none of these move anything |
 | Sauteed Spinach | 5.0 µg | 5.2 µg | 33 mg | 22,000 µg | all four concentration-scaled off the raw baseline (06267): biotin & Se from **MEXT raw spinach** (2.9 / 3 µg) ×1.73, choline from USDA raw spinach ×1.73, lutein from USDA raw spinach ×1.80 (carotenoid ratio). Note this uses MEXT for Se/biotin where `Steamed Spinach` used USDA — see that section |
 | Watermelon (すいか 赤肉種) | 0.9 µg *(MEXT)* | 0 *(MEXT)* | 4.1 mg | 8 µg | biotin & Se MEXT-measured; choline + lutein from USDA raw watermelon. Note lutein badly under-describes watermelon's carotenoids — its signature pigment is **lycopene**, which this dataset has no column for |
@@ -1196,6 +1515,175 @@ Rationale for the specific picks:
 - **Choline for the fishes** is derived as documented under **Grilled Fish**
   above (85 mg sawara, 90 mg gindara).
 
+## Copper, Magnesium & Zinc RDI — the 2025 Edition
+
+Copper and zinc were added to the visualizer's displayed nutrients on 2026-10-03
+(`NUTRIENT_GROUPS.Others` plus `RDI_TARGETS`), and all three minerals were put on
+the **Japanese MHLW adult-male RDA from 食事摂取基準 2025年版**:
+
+| | label | 2025 bracket used | was (2020年版) | CSV %DV column |
+|---|---|---|---|---|
+| Copper | **0.9 mg** | 30–64 | 0.9 (18–74) | unchanged — same denominator |
+| Magnesium | **380 mg** | **30–49** | 370 (30–64) | **rebased ×370/380 in all 93 tables** (2026-10-04) |
+| Zinc | **9.5 mg** | 30–64 | 11 (18–74) | **rebased ×11/9.5 in all 87 tables** |
+
+**Copper never moved** — 0.9 mg in both editions for a 30–64 man, so its column was
+already correct. Magnesium was initially set to 370 (correct for 50–64) and **rebased
+to 380 on 2026-10-04** once the user's age bracket was confirmed as 30–49. Zinc fell
+11 → 9.5
+because the 2025 revision adopted Japanese urinary-excretion data and moved to
+0.5 mg increments, so **every zinc bar now reads ~16% higher** than before.
+
+**Why the magnesium brackets differ at all — it is body weight, not age.** Dividing
+each adult-male RDA by that bracket's 参照体重 (reference body weight) gives the same
+figure throughout:
+
+| bracket | RDA | reference weight | per kg |
+|---|---|---|---|
+| 18–29 | 340 mg | 63.0 kg | **5.4 mg/kg** |
+| 30–49 | **380 mg** | 70.0 kg | **5.4 mg/kg** |
+| 50–64 | 370 mg | 69.1 kg | **5.4 mg/kg** |
+
+So the requirement is ~**5.4 mg per kg of body weight** across all adult brackets, and
+the 340/380/370 spread only reflects MHLW's reference man getting heavier then lighter.
+If a weight-specific target is ever wanted instead of a bracket lookup, it is
+5.4 × body weight (63 kg → 340, 68 kg → 367, 70 kg → 380). **There is no longevity
+basis for preferring one end of this range**: dose–response meta-analyses put the risk
+reduction in moving from ~150 to ~400 mg/day, with the curve flat at the top, and no
+RCT has tested magnesium against mortality. Japan sets **no upper limit for food
+magnesium** (the 350 mg/day UL is supplemental only), so neither figure carries risk.
+
+Full 2025 brackets, for when the age bracket changes:
+
+| | 18–29 | 30–49 | 50–64 | 65–74 | 75+ |
+|---|---|---|---|---|---|
+| Copper, men | 0.8 | **0.9** | **0.9** | 0.8 | 0.8 |
+| Magnesium, men | 340 | **380** | 370 | 350 | 330 |
+| Zinc, men | 9.0 | **9.5** | **9.5** | 9.0 | 9.0 |
+
+Reference values deliberately **not** used (recorded so they are not mistaken for
+the project targets):
+
+| | Japan 2025 women | US RDA men | US RDA women | US label DV |
+|---|---|---|---|---|
+| Copper | 0.7 (18+) | 0.9 mg | 0.9 mg | 0.9 mg |
+| Magnesium | 280 / 290 / 290 / 280 / 270 | 420 mg | 320 mg | 420 mg |
+| Zinc | 7.5 / 8.0 / 8.0 / 7.5 / 7.0 | 11 mg | 8 mg | 11 mg |
+
+Upper limits for reference: copper **7 mg** (Japan) vs 10 mg (US); zinc **40–45 mg**
+men / 35 mg women (Japan) vs 40 mg (US); magnesium has a Japanese UL only for
+supplemental Mg (350 mg), not food.
+
+Note the dataset as a whole is **not** uniformly Japanese — most vitamin targets
+are still US label DVs (vitamin C 90 not 100, B1 1.2 not 1.4, selenium 55 not 30,
+etc.). Calcium, iron, potassium, magnesium, copper and zinc are the Japanese ones.
+That mix is pre-existing and deliberate; see the Data Structure note.
+
+What the rebase touched, for auditing:
+
+- **84 zinc `% Daily Value` cells** recomputed as `Total ÷ 9.5 × 100`. Verified by
+  diff that **no `Total` row changed** and no column other than Zinc and Copper
+  was touched.
+- **4 tables had a zinc Total but a BLANK %DV cell**, so the app had been counting
+  their zinc as **zero**: `Strawberry (Amaou)`, `Chicken Thigh (Grilled)`,
+  `Pork Loin (Shougayaki)` and `Beef Hire/Tenderloin (Med)`. The last is the
+  significant one — 4 mg zinc per 100 g silently missing. The same four were blank
+  for copper too. All eight cells are now filled. This bug was invisible until
+  copper/zinc became displayed nutrients.
+- **7 copper cells** changed: those 4 blanks plus 3 stale values (Canned Mackerel
+  ×2, Boiled Soba). Copper's denominator did not change, so cells that were merely
+  less precise (e.g. `23.33` vs `23.3333`) were deliberately **left alone** to keep
+  the diff reviewable.
+- **Copper got a new icon** (🪙) in `getNutrientStyle()` and magnesium one too
+  (💎); zinc already matched the existing `selenium`/`zinc` rule (🛡️). With those
+  two added, **no displayed nutrient falls through to the default ✨ icon** any
+  more — worth re-checking if a nutrient is ever added to `NUTRIENT_GROUPS`.
+- Earlier the same day, 3 copper cells were corrected against the 0.9 denominator
+  (Romaine Lettuce, Steamed Spinach, Zespri Green Kiwi), all sub-0.05% DV.
+
+### Duplicate removal, MEXT realignment & spinach fix (2026-10-04)
+
+**Three duplicate tables were deleted** — they had been invisible (no %DV row) until
+the consistency pass above revealed them, at which point they collided with existing
+foods: `Kale (Raw )` (identical to `Raw Kale (Bioavailable)` except iron, which that
+row discounts ×0.60 for absorption), `Romaine Lettuce (Raw )` (a byte-for-byte
+duplicate of `Romaine Lettuce`), and `Apple (Raw )` (overlapping `Apple (Jonagold)`).
+The food count went 95 → **92**. Note `Kale (Raw )` was the derivation *baseline* for
+`Steamed Kale`, `Raw Kale (Bioavailable)` and `King Of Kale Salad`; those rows store
+their own values so nothing broke, but the provenance row is gone — the raw-kale
+figures are recorded in the Steamed Vegetables section.
+
+**Spinach selenium & biotin moved to MEXT.** `Steamed Spinach` and `Raw Spinach
+(Bioavailable)` carried Se 1.0 µg / biotin 1.53 µg per 100g, which look like USDA
+figures, where **MEXT 06267 measures raw spinach at 3 µg / 2.9 µg**. Both rows now use
+the MEXT values, matching what `Sauteed Spinach` already did. The two composites built
+on them were rebuilt from their components, which also made their heavy-metal ppm exact
+weight-averages:
+
+| | Selenium | Biotin |
+|---|---|---|
+| Steamed Spinach Salad | 1.18 → **3.18** | 3.33 → **4.70** |
+| Blueberry Spinach Smoothie | 1.10 → **2.74** | 12.26 → **13.39** |
+
+**Four drifting rows were realigned to MEXT.** These were old bulk-imported entries
+whose values diverged from MEXT by up to 1.9×:
+
+| row | now sourced from | basis |
+|---|---|---|
+| `Strawberry (Amaou)` | **07012** いちご 生 | direct ÷100 |
+| `Chicken Thigh (Grilled)` | **11222** 若どり もも 皮つき 焼き | direct, measured cooked |
+| `Pork Loin (Shougayaki)` | **11124** ロース 脂身つき 焼き | direct, measured cooked |
+| `Beef Hire/Tenderloin (Med)` | **11029** 和牛 ヒレ 赤肉 生 | **derived** raw→cooked |
+
+- **`Strawberry (Amaou)` keeps its cultivar name but now holds generic MEXT いちご
+  data** — MEXT has no cultivar-specific panel, and あまおう is what is actually
+  bought. Its zinc was **exactly half** MEXT's (0.1 vs 0.2 mg/100g), the clearest
+  single error found. Calories 38 → 31.
+- **`Beef Hire/Tenderloin (Med)` changed most: 175 → 250 kcal, fat 9.0 → 17.7 g.**
+  The old row's macros matched *imported* or 乳用肥育牛 fillet, not wagyu. Per the
+  user's "I usually use wagyu", it is now 和牛 ヒレ. **MEXT carries no cooked 和牛
+  ヒレ**, so it is derived with the same dry-heat model as `Wagyu Roast Beef` (80%
+  yield ×1.25, fat ×1.18, B-vitamins ×0.85/×0.80, energy recomputed by Atwater).
+  **The 80% yield is the soft assumption** — a steak cooked to medium may retain
+  more water than a roast, which would make this row read high.
+- **`Pork Loin (Shougayaki)` keeps its seasoned sodium.** MEXT 11124 is 52 mg/100g;
+  ~600 mg is added for the ginger-soy sauce, preserving the previous row's seasoned
+  basis and following the `Chicken Karaage` precedent rather than the unseasoned
+  convention used for the liver and wagyu rows. Protein rose 20.0 → 26.7 g.
+- **Choline is the only fill in all four** (MEXT carries none), protein-scaled from
+  USDA. Strawberry additionally takes lutein 26 µg from USDA. Beef's selenium and
+  biotin are the usual ［乳用肥育牛肉］ 11030 borrow, since 和牛 leaves both "—".
+
+### Full %DV consistency pass (2026-10-03)
+
+Immediately after the zinc rebase, every `% Daily Value (RDI)` cell in the file was
+recomputed from its `Total` row as `Total ÷ RDI × 100` — the definition the Data
+Structure section already states. This was safe to automate because **%DV carries no
+information the Total row does not**; it was verified first that no cell existed
+where the Total was blank but the %DV held a value (0 such cells), so nothing could
+be lost. Results:
+
+- **371 cells across 55 tables** recomputed. Most were rounding drift, but it also
+  cleared real errors up to ~12% relative (e.g. calcium 5 tables, selenium 8,
+  iron 1, vitamin B1 3).
+- **21 more blank-%DV cells filled** beyond the copper/zinc ones: **16 in manganese**
+  and **5 in phosphorus**. Same class of bug — the app read them as zero.
+- **The 8 "invisible" tables were fixed.** `Blue Cheese`, `Apple (Raw )`,
+  `Sesame Dressing`, `Granola`, `Red Cabbage (Raw )`, `Celery (Raw )`,
+  `Romaine Lettuce (Raw )` and `Kale (Raw )` sat as **nine consecutive `Total` rows
+  with no `% Daily Value` rows and no separators** (only the 9th, King Of Kale
+  Salad, had one). Each now has a computed %DV row plus the required 2-row
+  separators. **The app went from 87 to 95 selectable foods.**
+- Note this means earlier analyses that enumerated "80 foods" or "87 foods" —
+  including the lowest-calorie diet optimisation — silently excluded these eight.
+
+After the pass: **95 Total rows, 95 %DV rows, 0 blanks, 0 inconsistencies** beyond
+the file's own 4-decimal storage floor. That floor leaves 54 cells whose stored
+value differs from exact by at most **0.00005 percentage points per gram** (0.01 %DV
+on a 200 g serving) — an artifact of the `round(x, 4)` display convention, not of the
+arithmetic. Any future consistency check should use an absolute tolerance, not a
+relative one, or it will keep re-flagging these.
+
 ## Visualizer Food Ordering
 
 The order foods appear in the visualizer's "Available Foods" list is **not** the
@@ -1231,10 +1719,16 @@ Two things to remember when adding a food:
   broader ones that would also match: e.g. Chicken is tested before Meat so
   "chicken liver" is not caught by the meat rule, and the Soba/noodle check runs
   before the Oil check because "Boiled Soba" contains the substring "oil".
-  **That "Boiled" → "oil" trap has now bitten twice** — both clam entries begin
-  with "Boiled", so the shellfish rule (🐚) must also sit above the Oil rule in
-  `getFoodStyle()`; it is placed directly after the fish rule. Any future
-  "Boiled …" entry needs the same care. (`getFoodTypeWeight()` is safe here
+  **That "Boiled" → "oil" trap has now bitten four times** — Boiled Soba, both
+  clams, and Boiled Crab. Every one of those rules (🍜, 🐚, 🦀) must sit above the
+  Oil rule in `getFoodStyle()`; they are placed directly after the fish rule. Any
+  future "Boiled …" entry needs the same care.
+  **An English food name can also collide with an unrelated category.**
+  "Milkfish" contains **"milk"**, and the milk rule is both early in
+  `getFoodStyle()` *and* pinned at weight 10 *and* drives the **`ml` unit** — so a
+  row named "Fried Milkfish" would render as a pinned 🥛 drink. It is named
+  **`Fried Bangus (サバヒー)`** to dodge this. Check new English names against the
+  early rules (milk, oil, rice, bean, nut), not just against other foods. (`getFoodTypeWeight()` is safe here
   because its Oils rule matches only names *ending* in "oil".)
   **Composites and dishes named after an ingredient are the sharpest case.**
   "Blueberry Spinach Smoothie" would otherwise be caught by the blueberry

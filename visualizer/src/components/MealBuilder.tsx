@@ -19,7 +19,8 @@ const NUTRIENT_GROUPS = {
     'Vitamin B9 (Folate) (mcg)', 'Vitamin B12 (Cobalamin) (mcg)', 'Vitamin C (mg)', 'Choline (mg)'
   ],
   Others: [
-    'Lutein + Zeaxanthin (mcg)', 'Calcium (mg)', 'Iron (mg)', 'Magnesium (mg)', 'Potassium (mg)', 'Selenium (mcg)'
+    'Lutein + Zeaxanthin (mcg)', 'Calcium (mg)', 'Copper (mg)', 'Iron (mg)', 'Magnesium (mg)',
+    'Potassium (mg)', 'Selenium (mcg)', 'Zinc (mg)'
   ]
 }
 
@@ -46,10 +47,16 @@ const RDI_TARGETS: Record<string, string> = {
   'Choline (mg)': '400 mg',
   'Lutein + Zeaxanthin (mcg)': '10000 mcg',
   'Calcium (mg)': '800 mg',
+  // Copper, magnesium and zinc are the Japanese MHLW adult-MALE RDA from
+  // 食事摂取基準 **2025年版**, at the **30–49 bracket** (the user's age).
+  // The CSV %DV columns were rebased to match — do not change a value here
+  // without recomputing that nutrient's %DV column in every table.
+  'Copper (mg)': '0.9 mg',
   'Iron (mg)': '7.5 mg',
-  'Magnesium (mg)': '370 mg',
+  'Magnesium (mg)': '380 mg',
   'Potassium (mg)': '3000 mg',
-  'Selenium (mcg)': '55 mcg'
+  'Selenium (mcg)': '55 mcg',
+  'Zinc (mg)': '9.5 mg'
 }
 
 // Whole-serving entries: measured in quantity (servings), not grams. Their CSV
@@ -95,7 +102,10 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('broccoli')) return { icon: '🥦', color: '#10b981' }
   if (lower.includes('salad') || lower.includes('celery')) return { icon: '🥗', color: '#10b981' }
   if (lower.includes('liver') || lower.includes('beef') || lower.includes('pork') || lower.includes('hamburg') || lower.includes('ハンバーグ')) return { icon: '🥩', color: '#ef4444' }
-  if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('tuna') || lower.includes('マグロ') || lower.includes('anchovy') || lower.includes('sawara') || lower.includes('gindara') || lower.includes('sanma') || lower.includes('さんま') || lower.includes('秋刀魚') || lower.includes('fish')) return { icon: '🐟', color: '#f97316' }
+  if (lower.includes('salmon') || lower.includes('mackerel') || lower.includes('tuna') || lower.includes('マグロ') || lower.includes('anchovy') || lower.includes('sawara') || lower.includes('gindara') || lower.includes('sanma') || lower.includes('さんま') || lower.includes('秋刀魚') || lower.includes('tilapia') || lower.includes('ティラピア') || lower.includes('bangus') || lower.includes('サバヒー') || lower.includes('fish')) return { icon: '🐟', color: '#f97316' }
+  // Crab. MUST sit above the oil rule: "Boiled Crab" contains the substring
+  // "oil" — the same trap as Boiled Soba and the two clams.
+  if (lower.includes('crab') || lower.includes('かに') || lower.includes('蟹')) return { icon: '🦀', color: '#f97316' }
   // Shellfish. MUST stay above the oil (💧) rule: both clam names begin with
   // "Boiled", which contains the substring "oil" — the same trap documented for
   // "Boiled Soba".
@@ -121,6 +131,11 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('soba') || lower.includes('そば') || lower.includes('noodle')) return { icon: '🍜', color: '#d97706' }
   if (lower.includes('oil') || lower.includes('油')) return { icon: '💧', color: '#eab308' }
   if (lower.includes('unagi') || lower.includes('eel') || lower.includes('うなぎ')) return { icon: '🐉', color: '#84cc16' }
+  // Cacao/cocoa powder. Note 'cocoa' is NOT a substring of 'coconut'
+  // (c-o-c-o-a vs c-o-c-o-n-u-t), so this cannot steal the coconut rows, and
+  // "Aduna Super Cacao Powder" contains no 'nut' either. Sort weight is left at
+  // the Others default (800) — it is a powder, not a nut or a bean dish.
+  if (lower.includes('cacao') || lower.includes('cocoa') || lower.includes('カカオ') || lower.includes('ココア')) return { icon: '🍫', color: '#78350f' }
   if (lower.includes('ice cream')) return { icon: '🍨', color: '#fdf2f8' }
   return { icon: '🍽️', color: 'white' }
 }
@@ -146,6 +161,8 @@ const getNutrientStyle = (name: string) => {
   if (lower.includes('iron')) return { icon: '🩸', color: '#b91c1c' }
   if (lower.includes('potassium')) return { icon: '🍌', color: '#a855f7' }
   if (lower.includes('selenium') || lower.includes('zinc')) return { icon: '🛡️', color: '#b91c1c' }
+  if (lower.includes('copper')) return { icon: '🪙', color: '#b45309' }
+  if (lower.includes('magnesium')) return { icon: '💎', color: '#14b8a6' }
   
   return { icon: '✨', color: 'white' }
 }
@@ -187,6 +204,9 @@ const getFoodTypeWeight = (name: string) => {
       lower.includes('roe') || lower.includes('anchovy') || lower.includes('sawara') ||
       lower.includes('gindara') || lower.includes('fish') ||
       lower.includes('sanma') || lower.includes('さんま') || lower.includes('秋刀魚') ||
+      lower.includes('tilapia') || lower.includes('ティラピア') ||
+      lower.includes('bangus') || lower.includes('サバヒー') ||
+      lower.includes('crab') || lower.includes('かに') || lower.includes('蟹') ||
       lower.includes('clam') || lower.includes('shijimi') || lower.includes('asari') ||
       lower.includes('しじみ') || lower.includes('あさり') ||
       lower.includes('squid') || lower.includes('するめ')) return 500 // Fish (incl. shellfish & squid)
