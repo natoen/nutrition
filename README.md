@@ -645,6 +645,67 @@ Things to know about these two rows:
   Both clams are **low-mercury** (0.01–0.04 ppm) — roughly a tenth of the
   albacore rows' 0.35 ppm.
 
+#### Oatmeal (日食オートミール)
+
+`Oatmeal (日食オートミール Dry g)` is from **MEXT 01004 えんばく オートミール** used
+directly (÷100). The user's product is 日食 (Nisshoku / 日本食品製造) **organic** pure
+oatmeal — rolled and steamed — prepared by adding water and microwaving.
+
+**BASIS: DRY weight — the gram you scoop out of the bag, not the cooked porridge.**
+MEXT 01004 is the dry product, and this is the third basis convention in the dataset
+(alongside per-serving composites and the shell-on clams), so it is spelled out in the
+row name. Cooked weight was rejected deliberately: porridge weight depends entirely on
+how much water is added, so it is not reproducible, whereas 30 g dry is exact. **Note
+this differs from the rice rows, which ARE cooked weight** — `Cooked White Rice` is
+1.56 kcal/g against this row's 3.50 kcal/g, and the gap is water, not food.
+
+**No cooking adjustment is applied, and none is needed.** Nisshoku's own page states the
+product is *already* heat-processed — whole groats are steamed, roller-flattened, then
+roasted — and «そのままお召し上がりいただけます» (edible straight from the bag). Adding
+water and microwaving therefore only rehydrates it. There is also **zero leaching**,
+since the water is absorbed and eaten. The only heat-labile nutrient in meaningful
+supply is B1 (0.20 mg/100g), where even a harsh 15% loss on a 30 g serving costs
+0.009 mg ≈ 0.75% DV.
+
+**Nisshoku's own panel corroborates MEXT closely**, which is why MEXT was used whole
+rather than stitching the two together (Nisshoku publishes only a partial panel, and
+gives *ranges* because «農地、気候、品種、作況» make oat nutrients vary):
+
+| per 100g | MEXT 01004 | Nisshoku (×100/30) |
+|---|---|---|
+| Energy | 350 kcal | 367 kcal |
+| Protein | 13.7 g | 9.0–16.7 g |
+| Carbohydrate | 69.1 g | 70.1 g |
+| Dietary fibre | 9.4 g | 10.6 g |
+| Calcium | 47 mg | 37–63 mg |
+| Iron | 3.9 mg | 3.3–5.7 mg |
+| Vitamin E | 0.6 mg | 0.33–0.67 mg |
+
+MEXT falls inside Nisshoku's stated range for calcium, iron, B6 and vitamin E.
+
+Things worth knowing, per **30 g dry serving** (Nisshoku's own serving size):
+
+- **Manganese is the standout: 1.08 mg, 47% DV.** Oats are genuinely manganese-rich.
+  Note MEXT leaves Mn as "—", so this is a USDA fill (3.6 mg/100g) and therefore the
+  softest big number in the row.
+- **Biotin 6.6 µg (22% DV) is MEXT-MEASURED**, not filled — 22.0 µg/100g. Oats are a
+  real biotin source, in the same league as the nut rows.
+- Iron 1.17 mg (16% DV), fibre 2.82 g (10% DV), selenium 5.4 µg (10% DV), protein 4.1 g,
+  for 105 kcal.
+- **β-glucan is NOT tracked.** Nisshoku prints 1.4 g per 30 g serving, and it is the
+  soluble fibre behind oats' cholesterol claims — but this dataset has only a single
+  `Dietary Fiber` column, so the β-glucan share is invisible. Same class of gap as
+  lycopene, citrulline and cacao's flavanols.
+- **Choline (26 mg) and lutein (180 µg) are USDA fills**; MEXT carries neither.
+- **Heavy metals use a DRY cereal-grain baseline** (As 0.005, Cd 0.015, Hg 0.0005,
+  Pb 0.008 ppm). These sit above the cooked grain rows because those are water-diluted,
+  and below the seed rows. Arsenic is kept low because oats are not paddy-grown and are
+  not an arsenic accumulator, unlike rice.
+- The name needed new `oat`/`オート`/`えんばく` rules (🥣, Carbs 700); `oat` was verified
+  against every existing food name first and collides with none. **The name originally
+  contained a comma** (`...オートミール, Dry g`) which would have broken the CSV — the
+  append guard caught it, the same trap as the wagyu stew row.
+
 #### Barley Rice (麦ご飯)
 
 `Barley Rice (麦ご飯 5割麦)` is per-gram and is a **blend**, not a single MEXT
@@ -1156,42 +1217,50 @@ The discount here applies only to cacao's **own** 130 mg.
 In practice this barely moves: a 20 g serving goes from 3.2% to **1.1% DV**. Cacao is
 not a calcium food either way.
 
-**Zinc is phytate-discounted — ×0.42. Getting the phytate figure right reversed this
-conclusion.** Zinc bioavailability is predicted by the **phytate:zinc molar ratio**
-(WHO/IZiNCG), and the answer hinges entirely on which phytate number is used:
+**Zinc is NOT discounted (7.0 mg/100g, total content).** A ×0.42 phytate discount was
+applied on 2026-10-11 and **reverted the same day** — the method did not survive scrutiny,
+and the reason is worth recording so it is not repeated.
 
-| phytate source | mg/100g | phytate:zinc ratio | WHO bracket |
-|---|---|---|---|
-| Nigerian cocoa **beverages** | 590–750 | 8.3–10.6 | 5–15, moderate (30–35% abs) |
-| **cocoa POWDER, commonly cited** | **1684–1796** | **~24.6** | **>15, LOW (10–15% abs)** |
-| **measured cocoa nibs, defatted to powder** | **980 → ~1817** | **~25.7** | **>15, LOW (10–15% abs)** |
+The WHO/IZiNCG phytate:zinc bands (<5 high, 5–15 moderate, >15 low) are calibrated on
+**whole diets, not single foods**. Scored alone, essentially every plant food in this
+dataset lands in the ">15, low" band:
 
-The 590–750 figure was for cocoa *beverages* — diluted drink powders, not pure cacao —
-and it put cacao in the same moderate bracket a mixed diet occupies, implying no
-discount. **Pure cacao is roughly 2.5× higher**, and two independent routes agree:
+| scored in isolation | phytate:zinc ratio |
+|---|---|
+| Barley Miso | 66 |
+| Ground Sesame | 57 |
+| Peanut Butter | 51 |
+| Natto | 45 |
+| Roasted Almonds | 37 |
+| Brown Rice | 31 |
+| Wheat Bread | 30 |
+| Kidney Beans | 29 |
+| **Aduna Cacao** | **24.6** |
+| Cooked White Rice (bran removed) | 5.0 |
 
-- The commonly quoted range for cocoa powder is 1684–1796 mg/100g.
-- Independently, cocoa **nibs** measure 0.98 g/100g. Nibs are ~52% fat and this powder
-  is 11%, so defatting concentrates the non-fat solids ×1.85 → **~1817 mg/100g**. That
-  the two routes converge is what makes the figure trustworthy.
+A test that flags almost everything is being misused. A *day's* diet averages 5–15
+precisely because these foods are eaten alongside meat, fish, eggs and dairy, which carry
+zinc and no phytate. Worked example with the same 20 g of cacao:
 
-At a ratio of ~25 cacao sits in WHO's **low** bracket, 10–15% absorption (midpoint
-12.5%), against the ~30% mixed-diet absorption the zinc RDI assumes:
-**12.5 ÷ 30 = 0.42**. A 20 g serving reads **6.2% DV** instead of 14.7%.
+| | phytate | zinc | ratio | band |
+|---|---|---|---|---|
+| cacao alone | 348 mg | 1.40 mg | **24.6** | >15 low |
+| cacao inside a realistic day | 1486 mg | 14.93 mg | **9.9** | **5–15 moderate** |
 
-Caveat: the 1684–1796 range is widely quoted but one commentator notes they could not
-locate the primary study, and **fermentation and roasting both lower phytate**, so a
-well-fermented Ghanaian powder may sit at the lower end. The nib-derived cross-check is
-the stronger leg of the argument.
+9.9 is the band the 9.5 mg zinc RDA was calibrated on, so **the phytate penalty is already
+priced into the target** — discounting the food as well charges it twice. Cacao was simply
+the row the rule got applied to first; it is no more deserving than the sesame or miso
+above.
 
-**Magnesium is still not discounted.** Oxalate binds it only partially (spinach gets
-×0.60 on a ~7:1 oxalate:calcium ratio; cacao's is 1.65:1), and at 495 mg/100g magnesium
-is this row's second-best nutrient — a speculative cut would do more harm than good.
+**The general rule this establishes for this dataset: discount a nutrient only when there
+is a measured absorption outcome for that food, never from a diet-level screening ratio.**
+Cacao's iron (Hurrell, 71% inhibition measured in humans) and calcium (Heaney & Weaver,
+10% vs 36% measured) meet that test. Zinc did not.
 
-So this row carries **three** bioavailability discounts — iron ×0.30, zinc ×0.42,
-calcium ×0.33 — while copper, magnesium, manganese, potassium, phosphorus and fibre are
-total content. Per 20 g the row reads: copper **84% DV**, manganese 33%, magnesium 26%,
-fibre 24%, iron 11%, zinc 6%, calcium 1%.
+So this row carries **two** bioavailability discounts — iron ×0.30 and calcium ×0.33 —
+while zinc, copper, magnesium, manganese, potassium, phosphorus and fibre are total
+content. Per 20 g the row reads: copper **84% DV**, manganese 33%, magnesium 26%, fibre
+24%, biotin 18%, zinc 15%, iron 11%, calcium 1%.
 
 #### Coconut Water (ココナッツウォーター)
 
@@ -1484,6 +1553,7 @@ filled):
 | Grilled Squid | 6.3 µg *(MEXT)* | 46 µg *(MEXT)* | 98 mg | 0 | only choline filled (USDA squid raw 65 mg, protein-scaled ×23.6/15.58); biotin & Se measured. **Vitamin K is also a fill (0)** — MEXT "—", and するめいか 生 carries 0 |
 | Fried Squid (天ぷら) | 4.4 µg *(MEXT)* | 31 µg *(MEXT)* | 70 mg | 0 | only choline filled (same USDA squid basis, ×16.7/15.58); everything else measured, including the batter-oil vitamins K/D/E |
 | Grilled Chicken Breast | 5.3 µg *(MEXT)* | 29 µg *(MEXT)* | 103 mg | 0 | only choline filled (USDA roasted breast 82.5 mg, protein-scaled ×38.8/31); biotin & Se measured |
+| Oatmeal (日食オートミール) | 22.0 µg *(MEXT)* | 18 µg *(MEXT)* | 26 mg | 180 µg | biotin & Se are MEXT-measured and both notable; choline + lutein from USDA oats. **Manganese (3.6 mg) is also a USDA fill** — MEXT leaves it "—" — and it is the row's biggest number at 47% DV per 30 g, so the softest of the four |
 | Barley Rice (麦ご飯) | 0.8 µg *(MEXT)* | 0 *(MEXT Tr)* | 13.4 mg | 0 | *barley half only, per 100g cooked 押麦.* Biotin & Se from MEXT 01170; choline from USDA barley, pearled, cooked. The rice half contributes its own row's values |
 | Wagyu Stew Beef (chuck 赤肉) | 2.0 µg | 17 µg | 84 mg | 0 | *per 100g raw, before the ×1.538 cooking concentration.* Biotin & Se are MEXT "—" for all 和牛肉, borrowed from **MEXT 11030** (乳用肥育牛肉 かた 脂身つき) and protein-scaled ×20.2/17.1; choline from USDA beef chuck 87 mg scaled ×20.2/21 |
 | Wagyu Roast Beef (round) | 2.1 µg | 17 µg | 88 mg | 0 | *per 100g raw, before the ×1.25 cooking concentration.* Same 11030 source, protein-scaled ×21.3/17.1 since the round is leaner and denser in protein; choline USDA beef ×21.3/21 |

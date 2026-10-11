@@ -126,6 +126,8 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('chicken')) return { icon: '🍗', color: '#f59e0b' }
   if (lower.includes('sesame') || lower.includes('ごま') || lower.includes('胡麻')) return { icon: '🫘', color: '#a16207' }
   if (lower.includes('bread') || lower.includes('パン') || lower.includes('mischbrot')) return { icon: '🍞', color: '#fcd34d' }
+  // Oats. "oat" collides with no existing food name; verified before adding.
+  if (lower.includes('oat') || lower.includes('オート') || lower.includes('えんばく')) return { icon: '🥣', color: '#d97706' }
   if (lower.includes('cheese')) return { icon: '🧀', color: '#fbbf24' }
   // Soba must be checked before oil: "Boiled" contains "oil"
   if (lower.includes('soba') || lower.includes('そば') || lower.includes('noodle')) return { icon: '🍜', color: '#d97706' }
@@ -227,6 +229,7 @@ const getFoodTypeWeight = (name: string) => {
       lower.includes('みそ')) return 650 // Beans/Legumes
   if (lower.includes('rice') || lower.includes('bread') || lower.includes('soba') ||
       lower.includes('noodle') || lower.includes('mischbrot') || lower.includes('パン') ||
+      lower.includes('oat') || lower.includes('オート') || lower.includes('えんばく') ||
       lower.includes('granola')) return 700 // Carbs
 
   // Eggs, then the remaining others (cheeses etc.)
