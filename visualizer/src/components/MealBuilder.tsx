@@ -94,6 +94,9 @@ const getFoodStyle = (name: string) => {
   if (lower.includes('tomato')) return { icon: '🍅', color: '#ef4444' }
   if (lower.includes('potato')) return { icon: '🥔', color: '#d97706' }
   if (lower.includes('carrot')) return { icon: '🥕', color: '#f97316' }
+  // Pumpkin SEEDS must be tested before the pumpkin rule: "Pumpkin Seeds"
+  // contains "pumpkin" and would otherwise render as a 🎃 vegetable.
+  if (lower.includes('pumpkin seed') || lower.includes('かぼちゃの種') || lower.includes('pepita')) return { icon: '🌱', color: '#65a30d' }
   if (lower.includes('kabocha') || lower.includes('pumpkin')) return { icon: '🎃', color: '#d97706' }
   if (lower.includes('kiwi')) return { icon: '🥝', color: '#84cc16' }
   if (lower.includes('avocado')) return { icon: '🥑', color: '#10b981' }
@@ -192,6 +195,10 @@ const getFoodTypeWeight = (name: string) => {
       lower.includes('fruit')) return 100 // Fruits
       // NOTE: "coconut" contains the substring "nut". This Fruits rule MUST stay
       // above the Nuts/Seeds rule below, or coconut water sorts as a nut.
+  // Pumpkin SEEDS before the Vegetables rule, which matches "pumpkin" and would
+  // otherwise file them at 200 instead of with the other seeds at 600.
+  if (lower.includes('pumpkin seed') || lower.includes('かぼちゃの種') ||
+      lower.includes('pepita')) return 600 // Nuts/Seeds
   if (lower.includes('cabbage') || lower.includes('celery') || lower.includes('lettuce') ||
       lower.includes('kale') || lower.includes('broccoli') || lower.includes('carrot') ||
       lower.includes('kabocha') || lower.includes('pumpkin') || lower.includes('tomato') ||

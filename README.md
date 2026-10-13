@@ -645,6 +645,67 @@ Things to know about these two rows:
   Both clams are **low-mercury** (0.01–0.04 ppm) — roughly a tenth of the
   albacore rows' 0.35 ppm.
 
+#### Pumpkin Seeds (Alishan 有機かぼちゃの種)
+
+`Pumpkin Seeds (Alishan 有機かぼちゃの種)` is **raw, hulled, organic, unsalted** seeds,
+sourced in two tiers because MEXT has no matching preparation:
+
+| tier | source | nutrients |
+|---|---|---|
+| 1 | **Alishan's own label** | 582 kcal, protein 37 g, fat 46 g, carb 7.6 g, salt 0.03 g |
+| 2 | **MEXT 05006 かぼちゃ いり 味付け** | fibre + every micronutrient and the amino acids |
+
+**MEXT's only pumpkin-seed entry is いり 味付け — roasted AND seasoned**, which is a
+different product from raw unsalted seeds. Its minerals are still the best available
+reference (salting moves sodium, not magnesium or zinc), but **its sodium is deliberately
+NOT used**: MEXT 05006 is 47 mg/100g against Alishan's 12 mg (salt 0.03 g).
+
+**The macros disagree between the two sources and Alishan wins**, since it is the actual
+product:
+
+| per 100g | Alishan (label) | MEXT 05006 | USDA raw kernels |
+|---|---|---|---|
+| Energy | **582 kcal** | 590 | 559 |
+| Protein | **37.0 g** | 26.5 | 30.2 |
+| Fat | **46.0 g** | 51.8 | 49.1 |
+
+Alishan's 37 g protein is well above both references — 1.40× MEXT's. Added oil in the
+seasoned MEXT product explains part of the gap (more fat dilutes protein) but not all of
+it; variety differences are the likely remainder, since high-protein Styrian-type seeds
+are common in organic supply. **Alishan's panel is internally consistent**, which is why
+it is trusted: Atwater gives `37×4 + 46×9 + 7.6×4 = 592 kcal` against the stated 582,
+2% apart. **A consequence worth noting: the micronutrients come from a 26.5 g-protein
+basis while the macros are 37 g, so the minerals are probably slightly conservative.**
+
+What the row is for, per **30 g** (a normal handful):
+
+| | per 30 g | %DV |
+|---|---|---|
+| **Manganese** | 1.32 mg | **57%** |
+| **Magnesium** | 159 mg | **42%** |
+| **Phosphorus** | 330 mg | **26%** |
+| **Iron** | 1.95 mg | **26%** |
+| **Zinc** | 2.31 mg | **24%** |
+| Protein | 11.1 g | 22% |
+| Calories | 175 | 9% |
+
+**This is now the dataset's best magnesium source per serving** and its best plant zinc —
+the two things pumpkin seeds are known for, both confirmed. Note 175 kcal per handful is
+not trivial.
+
+- **Arginine is 4,700 mg of the 29,000 mg amino-acid total** — by far the largest single
+  amino acid, and ~4.7% of the seed by weight. Characteristic of pumpkin seeds.
+- **Iron is the micronutrient with the widest source disagreement**: MEXT 6.5 mg vs USDA
+  raw 8.82. MEXT's lower figure is used, per the repo's priority rule.
+- **Heavy metals use a seed baseline** (As 0.001, Cd 0.015, Hg 0.0002, Pb 0.002 ppm).
+  Cadmium is set below the sunflower row's 0.02 — sunflower is the stronger Cd
+  accumulator — but above the nut rows, since cucurbit seeds do take up some cadmium.
+- **A keyword trap was hit and fixed.** "Pumpkin Seeds" contains **"pumpkin"**, which
+  already maps to Kabocha (🎃, Vegetables 200) — so without intervention this row rendered
+  as a 🎃 *vegetable*. A `pumpkin seed`/`かぼちゃの種`/`pepita` rule is therefore placed
+  **above** the pumpkin rule in *both* functions (🌱, Nuts/Seeds 600). Verified
+  `Kabocha (Raw)` still returns 🎃/200. Same class as "coconut" containing "nut".
+
 #### Oatmeal (日食オートミール)
 
 `Oatmeal (日食オートミール Dry g)` is from **MEXT 01004 えんばく オートミール** used
@@ -1670,6 +1731,53 @@ What the rebase touched, for auditing:
   more — worth re-checking if a nutrient is ever added to `NUTRIENT_GROUPS`.
 - Earlier the same day, 3 copper cells were corrected against the 0.9 denominator
   (Romaine Lettuce, Steamed Spinach, Zespri Green Kiwi), all sub-0.05% DV.
+
+### Audit of the long-invisible rows (2026-10-14)
+
+The five rows that had been invisible for months (no %DV row until 2026-10-03) were
+finally audited against MEXT. **Four of the five had drifted materially and were
+realigned; the fifth cannot be checked.**
+
+| row | realigned to | columns moved >20% |
+|---|---|---|
+| `Celery (Raw )` | MEXT **06119** セロリ 葉柄 生 | **17** |
+| `Sesame Dressing` | MEXT **17117** ごまドレッシング | **17** |
+| `Red Cabbage (Raw )` | MEXT **06064** レッドキャベツ 結球葉 生 | 13 |
+| `Blue Cheese` | MEXT **13039** ナチュラルチーズ ブルー | 13 |
+| `Granola` | **cannot be audited** — see below | — |
+
+The worst individual errors found:
+
+- **`Celery (Raw )` had protein 0.0 g** — flagged as suspicious beforehand and confirmed
+  wrong; MEXT says **0.4 g**. It also had **vitamin A 5× too high** (20 vs 4 µg RAE),
+  **vitamin K 3× too high** (30 vs 10 µg), **sodium 2.9× too high** (80 vs 28 mg), and
+  copper, manganese and biotin all sitting at **0** where MEXT has real values.
+- **`Sesame Dressing` vitamin E was 2.50 mg against MEXT's 4.4** — the July suspicion
+  that it "looked conservative for a 37.5%-fat dressing" was correct, low by 1.76×. Its
+  **sodium was also understated 1125 → 1800 mg**, the single largest absolute correction
+  in this pass.
+- **`Blue Cheese` had copper 5× too high** (0.10 vs 0.02 mg), **vitamin K at 0.18×**
+  (2 vs 11 µg), vitamin D 3.3× too high and vitamin A at 0.68×.
+- `Red Cabbage (Raw )` had **sodium 4.4× too high** (17.5 vs 4 mg) and **folate at half**
+  (30 vs 58 µg).
+
+**`Granola` is unauditable: MEXT has no granola entry at all** (食品番号 01996 returns
+「食品番号が不正です」). Granola is a formulated commercial product whose composition is
+brand-specific, and published figures range ~385–471 kcal/100g against this row's 425.
+It therefore stays as-is and joins `Fried Bangus` and `Aduna Super Cacao Powder` as a row
+with no MEXT basis. Worth replacing with a specific product's panel if the brand is known.
+
+**`King Of Kale Salad` had to be shifted**, since four of its components changed. It is a
+stored gram-weighted sum, so each nutrient was moved by `Σ grams × (new − old)` over the
+changed components using the documented recipe (40 g sesame dressing, 40 g red cabbage,
+10 g blue cheese, 7 g celery). **Its sodium rose 694 → 966 mg**, almost entirely from the
+sesame-dressing correction — a 39% increase and the most consequential single result of
+this audit, since the salad was understating a quarter of a day's sodium.
+
+**`Oatmeal` manganese was checked and needed no change.** The 3.6 mg/100g USDA fill is
+corroborated by USDA rolled oats at 3.63; other databases span 2.9–5.0, so 3.6 is a
+defensible central value. It remains a fill (MEXT leaves Mn "—" for oats) and the row's
+largest number, so the 2.9–5.0 spread is the honest uncertainty.
 
 ### Duplicate removal, MEXT realignment & spinach fix (2026-10-04)
 
