@@ -1529,12 +1529,61 @@ Things worth knowing:
   squid rule was written against `するめ` and never a bare `いか`. Had it used
   `いか`, adding this food would have silently turned watermelon into squid.
 
+#### Grilled Sanma (さんま 皮つき 焼き)
+
+`Grilled Sanma (さんま 皮つき 焼き)` ← **MEXT 10174**, measured and used directly (÷100).
+Skin-on, which is how sanma is eaten grilled. No derivation or retention factors.
+
+This completes the sanma set: the dataset now holds the **grilled** fish alongside the two
+**canned** variants, which makes a clean three-way comparison per 100g:
+
+| | Grilled (10174) | 味付け can (10177) | かば焼 can (10178) |
+|---|---|---|---|
+| Calories | 281 | 259 | 219 |
+| **Protein** | **23.3 g (47% DV)** | 18.9 g | 17.4 g |
+| Fat | 22.8 g | 18.9 g | 13.0 g |
+| Carbohydrate | 0.2 g | 5.6 g | 9.7 g |
+| **Sodium** | **130 mg (5.7% DV)** | 540 mg | 600 mg |
+| **Vitamin D** | **13.0 µg (65% DV)** | 13.0 µg | 12.0 µg |
+| Vitamin B12 | 16.0 µg (667% DV) | 12.0 µg | 12.0 µg |
+| **Niacin** | **9.8 mg (61% DV)** | 3.5 mg | 6.2 mg |
+| Calcium | 37 mg | 280 mg | 250 mg |
+| Selenium | 45 µg (82% DV) | 33 µg | 31 µg |
+
+- **The grilled row is the better choice on nearly everything except calcium, and the
+  reason is sodium: 130 mg against the cans' 540–600.** The cans are seasoned products
+  (MEXT has no 水煮 sanma), so grilling is the only way to eat sanma in this dataset
+  without a quarter of a day's sodium attached. It also carries the most protein (23.3 g,
+  highest of the three) and the most niacin and B12.
+- **The cans win decisively on calcium — 250–280 mg against 37 mg** — because their bones
+  are softened and eaten. That is a real 7× advantage and the one reason to prefer them.
+- **Vitamin D is essentially identical across all three (12–13 µg, 60–65% DV)**, since it
+  is fat-soluble and survives both grilling and canning. Sanma is one of the dataset's
+  best vitamin D sources either way.
+- **Biotin (9.4 µg) and selenium (45 µg) are MEXT-MEASURED here**, unlike the canned rows
+  where both are "—" and had to be borrowed from raw 10173 and protein-scaled. So this row
+  is better-sourced than the cans on those two.
+- **Two MEXT Tr values are entered as 0**: vitamin B1 and vitamin K.
+- **Choline (78 mg) is the only fill**, protein-scaled ×23.3/18.9 off the 味付け can's
+  figure, which itself came from the Canned Mackerel row. It is the softest number here.
+- **Heavy metals reuse the sanma baseline** (As 0.001, Cd 0.002, **Hg 0.02**, Pb 0.001 ppm)
+  — genuinely low mercury, a small short-lived low-trophic pelagic fish, about a quarter
+  of grilled sawara's 0.08.
+- **No visualizer change was needed** — the existing `sanma`/`さんま`/`秋刀魚` keyword
+  added for the canned rows already routes it (🐟, Fish 500).
+
 #### Canned Sanma (秋刀魚) — Both MEXT Variants
 
 **MEXT carries exactly two canned さんま entries, and both are here.** The さんま
-block runs 10173–10178 (生 皮つき/皮なし, 焼き, 開き干し, みりん干し, then the two
-cans) and stops there — **10179 is しいら (dolphinfish)**, which is how the set was
-confirmed complete. Both are used directly (÷100):
+block runs 10173–10178 and stops there — **10179 is しいら (dolphinfish)**, which is how
+the set was confirmed complete. Both cans are used directly (÷100):
+
+> **Correction (2026-10-14):** an earlier version of this note listed the block's
+> contents in the wrong order. The actual layout is **10173 皮つき 生, 10174 皮つき
+> 焼き, 10175 開き干し, 10176 みりん干し, 10177 缶詰 味付け, 10178 缶詰 かば焼**, plus
+> **10407 皮なし 生** in the supplementary range. In particular 焼き is **10174**, not a
+> later number, and 10175 is 開き干し — both were initially assumed otherwise when
+> `Grilled Sanma` was added.
 
 - **`Canned Sanma Seasoned (さんま缶詰 味付け)`** ← MEXT **10177**
 - **`Canned Sanma Kabayaki (さんま缶詰 かば焼)`** ← MEXT **10178**
@@ -1676,6 +1725,7 @@ filled):
 | Coconut Water | 0 | 1 µg | 1.1 mg | 0 | MEXT "—" for biotin, Se **and vitamin K**; Se + choline from USDA coconut water, vitamin K and biotin filled as 0. At 22 kcal / 0.2 g protein none of these move anything |
 | Sauteed Spinach | 5.0 µg | 5.2 µg | 33 mg | 22,000 µg | all four concentration-scaled off the raw baseline (06267): biotin & Se from **MEXT raw spinach** (2.9 / 3 µg) ×1.73, choline from USDA raw spinach ×1.73, lutein from USDA raw spinach ×1.80 (carotenoid ratio). Note this uses MEXT for Se/biotin where `Steamed Spinach` used USDA — see that section |
 | Watermelon (すいか 赤肉種) | 0.9 µg *(MEXT)* | 0 *(MEXT)* | 4.1 mg | 8 µg | biotin & Se MEXT-measured; choline + lutein from USDA raw watermelon. Note lutein badly under-describes watermelon's carotenoids — its signature pigment is **lycopene**, which this dataset has no column for |
+| Grilled Sanma (10174) | 9.4 µg *(MEXT)* | 45 µg *(MEXT)* | 78 mg | 0 | **only choline filled** — biotin and Se are MEXT-measured here, unlike the canned rows where both are "—". Choline protein-scaled ×23.3/18.9 off the 味付け can |
 | Canned Sanma 味付け | 7.7 µg | 33 µg | 59 mg | 0 | both biotin & Se are MEXT "—" for the cans; borrowed from **MEXT 10173 さんま 皮つき 生** (7.4 µg / 32 µg — same fish, raw) and protein-scaled ×18.9/18.1. Choline from the Canned Mackerel row ×18.9/20.9 |
 | Canned Sanma かば焼 | 7.1 µg | 31 µg | 54 mg | 0 | same 10173 source, protein-scaled ×17.4/18.1; choline from Canned Mackerel ×17.4/20.9 |
 | Low-Fat Milk (加工乳 低脂肪) | 2.0 µg *(MEXT)* | 3 µg *(MEXT)* | 18 mg | 0 | only choline filled — the whole-milk row's 16 mg protein-scaled ×3.8/3.3; agrees with USDA lowfat milk ~17.7 mg. Biotin & Se measured |
