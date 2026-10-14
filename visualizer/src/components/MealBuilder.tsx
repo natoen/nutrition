@@ -116,6 +116,10 @@ const getFoodStyle = (name: string) => {
   // Squid. Matches the English "squid" and するめ only — a bare "いか" keyword
   // would also catch すいか (watermelon), so it is deliberately not used.
   if (lower.includes('squid') || lower.includes('するめ')) return { icon: '🦑', color: '#f97316' }
+  // Oysters. Matches the English 'oyster' and the kanji 牡蠣 only. Deliberately
+  // NOT 'カキ' — that is a substring of タカキベーカリー (the cereal bread row) —
+  // and NOT 'かき', which would collide with a future 柿/かき (persimmon) entry.
+  if (lower.includes('oyster') || lower.includes('牡蠣')) return { icon: '🦪', color: '#f97316' }
   // Miso pastes, AFTER the fish rule so "Canned Mackerel Miso-Packed" stays a
   // fish, and BEFORE rice so "Rice Miso" is not caught by the rice (🍚) rule.
   if (lower.includes('miso') || lower.includes('みそ') || lower.includes('味噌')) return { icon: '🍲', color: '#b45309' }
@@ -218,7 +222,8 @@ const getFoodTypeWeight = (name: string) => {
       lower.includes('crab') || lower.includes('かに') || lower.includes('蟹') ||
       lower.includes('clam') || lower.includes('shijimi') || lower.includes('asari') ||
       lower.includes('しじみ') || lower.includes('あさり') ||
-      lower.includes('squid') || lower.includes('するめ')) return 500 // Fish (incl. shellfish & squid)
+      lower.includes('squid') || lower.includes('するめ') ||
+      lower.includes('oyster') || lower.includes('牡蠣')) return 500 // Fish (incl. shellfish & squid)
   // Oils (weight 680, grouped right after Beans/Legumes). Checked BEFORE
   // Nuts/Seeds so "Roasted Sesame Oil" is not caught by "sesame". Match names
   // ENDING in "oil" so it catches "...Sesame Oil"/"...Olive Oil" without also

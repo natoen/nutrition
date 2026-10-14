@@ -567,6 +567,74 @@ carbs 10.2 g, fibre 1.3 g, Na 1 mg, K 180 mg, Ca 4 mg, Mg 7 mg, P 18 mg, Fe
   and `getFoodTypeWeight()` (Fruits, weight 100). **`もも` is deliberately NOT a
   keyword** — see the Visualizer Food Ordering notes.
 
+#### Oysters — Raw & Breaded Fried (かき)
+
+Both rows are **MEXT-measured and used directly** (÷100) — no derivation, no retention
+factors, unusually well-sourced for a cooked dish:
+
+- **`Raw Oyster (かき 養殖 生)`** ← MEXT **10292** かき 養殖 生
+- **`Fried Oyster (カキフライ)`** ← MEXT **10430** かき 養殖 フライ
+
+**MEXT carries a measured パン粉 フライ entry for oysters**, which is a happier situation
+than the squid: there, MEXT's only measured fry was 天ぷら and the frozen いかフライ
+(18008) was useless because it is the *uncooked* breaded product. Here 10430 is the real
+fried-and-eaten food, breading and absorbed oil included.
+
+**Basis: EDIBLE PORTION (shucked meat) — the dataset default.** MEXT's 廃棄率 for raw
+oysters is **75%** (the shell), but unlike the two clam rows there is **no shell-on
+rebase**: oysters are bought and served already shucked, so the gram logged is meat. The
+clams are rebased only because they go into the pot shell-and-all.
+
+| per 100g | Raw (10292) | Fried (10430) |
+|---|---|---|
+| Calories | **58** | **256** |
+| Protein | 6.9 g | 7.6 g |
+| Fat | 2.2 g | 11.1 g |
+| **Carbohydrate** | 4.9 g | **32.9 g** |
+| **Zinc** | **14.0 mg (147% DV)** | **12.0 mg (126% DV)** |
+| **Vitamin B12** | **23.0 µg (958% DV)** | **30.0 µg (1250% DV)** |
+| **Copper** | **1.04 mg (116% DV)** | 0.87 mg (97% DV) |
+| Selenium | 46 µg (84% DV) | 44 µg (80% DV) |
+| Iron | 2.1 mg | 1.8 mg |
+| Sodium | 460 mg | 380 mg |
+| Vitamin E | 1.3 mg | 3.1 mg |
+
+Things worth knowing:
+
+- **Raw oyster is the dataset's densest zinc source by a wide margin — 14.0 mg/100g,
+  147% DV.** Nothing else comes close (pumpkin seeds 7.7, wagyu stew beef 8.8 per 100g
+  cooked). It is simultaneously the best **copper** source among whole foods (1.04 mg,
+  116% DV) and carries **958% DV B12**. A 100 g serving of raw oysters covers zinc,
+  copper and B12 for the day, several times over for B12.
+- **The breading is the whole story of the fried row: carbohydrate goes 4.9 → 32.9 g**
+  and calories 58 → 256, a **4.4× increase**. Fat rises 2.2 → 11.1 g from the frying oil.
+  So 100 g of カキフライ is ~a third flour by weight.
+- **Protein barely moves (6.9 → 7.6 g) and that is the giveaway.** Frying drives off
+  water, which should concentrate protein substantially — that it stays almost flat
+  means a large non-protein mass (the パン粉) was added, exactly as reasoned for the
+  squid tempura row.
+- **B12 and vitamin E both RISE with frying** — B12 23 → 30 µg and vitamin E 1.3 → 3.1 mg.
+  B12 rises because water loss concentrates the oyster faster than the breading dilutes
+  it; vitamin E comes from the frying oil, the same effect noted for the oil-packed tuna
+  and fried squid rows. Vitamin K likewise goes 0 → 21 µg.
+- **Dietary fibre for the fried row is a fill (0.7 g)** — MEXT leaves it "—", and it can
+  only come from the wheat breading, so the squid-tempura figure (0.8 g) was used as the
+  closest analog, trimmed slightly.
+- **Choline is the only other fill in either row** (65 mg raw, 72 mg fried protein-scaled)
+  — from USDA oyster, since MEXT carries no choline for shellfish.
+- **CADMIUM is the one to watch, and it is the dataset's highest: 0.30 ppm raw.** Oysters
+  are the classic cadmium accumulator among bivalves — well above the clams (shijimi
+  0.016, asari 0.07 per 100g meat) and above the cacao row's 0.095. Like the clams these
+  are category baselines with wide error bars, since oysters are used as pollution
+  biomonitors and real values swing with harvest water. The fried row is set ~30% lower
+  (0.21) for breading and oil dilution. Arsenic 0.8 ppm is again overwhelmingly organic
+  arsenobetaine, as with asari and squid.
+- The rows needed a new **`oyster`/`牡蠣`** keyword (🦪, Fish weight 500). **`カキ` was
+  deliberately rejected — it is a substring of タカキベーカリー**, the cereal-bread row,
+  which it would have repainted 🦪 and refiled under Fish. `かき` was also rejected as it
+  would collide with a future 柿 (persimmon) entry. Verified the cereal bread still
+  returns 🍞/700.
+
 #### Boiled Shijimi & Asari Clams (Shell-On Basis)
 
 Both rows come from the **raw** MEXT entries — しじみ 生 (**10297**) and あさり 生
@@ -1618,6 +1686,8 @@ filled):
 | Barley Rice (麦ご飯) | 0.8 µg *(MEXT)* | 0 *(MEXT Tr)* | 13.4 mg | 0 | *barley half only, per 100g cooked 押麦.* Biotin & Se from MEXT 01170; choline from USDA barley, pearled, cooked. The rice half contributes its own row's values |
 | Wagyu Stew Beef (chuck 赤肉) | 2.0 µg | 17 µg | 84 mg | 0 | *per 100g raw, before the ×1.538 cooking concentration.* Biotin & Se are MEXT "—" for all 和牛肉, borrowed from **MEXT 11030** (乳用肥育牛肉 かた 脂身つき) and protein-scaled ×20.2/17.1; choline from USDA beef chuck 87 mg scaled ×20.2/21 |
 | Wagyu Roast Beef (round) | 2.1 µg | 17 µg | 88 mg | 0 | *per 100g raw, before the ×1.25 cooking concentration.* Same 11030 source, protein-scaled ×21.3/17.1 since the round is leaner and denser in protein; choline USDA beef ×21.3/21 |
+| Raw Oyster (かき 養殖 生) | 4.8 µg *(MEXT)* | 46 µg *(MEXT)* | 65 mg | 0 | only choline filled (USDA oyster raw); biotin & Se are MEXT-measured. **Zinc 14.0 mg is the dataset's highest** |
+| Fried Oyster (カキフライ) | 4.4 µg *(MEXT)* | 44 µg *(MEXT)* | 72 mg | 0 | choline protein-scaled ×7.6/6.9 off the raw row. **Dietary fibre (0.7 g) is also a fill** — MEXT "—", and it can only be the パン粉 breading, so the squid-tempura 0.8 g was used as the analog |
 | Boiled Shijimi Clam | 21.6 µg | 35 µg | 65 mg | 0 | *per 100g meat, before the shell-on rebase.* Both biotin and Se are MEXT "—" for shijimi and are borrowed wholesale from the あさり row (closest MEXT bivalve); choline from USDA clams, mixed species, raw |
 | Boiled Asari Clam | 21.6 µg *(MEXT)* | 35 µg *(MEXT)* | 65 mg | 0 | *per 100g meat, before the shell-on rebase.* Only choline filled (USDA clams, mixed species, raw); biotin & Se are measured |
 
